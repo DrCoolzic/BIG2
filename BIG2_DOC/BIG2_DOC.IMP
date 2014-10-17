@@ -1,0 +1,59 @@
+*							Epson LQ
+1B, 40												* Printer reset
+1B, 45												* Bold on
+1B, 46												* Bold off
+1B, 34												* Italic on
+1B, 35												* Italic off
+1B, 2D,  1										* Underline on
+1B, 2D,  0										* Underline off
+
+81, 1B, 52, 2, 7D, 1B, 52, 0				*  - Allemand
+82, 1B, 52, 1, 7B, 1B, 52, 0				* ‚ - Fran‡ais
+83, 61, 8, 5E												* ƒ - a BS ^
+84, 1B, 52, 2, 7B, 1B, 52, 0				* „ - Allemand
+85, 1B, 52, 1, 40, 1B, 52, 0				* … - Fran‡ais
+86, 1B, 52, 4, 7D, 1B, 52, 0				* † - Danois 1
+87, 1B, 52, 1, 5C, 1B, 52, 0				* ‡ - Fran‡ais
+88, 65, 8, 5E												* ˆ - e BS ^
+89, 65, 8, 1B, 52, 1, 7E, 1B, 52, 0	* ‰ - e BS Fran‡ais ¹
+8A, 1B, 52, 1, 7D, 1B, 52, 0				* Š - Fran‡ais
+8C, 69, 8, 5E												* i BS ^
+8D, 1B, 52, 6, 7E, 1B, 52, 0				*  - Italien
+8E, 1B, 52, 2, 5B, 1B, 52, 0				* Ž - Allemand
+8F, 1B, 52, 4, 5D, 1B, 52, 0				*  - Danois 1
+90, 1B, 52, 9, 40, 1B, 52, 0				*  - Norv‚gien
+91, 1B, 52, 4, 7B, 1B, 52, 0				* ‘ - Danois 1
+92, 1B, 52, 4, 5B, 1B, 52, 0				* ’ - Danois 1
+93, 6F, 8, 5E												* “ - o BS ^
+94, 1B, 52, 2, 7C, 1B, 52, 0				* ” - Allemand
+95, 1B, 52, 6, 7C, 1B, 52, 0				* • - Italien
+96, 75, 8, 5E												* – - u BS ^
+97, 1B, 52, 1, 7C, 1B, 52, 0				* — - Fran‡ais
+98, 79, 8, 1B, 52, 1, 7E, 1B, 52, 0	* ˜ - y BS Fran‡ais ¹
+99, 1B, 52, 2, 5C, 1B, 52, 0				* ™ - Allemand
+9A, 1B, 52, 2, 5D, 1B, 52, 0				* š - Allemand
+9C, 1B, 52, 3, 23, 1B, 52, 0				* œ - UK
+9D, 1B, 52, 8, 5C, 1B, 52, 0				*  - Japonais
+9E, 1B, 52, 2, 7E, 1B, 52, 0				* ž - Allemand
+9F, 66															* Ÿ - f
+A4, 1B, 52, 7, 7C, 1B, 52, 0				* ¤ - Espagnol
+A5, 1B, 52, 7, 5C, 1B, 52, 0				* ¥ - Espagnol
+A6, 61, 8, 5F												* ¦ - a BS _
+A7, 6F, 8, 5F												* § - o BS _
+A8, 1B, 52, 7, 5D, 1B, 52, 0				* ¨ - Espagnol
+AD, 1B, 52, 7, 5B, 1B, 52, 0				* ­ - Espagnol
+B0, 61, 8, 7E												* ° - a BS ~
+B1, 6F, 8, 7E												* ± - o BS ~
+B2, 1B, 52, 4, 5C, 1B, 52, 0				* ² - Danois 1
+B3, 1B, 52, 4, 7C, 1B, 52, 0				* ³ - Danois 1
+B9, 1B, 52, 1, 7E, 1B, 52, 0				* ¹ - Fran‡ais
+C0, 79, 8, 1B, 52, 1, 7E, 1B, 52, 0	* À - y BS Fran‡ais ¹
+C1, 59															* Á - Y
+DD, 1B, 52, 2, 40, 1B, 52, 0				* Ý - Allemand
+E1, 1B, 52, 2, 7E, 1B, 52, 0				* á - Allemand
+F1, 2B, 8, 5F												* ñ - + BS _
+F2, 3E, 8, 5F												* ò - > BS _
+F3, 3C, 8, 5F												* ó - < BS _
+F8, 1B, 52, 1, 5B, 1B, 52, 0				* - Fran‡ais
+0																		* NULL : fin
+

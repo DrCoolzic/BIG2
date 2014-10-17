@@ -1,0 +1,23 @@
+; >>>>>>>>>>>>>>>>>>>>>>>>> BIG2DEMO.PRJ <<<<<<<<<<<<<<<<<<<<<<<<<
+
+BIG2DEMO.PRG       ; Nom de l'ex‚cutable
+.C [ -K -P ]       ; Options du compilateur sans infos de debuggage
+;.C [ -K -P -Y ]   ; Options du compilateur avec infos de debuggage
+;.L [ -G -L -Y ]	 ; Options du linker avec infos de debuggage
+=                  ; Liste des modules
+
+PCSTART.O          ; Startup code
+
+BIG2DEMO.C (BIG2DEMO.H) ; Le programme principal
+
+PCFLTLIB.LIB       ; Librairie virgule flottante
+PCSTDLIB.LIB       ; Librairie standard
+
+BIG2.LIB           ; Librairie BIG sans infos de debuggage
+;BIG2DEBG.LIB      ; Librairie BIG avec infos de debuggage
+BIG_IMGS.LIB       ; Librairie BIG Image
+PCEXTLIB.LIB       ; Librairie ‚tendue
+PCTOSLIB.LIB       ; Librairie TOS
+PCGEMLIB.LIB       ; Librairies AES et VDI
+
+;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

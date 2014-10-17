@@ -1,0 +1,62 @@
+  BIG2 possŠde un ressource inclus. C'est le fichier BIG2INCL.RSC. 
+Mais le fichier de description BIG2INCL.RSH ne peut ˆtre utilis‚ 
+directement par BIG2, car cela entraŒnerait des conflits de noms (par 
+exemple, rs_trindex) avec le ressource du programme principal si 
+celui-ci possŠde un ressuorce int‚gr‚. Il faut donc modifier certaines 
+lignes de BIG2INCL.RSH afin de le rendre compatible avec les noms 
+attendus par BIG2. C'est cette conversion que r‚alise INCLCONV.TOS.
+
+  Ce programme lit le fichier BIG2INCL.RSH et le resauve sous le nom 
+BIG2INCL.HBG (comme Header BiG2) aprŠs modifications (le fichier 
+d'origine n'est pas modifi‚). Le programme et le fichier doivent ˆtre 
+dans le mˆme chemin. Voici la liste des modifications effectu‚es :
+
+Remplacements :
+  rs_       ->    bi_
+  RSIB      ->    BIIB
+  RSBB      ->    BIBB
+  WORD      ->    int
+  BYTE      ->    char
+  LONG      ->    long
+  FLAGS10   ->    BKGR
+  \210      ->    ˆ
+  \202      ->    ‚
+  \212      ->    Š
+  \134      ->    \
+  \047      ->    '
+  EspEsp    ->    Tab
+  TabTab    ->    Tab
+  TabEsp    ->    Tab
+  EspTab    ->    Tab
+  Tab,      ->    ,
+  ,Tab      ->    ,Esp
+  Esp/*     ->    TabTabTab/*
+  Esp final ->    \0
+  Remplace le groupe de lignes :
+     WORD RSBB0DATA[] =
+     {
+     };
+   par
+     int BIBB0DATA[] = { 0 };
+
+Suppressions de lignes :
+  Ligne "/* GEM Resource C Source */"
+  Lignes comportant "define" ou "defined"
+  Lignes comportant "endif"
+  Lignes comportant "include <"
+
+  Cela vous permet si vous le d‚sirez de modifier le dessin des 
+petites ic“nes utilis‚es par BIG2 pour ses boutons, les fenˆtres, etc. 
+Faites les modifs que vous d‚sirez dans BIG2INCL.RSC, sauvez-les, 
+faites convertir le fichier BIG2INCL.RSH en BIG2INCL.HBG, et 
+recompliez la librairie au moyen des projets BIG2.PRJ (librairie sans 
+infos de debuggage) et BIG2DEBG.PRJ (librairie avec infos de 
+debuggage).
+
+  Mais ne modifiez SURTOUT PAS l'ordre des objets, ni leurs noms, ni 
+leurs tailles et coordonn‚es. En effet, BIG2 part du principe que (par 
+exemple) la position d'un objet particulier est 0, 0, et si elle se 
+trouve modifi‚e, les cons‚quences pourraient ˆtre fƒcheuses. Donc, 
+‚vitez de modifier autre chose que les dessins des ic“nes, travaillez 
+toujours sur des copies et prenez vos pr‚cautions.
+

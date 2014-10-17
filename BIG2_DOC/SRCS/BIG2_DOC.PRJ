@@ -1,0 +1,25 @@
+; >>>>>>>>>>>>>>>>>>>>>>>>> BIG2_DOC.PRJ <<<<<<<<<<<<<<<<<<<<<<<<<
+
+BIG2_DOC.PRG				; Nom de l'ex‚cutable
+.C [ -K -P -M ] 			; Options du compilateur sans infos de debuggage
+;.C [ -K -P -Y -M ] 	; Options du compilateur avec infos de debuggage
+;.L [ -G -L -Y ]	 ; Options du linker avec infos de debuggage
+
+= 								 ; Liste des modules
+
+PCSTART.O 				 ; Startup code
+
+BDOC_DOC.C (BIG2_DOC.RSH, STRUCT.H)	; Module principal
+BDOC_IMP.C (BDOC_IMP.H, STRUCT.H)		; Module d'impression
+COMPRESS.C													; Module de compression / d‚compression
+
+PCFLTLIB.LIB			 ; Librairie virgule flottante
+PCSTDLIB.LIB			 ; Librairie standard
+
+BIG2.LIB						; Librairie BIG sans infos de debuggage
+;BIG2DEBG.LIB 		 ; Librairie BIG avec infos de debuggage
+PCEXTLIB.LIB			 ; Librairie ‚tendue
+PCTOSLIB.LIB			 ; Librairie TOS
+PCGEMLIB.LIB			 ; Librairies AES et VDI
+
+;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

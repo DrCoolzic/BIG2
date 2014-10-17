@@ -1,0 +1,10 @@
+
+Le programme "BIG2_DOC.PRG" peut ˆtre renomm‚ "BIG2.DOC.ACC" et ˆtre 
+utilis‚ en accessoire de bureau.
+
+Le fichier "BIG2.DOC.DCM" doit toujours se trouver dans le mˆme r‚pertoire 
+que le programme / accessoire, ainsi que le driver "BIG2_DOC.IMP".
+
+Dans la documentation elle-mˆme, lisez les chapitres "L'aide", "Le fichier 
+d'aide" et "L'impression" pour plus de d‚tails.
+

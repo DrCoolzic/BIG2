@@ -1,0 +1,20 @@
+/* GEM C Source Header File */
+
+extern TEDINFO  rs_tedinfo[];
+extern CICONBLK rs_ciconblk[];
+extern CICON    rs_cicon[];
+extern ICONBLK  rs_iconblk[];
+extern BITBLK   rs_bitblk[];
+extern BYTE     *rs_frstr[];
+extern BITBLK   *rs_frimg[];
+extern OBJECT   rs_object[];
+extern OBJECT   *rs_trindex[];
+
+#define NUM_BB    13
+#define NUM_IB    1
+#define NUM_CIB   0
+#define NUM_TI    30
+#define NUM_FRSTR 25
+#define NUM_FRIMG 2
+#define NUM_OBS   382
+#define NUM_TREE  22

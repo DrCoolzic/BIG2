@@ -1,0 +1,169 @@
+                              BIG_IMGS.LIB
+                   Librairie de chargement d'images
+                  destin‚e … ˆtre utilis‚e sous BIG
+
+  BIG_IMGS.LIB est une librairie de chargement d'images compl‚mentaire 
+… la librairie BIG. Elle est inutilisable hors de ce contexte.
+
+  Au d‚but de vos programmes, il faudra donc inclure le fichier 
+"BIG_IMGS.H" (qui inclut lui-mˆme le fichier "BIG.H"), et ne pas 
+oublier dans vos projets de linker BIG_IMGS.LIB et BIG.LIB.
+
+  BIG_IMGS ne d‚finit aucun nouveau type d'objet ou de structure, ni 
+aucune nouvelle variable. Mais elle offre 6 fonctions, que voici.
+
+---------------------------------------
+    load_image
+Prototypage
+  int load_image (char *fichier, MFDB *imag);
+
+Description
+  Cette fonction charge (et d‚compacte si n‚cessaire) une image IMG, 
+PAC, PI? ou PC?.
+
+ParamŠtres
+'fichier' Nom du fichier image … charger, avec chemin d'accŠs si 
+n‚cessaire.
+'imag' Pointeur sur un MFDB (d‚finit par la VDI), dans lequel tous les 
+paramŠtres relatifs … l'image seront plac‚s par la fonction.
+retour : TRUE si tout s'est bien pass‚, FALSE en cas de problŠme 
+(mauvais format d'image, impossible d'allouer la m‚moire, r‚solution 
+de l'image diff‚rente de la r‚solution courante, etc).
+
+Remarques
+  La fonction d‚termine elle-mˆme le format du fichier demand‚ et agit 
+en conc‚quence. Le programmeur ne doit pas oublier de lib‚rer la zone 
+m‚moire point‚e par "imag.fd_addr" avant de quitter l'application.
+
+---------------------------------------
+    load_img
+Prototypage
+  int load_img (char *fichier, MFDB *imag);
+
+Description
+  Cette fonction charge et d‚compacte une image IMG.
+
+ParamŠtres
+'fichier' Nom du fichier image … charger, avec chemin d'accŠs si 
+n‚cessaire.
+'imag' Pointeur sur un MFDB (d‚finit par la VDI), dans lequel tous les 
+paramŠtres relatifs … l'image seront plac‚s par la fonction.
+retour : TRUE si tout s'est bien pass‚, FALSE en cas de problŠme 
+(mauvais format d'image, impossible d'allouer la m‚moire, r‚solution 
+de l'image diff‚rente de la r‚solution courante, etc).
+
+Remarques
+  Le programmeur ne doit pas oublier de lib‚rer la zone m‚moire 
+point‚e par "imag.fd_addr" avant de quitter l'application.
+  La fonction ne traite que le format IMG standard, sans palette de 
+couleur.
+
+---------------------------------------
+    load_pac
+Prototypage
+  int load_pac (char *fichier, MFDB *imag);
+
+Description
+  Cette fonction charge et d‚compacte une image PAC (Stad).
+
+ParamŠtres
+'fichier' Nom du fichier image … charger, avec chemin d'accŠs si 
+n‚cessaire.
+'imag' Pointeur sur un MFDB (d‚finit par la VDI), dans lequel tous les 
+paramŠtres relatifs … l'image seront plac‚s par la fonction.
+retour : TRUE si tout s'est bien pass‚, FALSE en cas de problŠme 
+(mauvais format d'image, impossible d'allouer la m‚moire, r‚solution 
+de l'image diff‚rente de la r‚solution courante, etc).
+
+Remarques
+  Le programmeur ne doit pas oublier de lib‚rer la zone m‚moire 
+point‚e par "imag.fd_addr" avant de quitter l'application.
+  Je rappelle que les images PAC sont toujours monochrome (un seul 
+plan de couleurs).
+
+---------------------------------------
+    load_pix
+Prototypage
+  int load_pix (char *fichier, MFDB *imag);
+
+Description
+  Cette fonction charge une image PI1, PI2 ou PI3 (Degas non 
+compress‚), selon la r‚solution.
+
+ParamŠtres
+'fichier' Nom du fichier image … charger, avec chemin d'accŠs si 
+n‚cessaire.
+'imag' Pointeur sur un MFDB (d‚finit par la VDI), dans lequel tous les 
+paramŠtres relatifs … l'image seront plac‚s par la fonction.
+retour : TRUE si tout s'est bien pass‚, FALSE en cas de problŠme 
+(mauvais format d'image, impossible d'allouer la m‚moire, r‚solution 
+de l'image diff‚rente de la r‚solution courante, etc).
+
+Remarques
+  Le programmeur ne doit pas oublier de lib‚rer la zone m‚moire 
+point‚e par "imag.fd_addr" avant de quitter l'application.
+
+---------------------------------------
+    load_pcx
+Prototypage
+  int load_pcx (char *fichier, MFDB *imag);
+
+Description
+  Cette fonction charge et d‚compacte une image PC1, PC2 ou PC3 (Degas 
+compress‚), selon la r‚solution.
+
+ParamŠtres
+'fichier' Nom du fichier image … charger, avec chemin d'accŠs si 
+n‚cessaire.
+'imag' Pointeur sur un MFDB (d‚finit par la VDI), dans lequel tous les 
+paramŠtres relatifs … l'image seront plac‚s par la fonction.
+retour : TRUE si tout s'est bien pass‚, FALSE en cas de problŠme 
+(mauvais format d'image, impossible d'allouer la m‚moire, r‚solution 
+de l'image diff‚rente de la r‚solution courante, etc).
+
+Remarques
+  Le programmeur ne doit pas oublier de lib‚rer la zone m‚moire 
+point‚e par "imag.fd_addr" avant de quitter l'application.
+
+---------------------------------------
+    img_attach
+Prototypage
+  int img_attach (t_image_dial *bimg, char *fichier,
+                  int tree, int obj,
+                  int fcenterw, int fcenterh);
+
+Description
+  Cette fonction charge et d‚compacte une image IMG et l'affecte … un 
+objet B_PICT (image dans un formulaire).
+
+ParamŠtres
+'bimg' Pointeur sur une structure t_image_dial (d‚finie par BIG) 
+servant de description de l'image pour la routine d'affichage de cet 
+objet-image.
+'fichier' Nom du fichier image … charger, avec chemin d'accŠs si 
+n‚cessaire.
+'tree' Num‚ro du formulaire contenant l'objet.
+'obj' Num‚ro de l'objet dans le formulaire.
+'fcenterw' et 'fcenterh' Flags indiquant que l'objet doit ˆtre centr‚ 
+dans son objet-pŠre, respectivement en largeur et en hauteur, en 
+fonction des dimensions de l'image.
+retour : TRUE si tout s'est bien pass‚, FALSE en cas de problŠme 
+(mauvais format d'image, impossible d'allouer la m‚moire, r‚solution 
+de l'image diff‚rente de la r‚solution courante, etc).
+
+Remarques
+  Les largeur et hauteur de l'objet sont adapt‚es par la fonction pour 
+correspondre aux largeur et hauteur en pixel de l'image. Sa position 
+en x et en y est ‚ventuellement modifi‚e selon les flags transmis … la 
+fonction. En principe, le programmeur n'a pas … lib‚rer la zone 
+m‚moire r‚serv‚e pour l'image, la fonction "end()" de BIG s'en charge 
+automatiquement.
+  La fonction ne traite que le format IMG standard, sans palette de 
+couleur.
+
+---------------------------------------
+
+  Note : Ceci est la premiŠre version de cette librairie. Elle ne gŠre 
+pas encore les palettes de couleurs, mais ‡a viendra, ainsi sans doute 
+que d'autres formats d'images.
+

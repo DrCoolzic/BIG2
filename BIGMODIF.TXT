@@ -1,0 +1,227 @@
+***** Version 2.13 du 11/02/99 *****
+- Suppression du s‚lecteur BIG. Finalement, c'est vraiment pas bien, ce 
+truc !
+
+***** Version 2.12 du 29/08/98 *****
+- Nouvelle variable globale : 'Palette bpal[16]'.Au lancement du 
+programme, elle contient une copie de la palette systŠme, du moins les 
+16 premiŠres couleurs. Si on d‚sire modifier les couleurs de 
+l'application, il faut modifier ce paramŠtre. Cette variable est 
+utilis‚e par BIG lorsqu'il faut restaurer la palette par d‚faut lors de 
+changement de fenˆtre de premier plan par exemple. La "vraie" palette 
+systŠme est restaur‚e lorsqu'on quitte. Ainsi, la palette modifi‚e reste 
+locale … l'application (sauf en multitƒche si l'on a ‚galement modifi‚ 
+la palette systŠme, qui sera alors restaur‚e seulement en quittant le 
+programme).
+- Correction d'un bug dans le traitement du d‚filement d'une fenˆtre de 
+type normal.
+
+***** Version 2.11 du 22/09/97 *****
+- Le texte des objets B_GRASTR peut d‚sormais ˆtre cal‚ … droite de 
+l'objet par l'utilisation du bit BS_RIGHT de l'ob_flags.
+- Les objets B_SMSTR peuvent … pr‚sent recevoir des attributs 
+graphiques de la mˆme maniŠre que les B_GRASTR.
+- Nouvelle fonction : set_attributes (), qui sert … fixer les 
+attributs graphiques des objets B_GRASTR et B_SMSTR.
+- Ajout de plusieurs d‚finitions facilitant l'utilisation des 
+fonctions VDI vsl_type(), vsm_type(), vst_alignment(), vst_effects(), 
+vst_height() et vst_rotation().
+
+***** Version 2.10 du 18/06/97 *****
+Correction de trois petits bugs :
+- Une fenˆtre mise en plein pot puis ramen‚e … sa taille pr‚c‚dente 
+n'‚tait pas toujours redessin‚e correctement.
+- Une fenˆtre ne comportant pas de bouton de fermeture pouvait tout de 
+mˆme ˆtre ferm‚e … partir du clavier.
+- Une petite erreur dans le traitement des racourcis-clavier des menus 
+en fenˆtre.
+
+***** Version 2.09 du 26/05/97 *****
+Ajout d'un nouvel objet BIG2 : Les B_SMSTR (SMall STRing). Il s'agit 
+d'un texte affich‚ avec la fonte 8x8, en mode opaque ou transparent, 
+cal‚ … gauche ou … droite de l'objet.
+
+***** Version 2.08 du 16/03/97 *****
+Un ajout relativement important : un s‚lecteur d'objet "maison", 
+baptis‚ "s‚lecteur BIG2". La fonction selector () s'utilise comme 
+auparavant, mais elle comporte un nouveau paramŠtre, 'fselgig'. Il 
+s'agit d'un flag. S'il vaut FALSE, le s‚lecteur standard est utilis‚. 
+S'il vaut TRUE, c'est le s‚lecteur BIG2.
+Voir la doc pour les d‚tails d'utilisation de ce s‚lecteur o— l'accent 
+a ‚t‚ mis sur l'ergonomie.
+
+Autre petite modification : le programme de d‚mo affiche d‚sormais sur 
+le bureau l'image du fichier BIG2DEMO.IMG (et plus BIG2DEMO.PI3), au 
+moyen de la librairie BIG_IMGS.
+
+***** Version 2.07 du 14/12/96 *****
+Juste un petit bug corrig‚ dans le traitement des filtres de champs 
+‚ditables.
+
+***** Version 2.06 du 03/06/96 *****
+Nouvelle fonctionnalit‚ : Possibilit‚ de "prot‚ger" des parties de la 
+zone de travail des fenˆtres en haut ou … gauche. Apparition de deux 
+nouveaux ‚l‚ments dans la structure BigWind : w_hprot et w_vprot, 
+respectivement protection horizontale (… gauche) et verticale (en 
+haut). C'est le nombre de pixels prot‚g‚s (non concern‚s) lors 
+d'‚v‚nements de d‚filement par ligne ou par page.
+
+***** Version 2.05 du 17/03/96 *****
+Correction de bugs dans la fonction exist() qui fonctionne d‚sormais 
+correctement dans toutes les situations.
+
+3 nouvelles fonctions :
+- draw_title () qui redessine la barre de titre d'une fenˆtre BIG.
+- set_radio () qui s‚lectionne un radio-bouton (et lui seul) dans un 
+groupe de radio-boutons.
+- get_radio () qui retourne le nø du radio-bouton s‚lectionn‚ dans un 
+groupe.
+
+Nouvelle fonctionnalit‚ pour les objets B_SELEC. Si le bit 11 de 
+l'ob_flags est positionn‚, un double-clic sur l'objet active ‚galement 
+le bouton par d‚faut du formulaire (s'il y en a un). Ce bit est nomm‚ 
+"DcDefault" (comme "Double-Clic Default") est il est d‚fini par 
+DCDEFAULT.
+
+Deux nouvelles d‚finitions ont ‚t‚ cr‚‚e pour faciliter les choses :
+- "ADR", qui correspond simplement … "ir_trindex" (s‚rie de pointeurs 
+sur les formulaires du programme).
+- "get_popup", qui correspond … "match" et qui peut donc ˆtre utilis‚ 
+… la place du nom de cette fonction, qui r‚alise le contraire de 
+set_popup().
+
+***** Version 2.04 du 30/06/95 *****
+Correction d'un bug dans la fonction help().
+
+ATTENTION, si vous voulez me contacter, j'ai chang‚ d'adresse … partir 
+de cette version. La nouvelle est :
+  Claude ATTARD
+  5, rue de la Poste
+  64400 - Oloron Ste Marie
+
+***** Version 2.03 du 29/01/95 *****
+Correction d'un bug dans les d‚placements et les redimentionnement des 
+fenˆtres BIG.
+
+***** Version 2.02 du 21/12/94 *****
+Diverses petites modifications et am‚liorations ont ‚t‚ apport‚es … 
+cette version, notamment en ce qui concerne le redraw des fenˆtres, 
+qui a ‚t‚ optimis‚ lors des redimmensionnements. La sortie des fenˆtre 
+par la gauche du bureau, qui ne fonctionnait pas correctement sur les 
+versions les plus anciennes du TOS fonctionne d‚sormais comme il se 
+doit.
+
+***** Version 2.01 du 10/11/94 *****
+>>>>> Modification
+La gestion du bouton droit de la souris est d‚sormais r‚alis‚e grƒce … 
+l'astuce suivante, qui permet d'obtenir un ‚v‚nement MU_BUTTON en cas 
+de clic sur l'un OU L'AUTRE des boutons :
+Dans l'appel … la fonction evnt_multi(), le paramŠtre "ev_bclicks" 
+n'est pas le nombre de clics attendus, mais ce nombre auquel on ajoute 
+256 (c'est-…-dire '3' dans BIG2). Le paramŠtre "ev_bmask" est '3', 
+puisque on d‚sire scruter les deux boutons. Le paramŠtre "ev_bstate" 
+est L'INVERSE de l'‚tat. Comme on attend l'un uo l'autre bouton, il 
+faudrait mettre '3', l'inverse est '0' (les deux bits annul‚s).
+Cette fa‡on de proc‚der est d–e … une impr‚cision de l'AES. Bien 
+qu'elle n'ait pratiquement pas ‚t‚ document‚e officiellement, Atari 
+s'est engag‚ … ne pas la modifier. Seul inconv‚nient : cela ne 
+fonctionne pas sur le TOS 1.0, ce qui ne devrait pas ˆtre un trŠs gros 
+problŠme !
+Un grand merci … Chritian Nieber, auteur du g‚nial traitement de texte 
+Papyrus, qui me l'a indiqu‚e.
+
+***** Version 2.00 du 22/10/94 *****
+  Ce document est normalement consacr‚ … pr‚senter les derniers 
+changements apport‚s … BIG pour ‚viter … ses anciens utilisateurs de 
+relire le manuel complet. Toutefois, la version 2 (qui succŠde … la 
+1.93) est toute nouvelle, et elle a entraŒn‚ de nombreuses 
+modifications. Il est pratiquement impossible de toutes les r‚f‚rencer 
+ici de maniŠre succinte.
+
+  Je recommande donc aux "habitu‚s" de faire l'effort de tout relire 
+comme s'ils d‚couvraient BIG pour la premiŠre fois.
+
+  Pour ne pas vous frustrer, voici un trŠs rapide tour d'horizon de 
+BIG2, sans d‚tails :
+
+  La grosse nouveaut‚, c'est les fenˆtres qui sont entiŠrement 
+redessin‚es, pourvues de nouveaux boutons et de nouvelles 
+fonctionnalit‚s. Jetez un coup d'´il sur la d‚mo... Evidemment, la 
+structure BigWind a ‚t‚ un peu modifi‚e.
+
+  Plusieurs nouvelles fonctions sont apparues, certaines li‚es … ces 
+nouvelles fenˆtres (bwind_calc, set_windows, next_wind, etc), d'autres 
+destin‚es … faciliter le travail du d‚veloppeur (form_attach, 
+bulle_attach, create_popup, set_interface, etc).
+
+  D'autre part, certaines fonctions anciennes ont vu leur prototypage 
+modifi‚, comme open_window, formw_draw, height_sliders, etc.
+
+  Deux fonctionnalit‚s de fenˆtres li‚es aux flags ont disparues, pour 
+all‚ger l'ensemble. Il s'agit de WFBOUND (calage de la zone de travail 
+sur des multiples de 16), presque jamais utilis‚ dans la pratique, et 
+WFREDRAW (redraw syst‚matique), jamais utilis‚ ! En revanche, trois 
+nouvelles sont apparues :
+WFCALAG : calage de la taille de la fenˆtre et de w_lin et w_col sur 
+des multiples des unit‚s de d‚calage.
+WFDECAL : calage de w_lin et w_col si redimensionnement avec les 
+nouveaux Sizers.
+WFGROUP : groupement des quatre flŠches de fenˆtre en bas … droite.
+
+  Attention, le bit WFCLOSE a chang‚ de d‚finition. Ce n'est plus le 
+bit 13 de l'ob_flags, c'est le 12 !
+
+  Le portage de programmes d‚velopp‚s sous BIG 1.xx vers BIG 2 ne 
+devrait pas ˆtre trŠs difficile. Commencez par prendre connaissance de 
+la documentation (je me r‚pŠte !), et si vous ˆtes vraiment perdus, 
+les messages d'erreurs du compilateur sauront vous rappeler … l'ordre 
+et vous indiquer o— se trouvent les problŠmes. Je ne pense pas que ce 
+portage demande plus d'une heure pour un source de taille moyenne, 
+mˆme si votre exp‚rience du C est limit‚e. Le principal piŠge … ‚viter 
+dans BIG2 est qu'il est d‚sormais interdit d'utiliser la fonction GEM 
+wind_calc(). Il faut imp‚rativement passer par son ‚quivalement BIG2 : 
+bwind_calc(). Tenez compte de cette remarque dans vos portages.
+
+  Voici la d‚marche que je vous conseille de suivre pour le portage. 
+En utilisant la fonction du Pure C "Search project", cherchez et 
+corrigez les lignes comportant "wind_calc", "open_window", 
+"formw_draw" et "height_sliders". Veillez aussi … utiliser 
+syst‚matiquement la fonction BIG2 "zone_work()" au lieu de la fonction 
+GEM "wind_get (WF_WORKXYWH...)".
+
+  Eliminez ‚galement toutes les parties de programmes destin‚es … 
+"vider" une fenˆtre, elles sont d‚sormais inutiles. De mˆme, supprimez 
+les appels … "menu_tnormal()" qui s‚lectionnaient un titre de menu 
+dans le cas d'une option appel‚e par raccourci clavier : BIG2 le fait 
+lui-mˆme … pr‚sent.
+
+  AprŠs tout cela, le programme devrait ˆtre compilable avec BIG2 sans 
+beaucoup de difficult‚s.
+
+  L'interface  g‚n‚rale  des  programmes sous BIG2  est  modifiable  … 
+volont‚,  non  seulement les couleurs et autres attributs des  boutons 
+BIG2,  mais aussi les couleurs, trames, etc, des nouvelles fenˆtres. A 
+ce  sujet,  un  CPX  est en projet,  qui  permettra  de  modifier  ces 
+paramŠtres pour tous les programmes sous BIG2 pr‚sents sur la machine. 
+Il sera accompagn‚ d'un petit programme … placer dans le dossier  AUTO 
+qui  installera  un cookie "BIG2".  Ces deux fichiers (le  CPX  et  le 
+programme  AUTO) permettront donc … un utilisateur de  configurer  son 
+environnement comme il le d‚sire sans qu'il soit n‚cessaire  d'inclure 
+cette option au(x) logiciel(s) lui(eux)-mˆme(s).  Ces paramŠtres  sont 
+ceux  des  deux fonctions set_interface() et  set_windows().  Si  vous 
+d‚sirez que d'autres paramŠtres soient pris en compte, faites-moi part 
+de vos id‚es.
+
+  Toute nouvelle version d'un programme voit aussi arriver son  paquet 
+de  nouveaux  bugs.  Il est donc trŠs probable que BIG2 ne  fasse  pas 
+exception !  Excusez-moi de ces inconveignants,  et signalez-moi  s'il 
+vous  plait  tous les problŠmes que vous d‚couvrirez,  ainsi  que  les 
+id‚es qui vous viendraient pour continuer … faire ‚voluer  BIG2.  Vous 
+pouvez aussi simplement me dire ce que vous en pensez,  c'est toujours 
+int‚ressant.
+
+Voici un rappel de mes coordonn‚es :
+  Claude ATTARD
+  5, rue de la Poste
+  64400 Oloron Sainte Marie
+
