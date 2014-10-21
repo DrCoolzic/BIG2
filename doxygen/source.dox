@@ -1,0 +1,762 @@
+/*! @page page_big_source BIGdemo source walk through
+@author Claude Attard\n
+Translated by Jean Louis-Guerin
+
+<hr>
+
+@section source_toc Table of Content
+<div class="TOC">
+	- @ref source_intro
+	- @ref source_rsc
+	- @ref source_code
+		- @ref source_code_main
+		- @ref source_code_desk_img
+		- @ref source_code_form_mngt
+		- @ref source_code_form_win
+		- @ref source_code_text_win
+		- @ref source_code_image_win
+		- @ref source_code_graph_win
+	.
+</div>
+
+@section source_intro Introduction
+Even if it is not very complex, the concept of programming under BIG must undoubtedly 
+appear a little confusing to the one which approaches it for the first time. If you 
+have read the other BIG documents, and more specifically the reference chapter, you 
+should know in theory all that there is to know to start working. 
+
+However, it is probable that in practice it is not so clear!
+Therefore it is recommended that you study attentively the source of the demonstration 
+as it contains probably the answer to the majority of your questions. 
+
+As it would be tiresome to examine all the lines of the source one by one, 
+we will only detail the parts relative to BIG.
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+
+@section source_rsc The Resource
+
+As we already did noticed, most of information and structure of the program are in 
+the resource. Therefore let's start by looking at the content of the resource.
+
+@par The Menu
+The first tree in the resource is for the menu. The options: 
+- 'BIGdemo' / 'BigDemo Info...', 
+- 'Forms' / 'Free Form', 
+- 'Windows' / 'Small form', and
+- 'Windows' / 'Large form'
+.
+are of type pointer on function. Therefore a function thus be associated to them. 
+We only have indicate this by using the extended type B_FNCP(51).\n\n
+The option 'Windows' /  'Normal Windows' must call a hierarchical menu. 
+We place a small right arrow of the option (BIG replaces the last but one 
+character by an arrow towards the right-hand side or the left), and  
+we specify the extended type B_HIERM(41), as well as the number of the form 
+associated in the high order byte of the extended ob_state (the classification 
+of forms starts to zero).
+
+@par The Desk form
+The form for the desk comes next. The basic box will be resized by BIG according 
+to the size of the desktop in the current resolution. There is a hidden object 
+(HIDETREE). It is a G_BOX of the type BIG B_PICT. 
+This object will be used to display the image of the desk, if the corresponding 
+file exists. In addition to its extended type, the object has an extended ob_state, 
+which indicates that the image must be displayed by means of the VDI function 
+vrt_cpyfm(), and that the points of the image that are "set" will be blue 
+(color indicated by the high byte of the ob_state).\n\n
+The two texts of the box are B_SMSTR. They will be of which displayed as small 
+characters. The one on the top has also a BackGround bit (it will be written in 
+transparency) and a BS_RIGHT bit (the text will be fixed at the right-hand side). 
+The other objects do not have any particular attribute. BIG treats the desk a little 
+differently of the other forms, and informs the program of all that occurs there. 
+It is the program which must act in consequence. But the objects of the desk should 
+not have any flag EXIT, TOUCHEXIT, etc.
+
+@par The Main form
+The main form used for the demonstration is more complex. The G_BOX which is 
+the root-object of this form has a white zone without pattern. Like 
+we will see it in the study of the source, this pattern will be replaced in 16 
+colors (or more) mode by a pattern 100% of color 8 (clear gray), so 
+to obtain a relief effect.\n\n
+The graphic string has the type B_GRASTR(19) and the graphical attributes 
+in the ob_state, just as two frames B_FRAME(20). The radio-buttons are of type 
+B_SELEC(18) with the mandatory attributes SELECTABLE and RBUTTON. The checked 
+buttons are identical, without being RBUTTON. We indicate for each one of these 
+buttons the keyboard shortcut character by preceding it by a "[". BIG will take 
+care of the remainder, but we must make sure that a same character is not used twice 
+in the same form. Some of the radio-buttons and the selectable buttons 
+must be drawn with the text on the left and the button on the right. We ask it 
+by positioning the bit 13 of the ob_flags (named BS_RIGHT). We also position 
+bit 11 (DcDefault) so that the default button is activated in the event of 
+a double-click.\n\n
+The alert button is a pointer on a function. Let us place the B_FNCP type.\n
+We assign to the pop-up text the extended type B_POPUP so that it is 
+drawn in agreement with the background (for the needs of the 3D), and that it 
+is equipped with a "following option" icon. The pop-up image does not have an 
+extended type, but (as the pop-up text) it must be SELECTABLE and SHADOWED. 
+The rule under GEM is to give attribute SHADOWED to the pop-up buttons, 
+in order to distinguish them more easily. It is an obligation under BIG. 
+But as this attribute has no visual consequence on an object of the type 
+G_IMAGE, we place this object in a G_BOX SHADOWED to respect the tradition. 
+I advise you to always do this in the case of pop-up image.\n\n
+The first of the two editable fields is of type B_EDIT. We thus place in the 
+ob_state the length (as characters) of the text which it will be able 
+to accommodate (50, you can change it). Let us not forget the small arrows on 
+both sides, nor spaces which accompany them (see the chapter on extended editable). 
+The second editable field is using small size characters.\n\n
+The button of displacement of the form is placed in the upper right corner. 
+It is a G_IBOX OUTLINED, CROSSED and TOUCHEXIT of the extended type B_MOVE(17).\n\n
+The button 'Confirm' will be the default button. We also give him the type 
+B_UNDER so that it has a keyboard equivalent by underlined character and 
+that it is drawn in 3D. 'Cancel' must be activated by the key [Undo], thus 
+let us give him extended type B_UNDO(31), and affect to it also an underlined 
+character. We also place a 'Help' button which will be activated by the key 
+[Help], in the form of a G_BOXTEXT OUTLINED, SHADOWED with small text, of type 
+B_HELP(21), and the number of the help form associated in the extended ob_state 
+of the button.\n\n
+So that the form has a 3D aspect, we activate the BackGround bit (bit 10 of 
+ob_flags) of the title string, of the two B_FRAMEs, of the popup text, of the
+editables and of the two exit buttons.
+
+@par The two popup forms
+We then find the two text pop-up forms used by the demonstration. The options 
+are of G_STRINGs of which some are DISABLED. We make them precede by two spaces 
+to reserve the place of the check-mark.\n\n
+The whole surface of the root box must be covered. This box is SHADOWED, always 
+to respect the standards. It is forbidden to place a B_FNCP in pop-up. The first 
+of these pop-ups is obviously too high (with its 60 options) to be displayed on 
+the screen. It will be displayed either of pop-list (on request), or in 
+scroll-menu (automatically).
+
+@par The information box
+The information box has two B_HELP buttons. The first in the order of 
+classification ('Contact') will be activated by the [Help] key, but not the 
+second, whom it will imperatively be necessary to click it with the mouse. But 
+it will be managed internally by BIG like a help, without intervention of the 
+program itself. The image is adapted to high-resolution mode and will be deformed 
+when in color mode, but this is not too bad for the demonstration. I did not want 
+to complicate the things.
+
+@par The Help form
+The following form is a help. We find a B_GRASTR, several B_FRAMEs (these two 
+types of objects having the Background bit set for the 3D), and an exit button 
+whose presence is mandatory with the attributes EXIT, SELECTABLE and DEFAULT.
+
+@par The small form in a window
+We arrive at the small form in window. The buttons 'Confirm' and 'Cancel' must 
+close the window. For that matter we must position the bit 12 of the ob_flags 
+(named WFCLOSE). The buttons 'Apply' and 'Reset' will be respectively activated 
+by the [Return] and [Undo] keys, but without closing the window. You can make 
+the experiment of remove the closing bit closing of the first two and place them 
+in the others two. This form has moreover two pop-ups boxes which make it possible 
+to choose the pattern and the color to be assigned to the desk, as well as four 
+editable fields, including two extended and two with small size characters.
+This form being intended to be drawn in 3D, we position the BackGround bit of 
+the objects when that is necessary (the editables, the buttons and the title).
+We also position the bit 15 of the ob_flags (NOTOP) in the root-object 
+so that this form can be handled even when its window is not in foreground.
+
+@par The large form
+The large form does not present anything new, some of its B_CHECKB and B_ROUNDB 
+have the text on the left button, others contrary. They 
+have all the bit DcDefault. Bit NOTOP of the root is positioned, for the same reasons as for the small form in window.
+
+@par The Menu of Window
+The following tree is the menu of window. In the resource editor, we create it like 
+an ordinary menu. BIG will take care of "windowing" it. We just have to remove 
+all the entries reserved for accessories. The 'Infos' option is a B_FNCP. The 
+Icons option of the Alert menu is a B_HIERM.
+
+@par The Hierarchical menu
+Now we look at the hierarchical menu of the top menu. It is created like an ordinary 
+pop-up, but one can place any type of object there. In the case of the demonstration, 
+the first 2 options are of type B_FNCP, but not the third.
+
+
+@par The Image popup
+We arrive at the pop-up image. It consists of G_IMAGEs. Same remarks that for the 
+text popups apply here.
+
+@par The Context popup
+The following tree is the context popup, in any point similar to a text popup 
+called by a button in a form, but it can have of B_FNCPs (this is the case in 
+the demonstration).
+
+@par The Help forms
+The help form 'CONTACT' has a characteristic: apparently it does not have 
+an exit button. However, we saw that it is obligatory! In fact, a G_IBOX 
+SELECTABLE EXIT DEFAULT without frame recover all the surface of the form. 
+Thus, it is not seen but it is there and one can click anywhere to exit the form.
+\n\n
+Another Help form comes then.
+
+@par The hierarchical menu in a window
+The following form is a hierarchical menu in a window. Only the first two options 
+are normal, the others being of type B_FNCPs.
+
+@par The Thanks form
+Then we find the thanks form, which is built on the same model as that of 
+the contact.
+
+@par The toolbar of the text window 
+We discover now the text window toolbar. Such form is built like any other, with 
+keyboard shortcuts, the popup, etc. The objects EXIT or TOUCHEXIT, as well as the 
+editable fields are banished. Here we also envisage the 3D aspect when working 
+in color mode (set the BackGround bit where it is necessary), and NOTOP bit on the 
+root-object so that the toolbar can be handled when the window is in background.
+\n\n
+We now have the two popups forms called by the toolbar. The first one is for the 
+character sizes, the second for the fonts. This one consists of 41 G_STRINGs, of 
+which only the first one is currently active. It is the System font, used by default. 
+The other strings are DISABLED for now, and contain provisional filling texts. 
+The demonstration will have to replace them by the names of the charged fonts, and 
+activate them.
+
+@par The popup boxe forms
+We find the two forms of the popup boxes for the small form in a window. They are 
+only made up of G_BOXs TOUCHEXIT. The first represents the choice of the frame, 
+the following the choice of the color.
+
+@par The free strings
+After the forms come the free strings. The first one is in fact an alert. It can 
+be made up of 5 lines of 31 characters each (the first being generally a space 
+for aesthetics reasons there remain 30 about it), and of 3 buttons of 20 characters 
+each. 9 drawings are at your disposal for the icons (See the description of the 
+function big_alert() in the form management group of the functions).
+\n\n
+The following alert is the one which is displayed by the hierarchical menu in 
+the window with each time a different icon, and the third is the one called by 
+the 'Alert' button of the main form.
+\n\n
+The following strings are in the order: the window titles for Small form and 
+Large form, the texts of object selector "load text" and "load image", the titles 
+of the corresponding two windows, the title of window with menu, the title of the 
+histograms window and its line of information. 
+\n\n
+Then we find then the string which will be used when the demonstration is 
+launched out as an accessory: the one which will appear in the menu, then 
+the one which will be used as the title of the main window opened in the event 
+of operation as a desktop accessory. 
+\n\n
+It is recommended, especially under BIG, to place \b all texts used by the 
+application in the resource. First reason: it is pure GEM. Second reason: 
+in the case of an external resource, that makes easier the modification 
+(for translation or for change of keyboard shortcuts for example) since it 
+is not necessary to recompile the source. Moreover, (especially if it 
+resource is integrated), that allow a uniform way to treat these strings.
+\n\n
+The following free strings are the texts of the various bubble-help 
+used by the demonstration.
+
+@par Free images
+Finally, the last two objects of the resource are two free images: those 
+which will be used for the drawing of the iconified windows. An image for 
+the windows of the type form, an image for the others.
+
+We now have looked at all the resource of the demonstration. As you have seen, 
+many things appear in it, not only the aspect of the forms and 
+objects, but also a good part of the structure of the program, thanks to 
+the pointers on functions and to the popups and associated help.
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+@section source_code The Source code description
+I have tried to carry out a complete demonstration, presenting the programming of 
+all the important aspects of BIG. Thus, certain function references are done by 
+B_FNCP and others not, in order to show how to deal with BIG events and other points. 
+For a normal program, certain parts would have been treated in a way even simpler. 
+This demonstration, as its name indicates it, is a demonstration not only of what 
+type of interface can be done with BIG, but also how to program all the details 
+with BIG. The source could have been even shorter!
+
+I once again recommend that you take the time to study it thoroughly, practically 
+all the techniques of development under BIG are described.
+
+The first line "#include <big.h>" is particularly important, it is it which opens the 
+gate to BIG. You will note that the demonstration uses only five global variables. 
+Three are necessary for the management of the SpeedoGDOS fonts, which has nothing 
+to do with the interface itself (I acknowledge to have included this management 
+with the demonstration to make me small pleasure). The two other variables are used 
+by the desk image. 
+
+The programming of interface under BIG normally does not require any global variables
+other than those which are defined by BIG.H.
+
+Then, we tell the compiler that we work with an external resource, by means of the
+definition INTGR. Follow then instructions intended for the preprocessor so that 
+the program is correctly compiled. You can make the experiment recompile the 
+demonstration by replacing 0 by 1 in the line "#define INTGR 0", it will function 
+from now on with a integrated resource without another modification.
+
+We define the maximum number of windows with which we will work (7) and, for 
+convenience, we define a name for each of them.
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+@subsection source_code_main The Main function
+The first call of the program is to the function initial(). Under BIG, one \b always 
+needs to start with this call. With this simple line, we load the external resource, 
+we create and set up the USERDEFs objects, the table of the windows structures, the
+table of the function pointers, we impose the desk of the application and its menu, 
+and we initialize the main global variables, as well as certain elements of the 
+windows structures to default values. If the resource is integrated, the coordinates 
+and dimensions of the objects are adapted to the current resolution, if the application 
+is run as an accessory it is declared with GEM and its title placed in the menu.
+
+The function set_bimg() is then called so that the image of desktop is loaded and displayed. We will get back to that latter.
+
+The function ptr_fonctions() creates the links between the objects having a 
+function pointer and the corresponding functions. The demonstration uses 22 
+B_FNCPs objects. For example, the line fnc[0] = (void *) aff_infos;
+connect the 'Infos' option of the main menu (which is first B_FNCP object in
+the resource) with the function aff_infos(). The following lines perform the same 
+action for each of the B_FNCP. You will notice that it is absolutely necessary to 
+treat the objects in the order where they are in the resource (read again the 
+paragraph @ref prog_button). It is necessary of course that the different  
+functions were correctly prototyped. They should be called in this order, because 
+the initial() function places the table index in the high byte of the ob_state 
+of each B_FNCP. I remind that this imply that there cannot be more than 256 
+function pointers by application. This limit is rather broad and should not 
+create particular problems.
+
+You will also note that the same function can be affected to different objects. 
+The function aff_infos() is also connected to the element 5 of the table.
+
+The function set_form() sets up the links between the objects of type 
+popup, hierarchical pop-list, menus and Help with their associated forms. 
+It does in the same thing for the help-bubbles: the objects which have some 
+are connected to the corresponding free string. We could have carried out the 
+same thing directly in the resource, while placing the correct values in the 
+high order byte of the ob_state for each one of these objects. 
+But that would have been more tedious to make, and especially, insertion 
+later of other trees or strings in the resource would have shifted all the positions, 
+and thus the values! Therefore it would have been necessary to modify all the values
+again in the resource. By using the names given to the objects in the resource, 
+we work with much more comfort and reliability.
+
+We then meet the loading of vectorial SpeedoGDOS fonts. 
+After a test of the presence of Speedo, we ask it to load 
+all fonts available. A loop then enables us to recover the name of each one of them
+and to place it in the popup form who is intended to display them (without forgetting 
+to activate the options who were DISABLED). We also initialize with default values 
+the variables of the fonts management.
+
+Normally, it would also be necessary to do a shortening of the popup form. Indeed, 
+it has 40 entries reserved for the vectorial fonts, which will undoubtedly be too 
+many in the majority of the cases. We should thus hide (HIDETREE) the options in 
+excess, position the LASTOB bit of the "new last object", the element ob_next of 
+this object as well as the element ob_tail of the root. As in all this demonstration, 
+I have preferred to remain simple.
+
+If we work in a 16 colors (or more) mode, we carry out the function relief(), 
+which modifies the pattern and the color of the root-objects of the trees 
+concerned (will get back to that in detail).
+
+We place in the variable "aide_en_ligne" the value corresponding to the 
+[Control] key, so that it activates the display of the help-bubbles.
+
+We can now approach the main loop of the program, everything is already ready! 
+It is a large do {..} while loop. If we are running as an accessory, and that 
+this one is not active, we use a secondary loop (in the function 
+acc_loop()), which waits until the accessory is called. The most important line 
+of the main loop is:
+@code
+	evnt = dialog (DLG_DESK, adr_desk, TRUE, TRUE, PU_LIBRE, &img, FALSE);
+@endcode
+
+This call to the function dialog() carries out a lot of things. Let us examine 
+the transmitted parameters:
+- DLG_DESK It is a bit mask defined by BIG2.H. It indicates the 
+events to be supervised: the keyboard (for the management of the keyboard shortcuts 
+and the windows that can be handled with the keyboard), the mouse clicks (for the 
+icon and the texts of the desk as well as for the forms, toolbar and menus in window), 
+the area where the mouse is located (for changing its shape in the windows), 
+the messages (for the menu and the windows), and the timer (to be able to take back 
+"the hand" for the hierarchical menus, the processing of the palette, the management 
+of the right-click and the help-bubbles.
+
+- adr_desk is the address of the form to be treated, the desk in this case.
+
+- TRUE This flag announces to the function that we work on a desk. The function 
+reacts in a little different way for a desk compared to a fixed form. It returns
+to the main program all the click events which occur on the "bottom", so that the 
+programmer can create an desk corresponding to the needs for his application.
+
+- TRUE a click on the right button of the mouse must call a context popup.
+
+- PU_LIBRE It is the tree number (in the resource) of the context popup form.
+
+- &img not utilized in the case of the desk, it would be a pointer on the 
+MFDB describing the background of the form.
+
+- Also not utilized FALSE here (must be FALSE), it is the flag of 
+displacement of the form.
+.
+The function treats then the events received in return, by calling each time 
+the corresponding function. 
+It starts with MU_MESAG events (function event_mesag()). The first treated type 
+is MN_SELECTED, event of menu. Only three options are processed here: 'Big Alert', 
+'Quit' and 'Menu window'). The others being of B_FNCPs type, BIG does what is 
+necessary so that the corresponding function is executed automatically. I advise 
+that you never handle the 'Quit' option with a function pointer, but to return to 
+the main loop to leave. It is more readable and more logical.
+
+Then the events of hierarchical menu of the top menu are treated, which are of 
+a type specific to BIG. Since in the demonstration, there is only one option of 
+this hierarchical menu which is not a B_FNCP, there are not many tests to make. 
+If not, it would obviously be necessary to look which option it is.
+
+We supervise then, for the case where we would running as an accessory, the 
+message AC_CLOSE, which occurs when the accessory is closed by an external 
+intervention, generally because we launched or left another application while 
+the accessory is open (this never happen under MultiTOS). In the same situation 
+(work as an accessory), we must also note that the accessory is closed if 
+the user closes its main window, which is made by the appropriate test. 
+
+Let us go back to main(). We then treat the MU_BUTTON events. But as several 
+types of BIG events are containing MU_BUTTON, it is necessary to detail. 
+We start with the events for the context popup (BEV_FREEPU). 
+Only the options 'Big alert' and 'Menu Window' are to be examined, as the 
+others are of type of B_FNCPs.
+
+We examine then the MU_BUTTON/BEV_WFORM, i.e. the forms in window. If a click took 
+place in one of these forms, the message arrives here. We separately treat the 
+small and the large form in window, by looking only at the EXIT buttons, the 
+others (popup, selectable, radio-buttons, etc.) being managed by the call of the 
+dialog() function.
+
+We do not have many things to do. If the button is 'Confirm' or 'Apply', we release 
+the backup memory for the state of the form, and we record the new state. 
+In the case of 'Confirm', dialog() has already done what is necessary so that 
+the window is closed (since this button has its bit 13 positioned in the ob_flags). 
+We must also call the demonstration function objets_desk() (for the large form) or 
+trame_desk() (for the small one). If the button is 'Cancel' or 'Reset', we restore 
+the former state, the memory is automatically released. Same apply to the closing 
+of the window and the 'Cancel' button. For the 'Reset' button, we request a redraw 
+of the window contents to bring up to date the restoration of the state.
+
+We treat then the MU_BUTTON/BEV_WMENU events, and the events of menu in window: 
+- First case: it is about the window with a "normal" menu. The menu option 'Infos' 
+is a B_FNCP, we do nothing for it. For the others, we treat the operation. 
+For alert, you will notice that the check-mark is placed in this menu with 
+the GEM function menu_icheck() as if it were about a normal menu.
+- Second case: it is about the window with menu which is the main window 
+of the demonstration during an operation as an accessory. In this case, the 
+top menu is in this window. We proceed in the same way, by taking care only of the 
+options which are not of B_FNCPs.
+.
+We examine then the MU_BUTTON/BEV_WHIER events, the events of hierarchical 
+menu for the menu in window. Here again, it can be for the window with ordinary 
+menu or the one of the accessory. In the first cases, only the first two options 
+are to be treated, the others being of type B_FNCPs. We just call the function 
+icone() after having placed in word 6 of the buffer what it expects to find there: 
+the number of the clicked option. In the other case, only the option of histograms 
+is to be treated.
+
+Then, we deal with the events of type BEV_TOOL, the clicks on objects of a 
+toolbar. In the demonstration, we must only act in the case of a choice for a font 
+or for size of characters, and call a function which modifies the corresponding 
+global variables. Then, and even if this is for other objects, we redraw the 
+contents of the window. Normally, we should carry out the redraw only if one 
+parameter has actually changed. It is not the case in the demonstration.
+
+It remains to treat the mouse clicks directly on the desk. I will not describe 
+in detail this part which does not present any difficulty (by precaution, we 
+check that there is no window at the place of the click). The manner of treating 
+the desk strongly depends on the application. In the demonstration I was satisfied 
+to create something of very general.
+
+The only requirement, it is that the objects of the desk do not have an ob_flags 
+EXIT or TOUCHEXIT or another thing (except possibly LASTOB). If not, the
+dialog() function would try to treat them its own way. In fact, it works in 
+the following way: if the click takes place in the working area of a window, it 
+is treated by dialog(). if it takes place on one of the elements of the window 
+(resizing button for example), it is ignored (the GEM will generate a MU_MESAG 
+which will be treated separately). If it takes place on one of the objects of 
+the form whose dialog() received the address as a parameter, it tries to manage it 
+according to the flags of this object. Lastly, it returns the event to the program.
+
+For an desk, which requires a particular management each time, we want that 
+dialog() announces us simply the click without going anything, so that we decide 
+what must be carried out. In the demonstration, if the icon was EXIT and SELECTABLE, 
+dialog() would select it and deselect it with each click on the icon, but could 
+neither move it nor deselect it in case of a click "in the vacuum". Proceeding like 
+this, we must make the things "manually", but we can do what we want.
+
+The end of the do {...} while loop tests the variable "quit", which is set to 
+TRUE if the output of the program is required. If Speedo fonts were loaded, they 
+are released. Then the function end() is called.
+
+This function releases the various storage areas which were reserved (for the 
+window structures, the userdefs, the function pointers, the extended editable, 
+the screen buffer, the default pallet, and even the image buffer of the desk), 
+it closes all the windows (at least those which belong to our application), it 
+releases the resource if it is external, removes the menu and restores the GEM 
+desktop.
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+
+@subsection source_code_desk_img Display image on the desk
+The function set_bimg() Load the image of desktop and display it. 
+The operation is carried out very simply by a call to the function 
+img_attach() that belongs to the image processing library: BIG_IMGS. 
+This function is given the responsibility to determine the type of image, 
+to check the existence of the file and to load it. The various elements of 
+the bimg variable (of type t_image_dial) are filled with the values which 
+are appropriate. The image is automatically centered.
+
+Once all that is done, the object-image is made visible and one 
+message of redraw is sent to the desk so that this new object is displayed.
+
+Look at the the description of the BIG_IMGS functions for more details.
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+
+@subsection source_code_form_mngt Forms Management
+We arrive at the function which manages the free form of the demonstration. 
+We must declare a MFDB which will describe the background of the form. It will 
+be used only if we ask for a displacement of the form as a phantom box (or if 
+there is not enough memory to carry it out in real-time). We block the AES with 
+wind_update(), we ask for the address of the form (preprocessor instructions and 
+definition of INTGR at the beginning of the source tells to the compiler if we 
+work with an integrated resource or not), and we back up his state in the area 
+indicated by the pointer "adr_bakrsc" by means of the function bak_rsc(). 
+The pattern and fill color of editable field are modified if we are running in 
+16 colors or more.
+
+We can finally ask for the display by formm_draw(). We specify with this function 
+the address of the form, the editable field where the cursor must be placed 
+at the beginning, that we wish a displacement in real-time, and what is the 
+address of the backup MFDB for the background if it were necessary to carry out 
+a displacement as a phantom box for lack of memory. The various initializations, 
+reservation of memory, backups of images, and calculations are carried out by 
+the function.
+
+We can then enter the processing loop, again based on dialog(). In this case, 
+the events to be supervised are fewer than for the desk. Only the keyboard (for 
+the editable), clicks (for the various objects) and like always, the timer, to 
+keep the hand. dialog() deals with everything (pop-ups, help, displacement, 
+pointers on function, editable (extended or not), management of the cursor, etc.
+We have just to take care of the exit. If 'Confirm' were chosen, there is nothing 
+to make. If it is 'Cancel', we restore the former state of form.
+
+We then just have to remove the form from the screen. formm_undraw() takes care of 
+this, and releases the storage areas reserved by formm_draw(). On the other hand, 
+have the responsibility to release the state memory of the form.
+
+The function aff_infos() is almost identical. It has just an additional test 
+at the beginning: if the infos were required starting from the window menu, it is 
+necessary to reverse the title of corresponding menu. As there is neither a 
+'Cancel' button, nor a dialog with the user, it is useless to manage 
+the state of the form. Displacement being requested as a phantom box, the MFDB 
+pointer takes all its importance here.
+
+The function test_alerte() is the one which is called by 'Alert' button of the 
+free form. It carries out a simple call to big_alert().
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+
+@subsection source_code_form_win Forms in Windows
+The call of forms in window is even simpler than the one of blocking forms 
+(which block the menu, windows, etc).
+Let us begin with the function pform_wind(), which displays the small form. 
+As usual, we ask for the address of the tree (resource integrated or not), we 
+adapt the color and the pattern as necessary for the 3D, and we reverse the 
+title of menu. We affect then the current pattern and the color of the desk to 
+the popups boxes of the form so that they are the reflection of the situation. 
+We have just to open the window by formw_draw() and to reverse the menu title. 
+
+To formw_draw() we pass the address of the form, BIG Index of the window to be 
+opened (which was declared by initial()), the number (in the resource) of the 
+free string which must be the window title, the number of the string for the 
+line of infos (as it does not have one in this case, we transmit BLANK, i.e. "-1"), 
+the number of editable where must be the cursor at the opening of the window, 
+the flag to indicate that the form must be positioned on multiples of 16, since 
+it contains patterns, the attributes which the window must have (We use a BIG 
+constant here: only NAME, CLOSER, MOVER and SMALLER are active), and finally a 
+pointer on the function which will be used to redraw the content of the window 
+when it is iconified (when it is not, the form is drawn automatically when 
+necessary).
+
+The opening of the window of the large form is done by the function 
+gform_wind(). It is even simpler, since we do not have to test the pattern.
+
+I will not describe the functions trame_desk() and objets_desk() which are called 
+by main() if a button 'Confirm' or 'Apply' is clicked, respectively in the window 
+of small and the large form. These windows being open, it is the main loop of the 
+program (the one of of main()) which manages all that occurs there, 
+thanks to the dialog() function.
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+
+@subsection source_code_text_win The Text window
+The function charge_texte() opens the text window. I will not go into the details. 
+This function is not a "model of the genre", but it is sufficient for the 
+demonstration. What is important, it is that it loads the text in a storage area, 
+which must thus be released at one time or another. In a real program, I will have 
+chosen to release it only at the time to leave or by an option 'Quit'. In the 
+demonstration, this area must be released with each closing of the window. The 
+BigWind structure of this window must thus have as  "w_close" parameter
+the address of a function which will take care of that in addition to closing 
+the window.
+
+It is also necessary to place in "w_redraw" the address of the function which 
+will display the text itself. The most important is thus the call to open_window(). 
+The lines which precede this call load the text (note the use of the function 
+selector()) and count the number of lines. We also ask to the VDI the dimensions 
+of the characters cell for the current font (the system font of size 13 is used 
+by default).
+
+We call open_window() specifying the index of the window to be opened, its BIG 
+type (WTYP_NORM), its GEM attributes (WATR_CURR: everything except the line of 
+infos), the starting coordinates, its minimum dimensions, the shift units (size 
+of a cell), a flag to indicate that the window can be handled with the keyboard, 
+no positioning on the multiples of 16, and the shape of the mouse pointer in the 
+working area. Then comes the pointers on display functions (iconified and normal) 
+and of closing of the window, pointers on the strings of title and infos (the second 
+is empty), the total width and height of the window (in pixels). we have to "cast"
+the parameters to make sure they are interpreted of type long. Lastly, are 
+transmitted a flag FALSE announcing that the window does not have a menu, 
+another TRUE to indicate the presence of a toolbar and the number of tree 
+of this toolbar.
+
+Thats alot of parameters, but it is all that there is to do. From now, we do not 
+have to worry any more about this window. It will be moved, redrawn, iconified, 
+its contents will scroll without any intervention of our program (even in the case 
+of the most recent versions of GEM, which authorizes the handling of the background 
+windows). The display function (aff_texte() in the demonstration) will be called 
+automatically when that is necessary (I let to you examine this function, which is 
+not either a model, and which is imperfect in particular with regard to the 
+processing of the proportional fonts), just as winicn() if the window is iconified. 
+If there is no more window available in the tables of GEM, the alert of the 
+BIG integrated resource will be displayed to announce it to the user.
+
+As for the function close_txt(), it calls closed() (which closes the window 
+and modifies the element w_hg) and releases the text memory. As closed() seeks 
+in buf[3] the GEM handle of the window, we place it there "artificially" before 
+the call.
+
+We already mentioned the function set_font(). It is called when a font or a 
+size of character has been chosen in the toolbar. It just have to modify the 
+corresponding global variables, which will be then used by the display function 
+of the text. Note that the size is read directly in the popup button of the 
+toolbar. Thus, if you want that the demonstration is able to display other sizes, 
+it is enough to add them in the corresponding popup form, without the 
+need to recompile the demonstration!
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+
+@subsection source_code_image_win The Image window
+The function charge_image() resembles that of the text. It is a little more 
+complex due to the fact that it can be called to open the window normal image, 
+or starting from the window with menu, the image then having to be placed in 
+this one. There are thus several tests for that.
+The image is charged in an storage area, and the element w_cont.w_img of the 
+structure of corresponding window must be filled with the image characteristics. 
+In the same way for the élément.w_pal with the palette of this image.
+
+The call to open_window() is almost the same one as for the text. The BIG Type of 
+the window implies that BIG will take care of all the displays necessary. We 
+thus transmit one ZERO like redraw function. The variables "ftool", "fmenu" and 
+"menu" contain respectively FALSE, FALSE and BLANK in the case of the image 
+window, and contain FALSE, TRUE and the number of the menu in the case of the 
+window with menu.
+
+The redraw of the image is made starting from the contained informations in 
+w_cont.w_img.w_blk. If there is not, it is that the image was not charged yet. 
+BIG then traces a white rectangle in the window to empty it.
+The function of closing of window is not the same one according to the window, 
+since the memory of the menu must be released if it is the window with menu 
+which is closed. The function close_img() works like its counterpart of the 
+text, but must moreover release the memory of the palette. As for close_wmenu(), 
+it makes in the same way with in more the release of the memory of menu.
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+
+@subsection source_code_graph_win The Graphic window
+The window of histograms is creates and open by the function cree_histo(). 
+An storage area for the data is reserved, then random values drawn for the 
+histograms and are placed in this zone. The opening of the window is made 
+as we already saw.
+
+The function aff_histo() should not require particular explanation. 
+close_histo() makes does like for image and text, it releases the memory 
+reserved for the data.
+
+The function close_wmenu() close the window with menu by releasing the 
+storage areas reserved for the image and the palette.
+Another function, icones() recovers in buf[6] the option clicked (or called 
+by keyboard equivalent) in the hierarchical menu of the menu in window, and 
+chosen the icon of alert according to this option.
+
+The function winicn() is charged of the redraw of windows when they are iconified. 
+It has only to empty the window and to center an image or another there, according 
+to whether it is a form window or another type. 
+The images come from the resource and can thus easily be modified.
+
+The function clos_acc() is called in the event of message AC_CLOSE, for closing 
+the main window of the accessory or if one clicks the option to leave accessory 
+(form in window). It returns the original coordinates of all the windows when 
+they were iconified, and close the windows from the point of view of BIG, but NOT 
+from the point of view of GEM. See the chapter Programming of accessories to know why.
+
+Another function, acc_loop() is used if one run the program as an accessory. It 
+simply awaits on behalf of GEM message AC_OPEN announcing that the accessory was 
+called. It opens the main window of the accessory while placing the menu of the 
+application there, and returns to the main loop.
+
+The function red_acc() is a false function, it is empty! During the operation 
+of the demonstration as a desktop accessory, the function open_window() awaits 
+the address of a function charged to redraw this window. It is thus necessary 
+to provide it one, but there is nothing to redraw, since even the background 
+pattern of the window is drawn by BIG. Therefore, we indicate a function to 
+it which does not do anything strictly.
+
+Last function, relief() is called at the beginning of the program when running 
+with 16 colors or more, so that the pattern and colors of certain objects and 
+root_boxes are modified for the effect of 3D.
+
+Still a small remark. When an option of menu is clicked with the mouse, the 
+GEM is responsible to reverse the title of corresponding menu. But 
+when a function is activated by keyboard shortcut, it is not the case. 
+We must do it ourselves. Under BIG, that is not necessary. The title of menu 
+is always reversed whether the option was selected with mouse or with the 
+keyboard,  whether the menu is the top menu or a menu in windows, whether it 
+is a menu option itself or a hierarchical menu. The programmer must only 
+deselect the title by the GEM function menu_tnormal() at the end of the 
+processing.
+
+This program BIG2DEMO.PRG was created with minimum and very simple parameters. 
+For compilation,with Pure C, the only activated options are : "Default int 
+is unsigned" (-K) and "Uses absolute calls" (-P). No option is not activated in 
+the linker. Library BIG2.LIB was compiled with the same options. Thus, BIG 
+practically does not impose constraints of compilation.
+
+It is useful and convenient to work with two libraries. One (BIG2DEBG.LIB) is 
+compiled and linked with debug information (options -Y in the compiler, -L and 
+-G in the linker) and can be used during the development in order to have access 
+to the global variables under debugging. The second (BIG2.LIB) is compiled 
+without this information, for the final compilation of work carried out.
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+@sa 	
+	- @ref prog_multitask
+	- @ref prog_param_func
+	- @ref prog_integrated_rsc
+	- @ref prog_accessory
+	- @ref prog_iconify
+
+@ref big_toc "[return to BIG toc]" @ref source_toc "[return to Source toc]"
+
+<hr>
+@date October 2014
+
+*/

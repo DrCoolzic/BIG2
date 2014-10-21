@@ -1,0 +1,827 @@
+/*! @page page_big_gui GUI elements of a BIG application
+@author Jean Louis-Guerin
+
+@section gui_toc Table of Content
+<div class="TOC">
+	- @ref gui_preface
+	- @ref gui_gui
+	- @ref gui_desk
+	- @ref gui_menu
+		- @ref gui_menu_bar
+		- @ref gui_hier_menu
+		- @ref gui_context_menu
+	- @ref gui_icon
+	- @ref gui_win
+	- @ref gui_win_manip
+		- @ref gui_win_activate
+		- @ref gui_win_move
+		- @ref gui_win_close
+		- @ref gui_win_size
+		- @ref gui_win_scroll
+		- @ref gui_win_icon
+	- @ref gui_form
+	- @ref gui_form_control
+		- @ref gui_pointer
+		- @ref gui_drag
+		- @ref gui_form_move
+		- @ref gui_toolbar
+		- @ref gui_form_editable
+		- @ref gui_button
+			- @ref gui_checkbox
+			- @ref gui_radio
+		- @ref gui_dropdown_list
+		- @ref gui_scroll_list
+		- @ref gui_bubble_help
+.
+</div>
+
+@section gui_preface Preface
+In this chapter we describe in details the different GUI elements available to 
+develop an application with BIG. We will see the possible enhancements of 
+applications developed with BIG compared to standard application developed 
+with GEM. The text provided here can be used as a "skeleton" to describe 
+the GUI of your final application.
+
+As many different terminologies are used to describes the elements of a GUI 
+it is useful to review the terminology used in this document.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@section gui_gui Graphical User Interface
+A graphical user interface (GUI) is a type of interface that allows 
+users to interact with electronic devices through graphical icons and 
+visual indicators such as secondary notation, as opposed to text-based 
+interfaces, typed command labels or text navigation. The actions are 
+performed through direct manipulation of the graphical elements.
+
+Designing the visual composition and behavior of a GUI is an important part of 
+software application programming. Its goal is to enhance the efficiency and ease 
+of use for the underlying logical design of a program, a design discipline known 
+as usability. 
+
+A GUI is composed of Structural and Control elements described below in the 
+context of GEM and BIG library\n
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@section gui_desk Desk
+When starting an application developed with BIG the application desk appears 
+on your screen. The desk is the starting point for everything the
+user do with the application. The application desk cover the totality of 
+the screen.
+@image html desk.jpg
+It typically contains the following elements:
+- The first element is the <b>desk background</b>. The background can
+either be a solid color, or a shaded background with pattern, or
+an image. It is possible to change the the desk background, for example
+at the request of the user, during execution of the program.
+- The desk can also contains one or several optional \b icons. These icons
+can be placed by the application or can be the result of user operations. For
+example an iconified window. These icons are commonly used to open windows
+at user request.
+- Many applications will also have a <b>menu bar</b> located at the top
+of the screen. The menu bar displays one or several heading(s) and each
+of them has its own optional drop-down list, from which user can select 
+options. The menu bar is usually used to start commands but can be
+used for other purpose (e.g. to display program information)
+- One of the most common element found on application desk is the \b window. Windows 
+are used to display information or interact with the user. Several windows 
+(number vary based on the version of TOS) can be opened at the same time by 
+the application or at request of the user.
+- The desk can display \b Forms (also called <b>Dialog boxes</b>). 
+Forms are used to interact with the user. They are commonly used to 
+allow the user to specify information to the program.
+- The desk can also display <b>Alert boxes</b>. Alert boxes are displayed by the 
+program to provide important information to the user. Alert boxes often
+provide selectable options to get feedback choices from the user. For
+example 'Continue' or 'Cancel'
+- Finally the desk will always display a <b>mouse pointer</b> (cursor). The 
+mouse pointer is a small icon. Its shape is selectable and can change in the 
+course of the program depending on the activity or location on the screen. 
+For example the pointer can be changed to a busy bee icon to indicate that 
+the program is working, or it can be changed to an I-bar to indicate an 
+insertion point for text entry. The mouse pointer allow the user to
+interact with the elements of the GUI. For example to select an option, to
+drag an icon, etc.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+@section gui_menu Menus
+Menus allow the user to execute commands by selecting from a list of choices. 
+Menu \b Headings and \b Options are directly selected with the mouse pointer. 
+Keyboard shortcut may also be used to directly select menu options. Menus are 
+convenient because they show what commands are available within the software. 
+This limits the amount of documentation the user need to reads to understand 
+the software. BIG support several types of menu detailed below.
+@note BIG allows the usage of menu bar (flat and hierarchical) in Windows
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+@subsection gui_menu_bar Menu Bar
+@image html menu_bar.jpg
+The menu bar is usually used to start commands but can be used for other 
+purpose (e.g. to display specific information).
+
+A menu bar is displayed horizontally across the top of the application 
+desk and/or along the tops of some windows. 
+The menu bar displays one or several heading(s) and each of them has its 
+own optional drop-down list of options, from which user can select. 
+The list of options are only revealed when the user position the mouse 
+pointer over the menu heading. The heading highlights and the option list 
+unroll under the selected heading. The entry under the mouse pointer are
+displayed in reverse video. The user is able to select an options within the list. 
+Options in dark text are active and available for use. Options in light 
+text are inactive. Inactive options are not available for use at the time 
+you display the menu. When the user clicks elsewhere the content of the 
+menu will disappear. 
+
+The first menu heading (on the far left) of an application menu bar is 
+often labeled \b Desk.
+This menu is divided into two sections. The top section contains 
+entries specific to the application. For example option to display information 
+about the application you are working with.
+The lower section lists active desk accessories. To be active, a desk 
+accessory file must have the extension .ACC and must be on the root 
+directory of drive C (or on a floppy startup disk in drive A) when 
+the computer is switch on.
+
+Most of the commands entries listed under the menu headings can be selected by 
+using keyboard shortcuts. Each command's shortcut is listed to the right of the 
+command name. To initiate the command, just press the key combination 
+indicated. It saves a lot of time if you memorize the shortcuts for 
+the commands you use frequently. It is possible to change the assigned shortcuts
+of a command, or assign a shortcuts to a command that does not have one with a
+resource editor.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_hier_menu Hierarchical Menu
+@image html hier_menu.jpg
+BIG introduces the notion of hierarchical menu (also available in recent version
+of GEM). A Hierarchical menu (sometime referred as a Cascading menu or Sub-menu) 
+allows to display a secondary menu. This secondary menu appears off the left 
+or right side while you are holding the cursor over an option on the primary 
+menu. This menu displays "secondary options" related to the selected "primary option". 
+Menus organized hierarchically, allow navigation through different levels 
+of menu structure. If the list being used for hierarchical menu is higher 
+than the desk, BIG automatically transforms it into a scroll-list
+
+A hierarchical menu entry has a small arrow to remind the user that this option 
+has a hierarchical menu, and it indicates from which side (towards the right side 
+or the left side) the sub-menu will be displayed. When you bring the mouse pointer 
+over the hierarchical menu entry the hierarchical menu is displayed after a short time 
+(approximately half of a second). If you leave the option by the opposite side of
+the sub-menu, or if you move the cursor above or below the sub-menu, it 
+disappears. The menu options of the sub-menu disappears when you click an 
+entry, or if you click outside, or if the cursor of the mouse is moved to another 
+option of the main menu, or if it moves above or below the sub-menu. 
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_context_menu Context Menu
+<div style="float:right">
+@image html free_popup.jpg
+</div>
+BIG introduces the notion of context popup menu. This popup menu is 
+invisible until the user performs a right mouse click. It then appears
+under the mouse pointer.
+
+<div style="clear:both"></div>
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@section gui_icon Icons
+An icon is a small image (bit-mapped graphics) that represents objects 
+such as a command, an iconified window etc. \n
+Icons provides an easy interface to the user. They can be used to execute
+specific program commands. Icons are made more user-friendly by being very 
+distinct from every other icon. Their different representations are often 
+a clear indication of what a command will perform.
+
+Icons may be found on the application desk, in toolbars and in drop-down lists. 
+
+@sa @ref gui_win_icon
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@section gui_win Windows
+Most of a program activity takes place in windows. A window is an area of 
+the application desk that displays information, with its contents 
+being displayed independently from the rest of the screen. Multiple windows 
+(number vary based on version of the TOS) can be open at one time.
+
+It is easy for a user to manipulate a window: 
+- It can be opened and closed by the user (e.g. clicking on an icon, or a 
+menu option) or by the application. A window displayed on the screen is by 
+definition open.
+- It can be moved to any area by dragging it. For example by clicking in 
+the title bar along the tops and keeping the pointing device's button pressed, 
+then moving the pointing device. 
+- A window can be placed in front or behind other windows, 
+- Its size can be adjusted, 
+- Scrollbars can be used to navigate the content within it. 
+
+A GEM window is usually "decorated" with several predefined controls 
+illustrated in the following diagram:
+@image html gem_win.jpg
+<div style="clear:both"></div>
+
+A BIG windows can have any of the GEM predefined controls but 
+can also use new controls as illustrated in the diagram below:
+@image html big_win.jpg
+<div style="clear:both"></div>
+
+Big allows to place the Up/Down and Left/Right slider arrows buttons in the
+bottom right area of the window frame as shown below:
+@image html text_win.jpg
+<div style="clear:both"></div>
+
+@par Title/Mover Bar
+The Title bar is the box displayed on top of the windows. It is used to
+display specific program information and the text appears in the center of  
+the window's move bar. 
+
+@par Information Bar
+The Information bar is used to display specific information pertinent to the 
+application. It is an optional part of the window and is displayed immediately
+below the Title bar.
+
+@image html win_menu.jpg
+
+BIG add the capability to add flat or hierarchical menu bar 
+(see @ref gui_menu) as well as toolbar (see @ref gui_toolbar) in windows.
+@note The menu entries of a menu bar placed in a window are not displayed automatically, 
+at least not continuously. You have to "activate" them by clicking on one of the 
+menu headings.
+This time, the corresponding menu is displayed, and now the whole menu bar works 
+as usual. You can move to the other menu headers, select one option, etc. the 
+desk menu "is blocked" during this time. Choose an option or click outside to 
+deactivate the window menu.
+BIG also deals with the menu keyboard shortcuts. If a window is in the front 
+(window activated), it checks in the menu if an option corresponds to the 
+keyboard shortcut typed. Search is also 
+carried out in the hierarchical menu entries if it there is some.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@section gui_win_manip Manipulating Windows
+
+
+@subsection gui_win_activate Activating a window
+Open windows may overlap. If they do, the active window is always completely 
+displayed. You can identify which window is active by looking at the title/mover 
+bar. Only the active window's move bar is shaded. Activating a partially 
+hidden, inactive window will move it to the front and over the other 
+windows. This can be done by:
+- Positioning the pointer anywhere on the window and clicking the left 
+mouse button.
+- Using the Cycler button. This is especially useful when you have multiple, 
+overlapping and sometimes hidden windows displayed on the desk. When 
+you click on the cycler button this brings the bottom window to the top of 
+the stack and displays it as the active window. The current active window 
+is sent to the bottom of the stack.
+- Using [Control + Tab] keys bring to the front the following window (if there 
+is one), which was in the back
+- A [control-click] on the displacement bar
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_win_move Moving a Window
+You can use the title/mover bar to move a window to any screen position below the 
+desk menu bar. Position the pointer over the shaded mover bar. Use dragging to move 
+the window to a new position on the screen, then release the mouse button. The window displays in its new position. Note that when you dragged the window 
+the mouse pointer shape changes, and an outline of the window followed 
+the movement of the pointer until you released the mouse button.
+
+It is also possible to do a normal click on the displacement bar. The phantom box 
+appears then and follow the cursor. A new click "drops" the window to its new 
+position.
+
+@note BIG windows can be moved outside of the screen, not only to the bottom 
+and to the right as usual with GEM, but also to the left.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_win_close Closing a window
+In the upper left corner of the window there is is a small box containing an "X" 
+icon, this is the \b closer button. Move the pointer over the closer button and click 
+once. The window closes. Note than a window can also be closed automatically
+by the program or by selecting an entry in a menu.
+
+The [Shift + Esc] key combination is equivalent to the window closing button.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_win_size Resizing a window
+<div style="float:right">
+@image html resize.jpg
+</div>
+Resizing windows is especially useful when you want to display more than one 
+window on the desk at one time. This can be done using a Sizer button.
+GEM windows have one sizer button in the lower right corner of the window. BIG 
+windows can have up to 4 sizer buttons in each corner of the windows. To resize
+a window position the pointer over the sizer button and use dragging to move the 
+sizer button. The shape of the mouse pointer is changed and an outline of the window 
+follows the mouse pointer movement. Release the mouse button when the window outline 
+is of the size you want.
+You can also do a normal click on the Sizer button. The phantom box 
+appears then and follow the mouse pointer. A new click "drops" the window with 
+its new size.
+
+You can also use the \b fuller button located on top right corner to expand or
+shrink a window. Clicking on the fuller button will expands a window to fill the 
+entire screen (unless it was already "fulled"). Clicking on the fuller
+button again returns the window to the most recent size and position. The same
+actions can be done by double-clicking on the displacement bar.
+
+The [Esc] key corresponds to the fuller button and the combination 
+[Shift + Esc] to the window closing button.
+<div style="clear both"></div>
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_win_scroll Scrolling windows content
+Sometimes the content of a window will contain more information that can
+be displayed in a window at one time. When this occurs, some of the information
+remain undisplayed, or hidden. You can view the hidden items by using the 
+scroll bars or arrow boxes (up, down, left, right). The scroll bars along 
+the bottom and right edges of the window let you scroll the window horizontally 
+(right and left) or vertically (up and down).
+<div style="float:right">
+@image html scroll.jpg
+</div>
+
+If the display contains more items than will fit in the window, a portion of 
+the scroll bar will be proportionally shaded. The scroll slider shows the 
+current position of the displayed window relative to its total content. If there is 
+grayed area above or below (or left and right) the scroll sizer, more of the content 
+is available by scrolling the window in the direction of the grayed area.
+
+There are three ways to scroll a window: line by line, one window display 
+at a time, or continuous scrolling:
+- To scroll by one line at a time, position the cursor over the scroll arrow 
+that indicates the direction of the hidden contents and click. 
+- To scroll by one window display at a time, position the cursor over the 
+shaded area of the scroll bar and click.
+- Continuous scrolling can be performed in several ways:
+	- To scroll continuously one line at a time, position the cursor 
+	over the scroll arrow that indicates the direction of the hidden contents
+	and hold down the left mouse button.
+	- To scroll entries continuously one window at a time, position the cursor 
+	over the shaded area of the scroll bar. Hold down the left mouse button.
+	- You can also skip over some of a window contents by dragging the scroll 
+	slider box to a new position in the scroll bar. The window will now display the 
+	contents of that portion of the window.
+.
+Another way to accomplish this is by using the up and down (or left and right) 
+arrow keys at the right of the main keyboard. Each time you press an arrow key 
+the content is scrolled one line at a time. Using the [Shift + an Arrow key] is 
+equivalent to a click in the corresponding shaded area of the sliders. In other 
+word each time you press an arrow key in combination with the [Shift] key the 
+content is scrolled one window at a time.
+<div style="clear both"></div>
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_win_icon Iconifying a Window
+<div style="float:right">
+@image html iconification.jpg
+</div>
+Sometimes the screen may get cluttered with windows, and this may harms the ease 
+of use. Closing some of them is not always the good solution, because reopening
+them may takes long times. For example if the program must reload the contents 
+from a file. The most elegant and convenient solution is "the iconification of 
+the windows". A new window button has been created for that matter: the 
+"iconifier" button. When this button is clicked, the window is reduced to a size of 
+72 X 72 pixels icon, and all its other attributes are temporarily canceled, except 
+the title and the displacement bar. Moreover, the title is written in small characters.
+
+BIG Windows can have a Smaller button (it is the first of the 4, on the top 
+right corner of the windows). It represents a small triangular arrow going towards 
+a small square window. And this capability of BIG is active on \b all TOS 
+versions.
+
+To deiconify the window, it is necessary to perform a double-click on the 
+corresponding icon. The application restore the window with its previous position 
+and attributes.
+
+A [Control + click] on the iconifier button of a window will iconify \b all the 
+open windows into a single icon. The reverse operation is done by double-clicking 
+on this iconified window. 
+<div style="clear both"></div>
+
+If the user opens other windows and redo an "all iconification", another icons is 
+created. At the time of a double-click on an iconified window, the windows are 
+restored as before.
+<div style="float:right">
+@image html diff_icons.jpg
+</div>
+@note The iconified windows can be drawn using different images. For example 
+different icons can be used based on the type of window (window is a form or not).
+<div style="clear both"></div>
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@section gui_form Forms (Dialog Boxes) and Alert boxes
+When an application needs to communicate with the user, a \b Form (also known 
+as <b>dialog box</b>) appears on the desk. To respond to a Form, the user type in  
+answers and/or perform actions on the control elements. 
+Then he/she selects one of the dialog buttons. If a dialog button has an enlarged 
+border, it is the default button and can be selected by pressing [Return].
+
+The computer uses <b>alert boxes</b> to bring something to the user attention.
+Alert boxes can contain an icon (e.g. stop signs, question marks, or exclamation 
+points, etc.) and may either caution users about an intended action or tell them 
+that something went wrong. When users see an alert box, they have to follow its 
+instructions, then select the appropriate dialog button.
+
+Some forms ask the user to supply information or make a choice. User can use 
+the keyboard or mouse to make a choice or supply the information needed. 
+An I-bar text insertion cursor indicates where the next typed character 
+will appear on a text field. Some dialog boxes contain more than one field 
+requesting text information. To select a field, position the pointer over that 
+field. Click once. The cursor jumps to that field.
+
+BIG supports three types of forms:
+- GEM-Forms (simply referred as a Forms in this documentation): this type of 
+form is the traditional GEM form i.e. a \b modal window of user input. This 
+means that the Form is displayed to give or request information from the user and 
+that no other interaction can occur between the user and applications until 
+the Form is exited. A normal form consists of a frame encompassing a number of 
+control elements that accept user input.
+- Alert box: Alerts are special dialog boxes which provide information 
+and/or a limited choice of options to the user. Alerts are often used to 
+present an error condition to the user or to inform them of a choice. For
+example an alert box pops up, and the user will have to click 'OK' to proceed. 
+- Window-Forms (referred as window-forms or forms in window in the 
+documentation): this type of form is a \b mode-less window of user input.
+This means that other interaction can occur between the user and the 
+application before the form is exited (closed). 
+Window-Forms are "standard" forms placed within windows and therefore 
+they combine the windows features (i.e. can be moved, resized, iconified,...) 
+and the display/entry capabilities of Forms.
+
+The features of each of the available control elements available for BIG 
+forms are reviewed below.\n 
+For the features of windows refer to the above section @ref gui_win 
+and for control elements of a window refer to @ref gui_win_manip.
+<div style="float:right">
+@image html lform_bottom.jpg
+</div>
+
+A form in a windows is often used to enter parameters to the program.
+It often implies the presence of two new buttons: 'Apply' and 'Reset'. 
+They correspond to the usual 'Confirm' and 'Cancel' buttons, but they
+do not close the window. The form remains displayed. That is extremely practical 
+to modify parameters without having to call back the form each if you 
+do not find immediately the right value for the parameters. The visualization 
+of the effect is immediate, but the "parameter form" remains available 
+for other modifications. If the window is closed by clicking in the closing 
+button in the top left corner, that corresponds to the 'Cancel' button.
+
+BIG takes care automatically of management of these buttons, while 
+recording and by restoring if necessary "the state" of the form.
+<div style="clear both"></div>
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@section gui_form_control Control Elements (Widgets)
+This section describes the control elements (Widgets) available in BIG, 
+that a user interacts with.
+
+
+@subsection gui_pointer Mouse Pointer
+<div style="float:right">
+@image html pointers.jpg
+</div>
+
+Interfaces driven by a computer mouse uses a small icon to show the 
+current position of the mouse pointer. The default mouse pointer is an 
+arrow pointing up and to the left, and is called the "mouse pointer".
+You use the mouse pointer to select icons or menu options, and to move objects 
+on the desk. You control the pointer by moving the mouse.
+BIG allows to automatically change the shape of the mouse pointer when 
+entering a specific window.
+<div style="clear both"></div>
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_drag Draging Elements
+@image html ghost_image.jpg
+
+Holding down the mouse button on an object and moving the pointer is called 
+\b dragging. Dragging allow to move graphical objects (icons, windows...) from 
+one place to another. After you select an object, you can drag the 
+selected object to a new location. Using the mouse to drag is easy. 
+Just move the mouse while holding down the mouse button. Any selected 
+object will be dragged. When you drag object from one location to another, 
+a ghost outline (or optionally a full image) of the selected object follows 
+the cursor from the original location to the destination. The pointer shape 
+also changes until you release the mouse button. 
+When you release the mouse button the object will be dropped at the current 
+position of the mouse. The mouse pointer must be positioned exactly over 
+the selected object for successful dragging.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_form_move Moving a Form
+@image html big_form.jpg
+
+As we have seen in @ref gui_form, BIG support the standard GEM forms.
+We will see later the new widgets that can be used in forms but for now
+lets look at one extra feature. Normal GEM forms are displayed at a fixed
+location. Big add the capability to move the form over the application desk. 
+This can be useful if you need to look, for example, at some information 
+hidden by the form. For that matter it is possible to add a mover button 
+(that has the shape of a folded down corner) in the top right corner of the 
+form. To move the form just click the mover button and drag the form to
+the new position. During drag a ghost (or optionally a real image) of the 
+form is displayed so you can place the form at the exact desired position.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_toolbar Window Toolbar
+A toolbar is a form (usually small) placed on the top of the window and that
+can have on-screen buttons, icons, menus or other input or output elements.
+
+This form is independent of the window work area and is therefore not affected 
+by things like scrolling of information in the work area. The usage of the
+control elements is the same as in a normal form. If the size of the window 
+becomes too small, only the first elements of the toolbar will be displayed.
+It is therefore recommended to place the more important controls on the left
+of the toolbar.
+
+Note that the objects of the toolbar can be handled even when the window is 
+behind.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_form_editable Editable Field
+@image html form_editables.jpg
+Editable fields (also known as text box, text field or text entry field) 
+allow the user to input textual information to be used by the program.
+
+There can be many editables in a Form. BIG support the standard GEM editables 
+but also introduces "extended editables" with many new features. Editables
+often contain a string displayed in front of the entry field to indicate 
+the purpose of the editable. The entry field is usually filled with "_"
+characters to delineate the size of the entry field. The extended editable
+fields have a small arrow at each end of the entry field. Text can be
+displayed using normal or small font. It is possible to use "filtering"
+on an entry field so that user can only enter certain type of characters.
+For example only numbers, or only letters, etc.
+
+The following operation can be performed on editable fields:
+- Enter text using a keyboard: The text appears when pressing keys from the
+keyboard at the position indicated by the cursor (depicted as a vertical bar).
+- Enter text larger than the displayed field: BIG allow to enter more text 
+than what can be displayed in extended editable fields. When reaching the end 
+of the editable field you can continue to type character. The displayed text 
+will be shifted to the left and the new character displayed at the end of the 
+field. When you reach the maximum length of the extended editable the last 
+character will be overwritten.
+- Navigate the text: 
+	- Using the mouse: Change the cursor position by clicking the desired point 
+	with the mouse pointer. Click slightly after the end of the editable field to 
+	set the cursor at the last position. Click slightly before beginning of the 
+	editable field to set the cursor on the first position.
+	- Using the keyboard: 
+		- Pressing left and right arrow keys  change the cursor position by 
+		one character. For extended editable, when the cursor reach the edge 
+		of the field the text is shifted.
+		- Holding the [Shift] key while pressing arrow keys makes the cursor move 
+		to the beginning/end of the field. For extended editable, if the cursor 
+		is already at the beginning/end of the field the text is shifted to 
+		the first/last character of the entire text.
+		- Holding the [Ctrl] key while pressing arrow keys makes the cursor move 
+		to the previous/next word (no shifting done in this case).
+		- For extended editable, clicking and holding down the left mouse button 
+		on the small arrows on the left/right of the editable field causes the 
+		text to be shifted.
+- Edit existing text (changing the text already entered)
+	- If you type characters in the middle of an editable field the characters 
+	on the right will be shifted (insert mode) until the maximum size of the 
+	editable is reached in which case the text will be replaced (replace mode). 
+	- Delete/Backspace keys remove one character right/left of current cursor 
+	position.
+	- [Esc] erase the entire text.
+- Copy / Cut / Paste Text:
+	- [Ctrl + C] allow to copy the entire text of an editable in a buffer. 
+	- [Ctrl + X] allow to copy the entire text of an editable in a buffer and 
+	delete the text from the field.
+	- [Ctrl + V] allow to paste the content of the buffer in the field.
+	.
+	It is possible to copy/cut/paste between any editable field of any form.
+- Moving cursor between editables:
+	- [Shift + up_arrow] or [Clr] bring the cursor to the first field of the form.
+	- [Shift + down_arrow] or [Shift + Clr] bring the cursor to the last field of 
+	the form.
+	- [down_arrow] or [Tab] bring the cursor to the next field of the form.
+	- [up_arrow] or [Shift Tab] bring the cursor to the previous field of 
+	the form.
+
+Some fields contain punctuation marks (e.g. periods ".", slashes "/", etc.) 
+to divide text. To advance past a punctuation mark, type that mark. For 
+example, if you have a field with a period dividing the field, such as 
+the period that separates a file's name from the extension. Type a period 
+to advance to the second part of the field.
+
+Keyboard shortcuts summary:
+- [Left Arrow] - Moves the cursor one character to the left within a field.
+- [Right Arrow] - Moves the cursor one character to the right within the field.
+- [Down Arrow] - Moves the cursor to the next field.
+- [Up Arrow] - Moves the cursor to the previous field.
+- [Shift + Left Arrow] - Moves the cursor to the left of the field.
+- [Shift + Right Arrow] - Moves the cursor to the right of the field.
+- [Shift + Down Arrow] - Moves the cursor to the last field.
+- [Shift + Up Arrow] - Moves the cursor to the first field.
+- [Ctrl + Left Arrow] - Moves the cursor one word to the left within a field.
+- [Ctrl + Right Arrow] - Moves the cursor one word to the right within the field.
+- [Clr] - Moves the cursor to the first entry field.
+- [Shift + Clr] - Moves the cursor to the last entry field.
+- [Tab] - Moves the cursor to the next field.
+- [Shift + Tab] - Moves the cursor to the previous field.
+- [Backspace] - Deletes the character or space to the left of the Cursor.
+- [Delete] - Deletes the character or space to the right of the cursor,
+- [Esc] - Clears the current field.
+- [Ctrl + C] copies text from an entry field into a buffer
+- [Ctrl + X] copies and deletes text from an entry field into a buffer
+- [Ctrl + V] pastes the content of the buffer into an entry field
+- [Return] - Selects the default dialog button, if one is present. 
+A bold border around the button indicates the default button.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_button Selectable Buttons
+A typical button is a rectangle wider than it is tall, with a descriptive caption 
+in its center. The most common method of pressing a button is clicking it with the 
+mouse pointer, but other input such as keystrokes can be used to 
+execute the command of a button. When pressed, in addition to performing a 
+predetermined task, buttons often undergo a graphical change.
+
+Depending on the circumstance, buttons may be designated to be pushed only once 
+and execute a command, while others may be used to receive instant feed back. 
+Other buttons are designed to toggle behavior on and off like a checkbox. 
+These buttons will show a graphical clue to indicate the state of the option.
+
+With BIG a double-click on a button activate the "default" button of a form
+(if there is one).
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsubsection gui_checkbox Checkbox buttons
+@image html checkbox.jpg
+BIG introduces a new type of button called a checkbox button. A checkbox
+allow the user to make multiple selections from a number of options. They
+are shown on the screen as a square box that can contain white space (for false) 
+or a "X" (for true). A caption describing the meaning of the check box is shown 
+adjacent to the check box. Inverting the state of a check box is done by clicking 
+the mouse on the box, or by using a keyboard shortcut.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsubsection gui_radio Radio buttons
+@image html radio.jpg
+A radio button allows the user to choose only one of a predefined set of options. 
+When one of the buttons is "pressed", other buttons would "pop out", leaving the 
+pressed button the only button in the "pushed in" position.
+
+Radio buttons are arranged in groups of two or more and displayed on screen as, 
+for example, a list of circular holes that can contain white space (for 
+unselected)  or a dot (for selected). Adjacent to each radio button is normally 
+shown a caption describing the choice that this radio button represents. When 
+the user selects a radio button, any previously selected radio button in the 
+same group becomes deselected. Selecting a radio button is done by clicking 
+with the mouse pointer on the button, or by using a keyboard shortcut.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_dropdown_list Drop-down list
+BIG handles drop-down lists with several type of objects: text, boxes, or icons.
+@image html drop_details.jpg
+@image html drop.jpg
+
+A drop-down list allows the user to choose one value from a list. When a 
+drop-down list is inactive, it displays a single value inside the button. 
+When activated, it displays (drops down) a list of values, from which the 
+user may select one. 
+When the user selects a new value, the control reverts to its inactive state, 
+displaying the newly selected value.
+
+When you click on a text drop-down list, a list with columns of options is 
+displayed under the button. The display of the list is automatically shifted 
+if there is not enough space for it. The drop-down list is 
+used exactly like a pull-down menu. It can contain several columns of options. 
+If you are running in colors mode (with at least 16 colors), the background of 
+the options changes to yellow when the mouse pointers passes above them.
+
+When you select one entry on the drop-down list its text is copied into the button. 
+If you click again this button: this time, the list is positioned so that the 
+position of the selected option and the corresponding button are placed under the 
+cursor (if there is not enough room, the displayed list is shifted), and this 
+option is already check marked.
+
+There are two other ways of changing the selection of a drop-down button:
+- Perform a [Shift + Click] on the button, or 
+- click on the small "following option" icon (the one with two circular arrows). 
+.
+The option following to current one is selected (to be exact, the first active
+option). When the end of the option list is reached, it starts again from
+the beginning. If the text (or the image) of the button does not correspond to 
+any of the list of options, the first entry is selected.
+
+<div style="clear:both"></div>
+@image html drop_icon.jpg
+BIG allow to use graphical icons in a drop-down list. When you click on a
+graphical drop-down list, a list composed of icons is displayed. 
+If you choose one of them, its drawing content is placed into the button.
+
+<div style="clear:both"></div>
+@image html drop_box.jpg
+With BIG you can also uses "box" drop-down list. When you click on a
+box drop-down list, a list composed of boxes (containing text, colors, or 
+patterns) is displayed. If you choose one of the entry, its graphical content 
+is placed into the button.
+
+<div style="clear:both"></div>
+@image html scrollable_list.jpg
+When a drop-down list contains more options that can be displayed on the screen
+BIG creates automatically a scrollable list. It is a list provided with scroll 
+arrows at the top and the bottom. As soon as the cursor of the mouse is placed 
+over one of these arrows, the options start to scroll in this direction, until 
+the end of the list, without being necessary to click. 
+
+The list is automatically placed under the calling button if there is enough room 
+to display at least four options and the two arrows. If not, it is displayed from 
+the top of the desk. The option which corresponds to the text of the button (if 
+there is one) is "checked", and it is displayed in the first position in the 
+scrollable list (unless it is one in the last entries of the list, in this case it 
+can be shifted).
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_scroll_list Scroll list
+@image html scroll_list.jpg
+
+BIG also provides "Scroll-List". In this case the list displays 8 options 
+and is decorated with a complete slider bar located on his right side. 
+You can click on one of the up or down arrow to move the contents of the 
+option menu in this direction. If you click on a grayed part above or below 
+the slider, 8 options at a time are shifted. Lastly, by clicking the slider 
+box and keeping the mouse button depressed, you can make scroll the contents 
+of the list in real-time. 
+As previously, the option corresponding to the text of the button 
+is checked and it is placed in first position if possible. The scroll-list 
+is placed under the calling button if there is enough place, if not above. 
+If the list associated with this button have less than nine options, 
+it is a "normal" drop-down list which is displayed.
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+
+@subsection gui_bubble_help Bubble help
+@image html bubble_help.jpg
+When bubble help is on, moving the mouse over an item displays help information 
+for that item.\n 
+The name "bubble help" refer to the way the help text is displayed, in "bubbles", 
+like those containing the words in a comic strip.\n
+
+The underlying system is based on resources holding text that appears in the 
+bubble. The bubble graphics is supplied by BIG itself. As the bubbles are 
+implemented entirely as resources, they can be easily customized with a 
+resource editor. BIG automatically display the proper bubble 
+based on the mouse location. It also positioned the bubble using an algorithm 
+designed to keep it from covering the objects being examined. 
+
+@ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
+
+<div style="clear:both"></div>
+<hr>
+
+@author	 Jean Louis-Guerin
+$Date: October 2014$
+
+*/
+

@@ -1,14 +1,43 @@
-/*						>>> Big Is Gem <<<
-				MODULE FONCTIONS DIVERSES
+/*! @file BIG2DIVR.C
+@brief implementation of miscellaneous functions 
+
+@verbatim
+BIG = "BIG Is GEM" - A high level GEM library. 
+Initial Development by Claude ATTARD, Maintenance by Jean LOUIS-GUERIN
+Copyright (c) 1993-2014 Claude ATTARD
+Copyright (c) 2010-2014 Jean LOUIS-GUERIN
+
+website: http://info-coach.fr/atari/software/system/big.php
+forum:   http://www.atari-forum.com/viewtopic.php?f=16&t=27060
+
+The BIG library may be used and distributed without restriction provided that 
+this copyright statement is not removed from the file and that any derivative 
+work contains the original copyright notice and the associated disclaimer.
+
+The BIG library  is free software; you can redistribute it and/or modify  it 
+under the terms of the GNU General Public License as published by the Free 
+Software Foundation; either version 3 of the License, or (at your option) any 
+later version.
+
+The BIG library is distributed in the hope that it will be useful, but WITHOUT 
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+HxCFloppyEmulator; if not, write to the Free Software Foundation, Inc., 51 
+Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+@endverbatim
+
 */
-/****** En-tˆte BIG ***********************************************/
-#include <BIG2.H>
+
+
+#include "BIG2.H"
 #include "BIG2DIVR.H"
-/****** Fonctions diverses ****************************************/
-/* #[ path () Cherche et retourne le chemin de l'application :		*/
-char *path (char *pat)
-{
-int drive;
+
+
+/* #[ path () looks for and return the application path */
+char *path (char *pat) {
+	int drive;
 
 	drive = Dgetdrv ();							/* Lecteur courant */
 	pat[0] = (char) (65 + drive);
@@ -17,13 +46,13 @@ int drive;
 	strcat (pat, "\\");
 	return pat;
 }
-/* #] path () Cherche et retourne le chemin de l'application :		*/ 
-/* #[ exist () Fichier existe :																		*/
-long exist (char *name, int att)
-{
-int err, o, l;
-long length;
-char old[128];
+/* #] path () looks for and return the application path */ 
+
+/* #[ exist () tests if file exist */
+long exist (char *name, int att) {
+	int err, o, l;
+	long length;
+	char old[128];
 
 	if (NOT (att & FA_SUBDIR))						/* Si on cherche un fichier */
 	{
@@ -58,7 +87,8 @@ char old[128];
 		return FALSE;
 	}
 }
-/* #] exist () Fichier existe :																		*/ 
+/* #] exist () tests if file exist */ 
+
 /* #[ set_palette () Impose une palette de couleurs :							*/
 void set_palette (int index)
 {

@@ -1,0 +1,829 @@
+/*! @page page_big_demo BIGdemo guided visit
+@author Claude Attard\n
+Translation by Jean Louis-Guerin
+
+<hr>
+
+@section demo_toc Table of Content
+<div class="TOC">
+	- @ref demo_pres
+	- @ref demo_first_form
+	- @ref demo_complex_form
+	- @ref demo_alert
+	- @ref demo_form
+	- @ref demo_special_window
+	- @ref demo_large_form
+	- @ref demo_hier_menu
+	- @ref demo_image_win
+	- @ref demo_graph_win
+	- @ref demo_win_menu
+	- @ref demo_free_popup
+	- @ref demo_timer
+	- @ref demo_iconification
+	- @ref demo_bubble
+	- @ref demo_end
+	.
+</div>
+
+
+@section demo_pres BIGdemo presentation
+@image html start_demo.jpg
+This program does not perform anything in particular. It is just there 
+to show the possibilities of the BIG functions and how they are used. Do not 
+hesitate to study the source attentively as all the major functions of BIG are 
+presented there (see @ref page_big_source). The demonstration runs in all the 
+resolutions, but it is not adapted to low resolution. The icons will be 
+deformed and certain things will be strange. For example the menu and certain 
+forms which are too large (and which could result in crash). I simply wanted 
+to show that BIG makes it possible to develop for all resolutions, but I did 
+not want to complicate the source of the demonstration.
+
+Now launch BIGdemo: A desk with a frame containing two texts, an icon, and 
+a menu bar with three headings is displayed.
+
+If an image file called "BIG2DEMO.IMG" is located in the same path as 
+the program, this image is loaded and displayed (even if you are running in a 
+color) as the desk background image. The icon and the frame containing the 
+texts can be moved. The icon can be selected by a simple click, and deselected 
+by clicking anywhere outside the icon.
+
+@note In this guided visit, the keyboard keys will be describe between the "[" and "]" 
+characters like [this]. The texts of the buttons, options, forms, etc, will be 
+presented between single quotes, like 'that'.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_first_form A first simple form
+<div style="float:left">
+@image html big_menu.jpg
+</div>
+@image html small_form.jpg
+
+Click the 'BigDemo Info...' option of the 'BIGdemo' heading menu. 
+
+An information form pops up displaying the version number and some information 
+about BIG.
+
+You can move this form on the screen by clicking the mover button in the upper 
+right corner (it has the shape of a folded down corner) an by keeping the button 
+of the mouse depressed. The displacement mode for this form is using a phantom 
+box, i.e. the form disappears for the time of displacement and is replaced by 
+a rectangle with the same dimensions.
+
+Click the button 'Contact' or press the [Help] key. Another form is displayed on 
+top off the first. It gives my address (JLG: note that this address is out of 
+date!) if you wish to contact me or receive the complete sources of BIG. Leave 
+this second form by clicking anywhere inside the form or by pressing the [Return] key.
+
+In the information box, click the button 'Thanks'. A third form appears, presenting 
+few words of thanks to buddies, who helped me to carry out BIG with their advices, 
+their work, their suggestions or their encouragements. As previously, leave this 
+form while clicking anywhere inside or by pressing the [Return] key.
+
+Now leave the information form by clicking the 'Return' button or by pressing 
+the [Return] key. To get to this form, you could also have also used the menu 
+shortcut by pressing the [Control + B] keys. If you replace the string "^B" 
+of the menu option by, for example, "^F", using a resource editor, you can now 
+press the [Control + F] keys to call this same option. Thanks to BIG, it is not 
+necessary to recompile the program so that new keyboard shortcuts can 
+be used!
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_complex_form A more complex form
+<div style="float:left">
+@image html form_menu.jpg
+</div>
+@image html free_form.jpg
+
+Lets us move to the second menu, noted 'Forms'. Click the option 'Movable Form' 
+(or press [Alternate + Control + L] keys). 
+The displayed form is definitely more complex than the first one. Move it around 
+the screen by using the form "mover" button in the upper right corner. 
+This time the form moves "in real-time", i.e. the complete form with all its 
+contents moves following the movements of the mouse instead of the phantom 
+box used in the previous example. The title of this form uses graphical bold 
+and underlined attributes. The form has a "3D" aspect (if you are running on 
+a machine with at least 16 colors).
+
+Under the title two groups of radio buttons appear into two frames called "Frame 1" 
+and "Frame 2". They are displayed as small round buttons with a text either on the 
+right, or on the left. One of the characters in each text is underlined (and in red 
+if you are using color display). If you press the [Alternate] key at the same time 
+as one of these characters, the button acts as if it had been clicked.
+<div style="clear:right"></div>
+
+<div style="float:left">
+@image html drop.jpg
+</div>
+<div style="float:right">
+@image html drop_details.jpg
+</div>
+Lets now look at the shaded "Drop-down" button. 
+
+When you click on it, a drop-down list with two columns of options opens, it is 
+placed under the button. If you had moved the form so that there is not enough space 
+for it on the screen the display of the list would be shifted. The drop-down list can 
+be used exactly like a pull-down menu. It can contain several columns of options. 
+If you are running in colors mode (with at least 16 colors), the bottom of the options 
+changes to yellow when the mouse comes above them.
+
+Select one entry. Its text is copied into the button. Click again this button: 
+this time, the list is positioned so that the position of the selected option and 
+the corresponding button are placed under the cursor (if there is not enough room, 
+the list display is shifted), and this option is already check marked.
+<div style="clear:both"></div>
+
+<div style="float:left">
+@image html drop_icon.jpg
+</div>
+Let’s now click the icon. 
+
+A new list is displayed, but this one is composed of icons. 
+If you choose one of them, its drawing content is placed into the button.
+
+There are two other ways of changing the selection of a drop-down list:
+- Perform a "Shift + click" on the button, or 
+- click on the small "following option" icon (with two circular arrows). 
+
+The option following to current one is selected (to be exact, 
+the first active). When the end of the option list is reached, it starts again from
+the beginning. If the text (or the image) of the button does not correspond to any of 
+the list options, the first entry is selected.
+
+The two checkbox buttons are displayed as a small square with the text of the button 
+on the right or on the left. If the button is selected, a big "X" is displayed in the 
+square. Here also a character is underlined (and eventually red), to announce the 
+presence of a keyboard shortcut.
+<div style="clear:both"></div>
+
+Clicking the 'Alert' button displays a "BIG type" alert form, i.e. an alert form 
+that can also be moved on the screen. However, in this case, it moves as a phantom 
+box. Indeed, displacement in real-time requires to save the entire screen in a buffer. 
+BIG has only one buffer of this type (to limit memory usage) and it is already 
+occupied for the main form. Therefore, the alert form is moved as a phantom box. 
+We will get back in detail on this subject. The interest of this 'Alert' button is 
+that it is linked to a function that displays the alert form by using a "function 
+pointer". When this button is clicked the function is called automatically without 
+the need to carry out a whole series of tests! It is a concept close to object 
+oriented programming which is one of the benefits of BIG. We will talk about this 
+later on!
+
+@image html editable.jpg
+The first of the two editable fields has a small arrow of each side. Type some text 
+in this field, and continue to type after reaching the end of the field. The text 
+is shifted to the left allowing you to continue to enter text! You can enter up to 
+50 characters in this field. In fact, BIG authorizes creation of extended editable 
+having up to 255 characters. If you continue to type after reaching the maximum size, 
+the last character is replaced by the one you just typed. If you type some text in 
+the middle of the field, it is captured in insertion mode, unless the maximum size 
+of the text is reached. In this case, the capture is done in replacement mode.
+
+When clicking anywhere in the field, the cursor is positioned at this place. If 
+one clicks at the extreme right of the field (after the already entered text), it 
+is positioned at the end, and if one clicks at the extreme left, it is positioned at 
+the beginning. The left and right arrow keys can be used to move the cursor. When 
+the cursor has reached the end (or the beginning), the text is shifted. When used 
+with the [Control] key, the arrows keys bring the cursor to the beginning of the 
+preceding or following word (no shifting is done in this case). When used with the 
+[Shift] key, the cursor is brought all the way to the left or all the way to 
+the right of the editable field. If the cursor is already on the first or last 
+position of the field, the text is shifted until the first or last character of the 
+entire text. Lastly, when clicking on the small arrows (on both side), and 
+holding the mouse button down, the text is shifted, even if the cursor was 
+previously into another editable field.
+
+The second editable field is more traditional, but it is using small size characters,
+that the GEM is unable to manage correctly. This editable offers the same enhancement 
+with regard to the displacement of the cursor, except of course the shifting of the 
+text, since it is not an "extended" editable field.
+
+The combinations [Shift + Up_Arrow] or [Clr] bring the cursor on the first field of 
+the form. The combinations [Shift + Down_Arrow] and [Shift + Clr] brings it on the last 
+field (following the classification order of the objects in the resource).
+
+The [Down_Arrow] key and [Tab] bring the cursor on the following field of the form. 
+The [Up_Arrow] key and [Shift + Tab] brings it on the preceding field 
+(following the classification order of the objects in the resource).
+
+Place the cursor on the second editable field, type some characters, and press 
+[Control + C] keys. Bring then the cursor on the other editable and press 
+the [Control + V] keys. The text of second field is copied into a buffer by the first 
+operation, and is pasted by the second. Type a rather long text in this large editable
+field (one with thirty characters for example), copy it with [Control + C] and 
+paste it in the other with [Control + V]. The text being too long, the end is 
+truncated. There is another keyboard shortcut which relates to the editables, 
+it is [Control + X]. The text is also copied to be able to be pasted elsewhere, 
+but it is also removed from the field of origin. This is a "cut" operation. In a 
+program developed with BIG, all the editable fields of the program are eligible 
+for copy, cut, and paste operations even if they are not in the same form.
+
+@image html bot_key.jpg
+The 'Confirm' button is, as usual, activated by the [Return] or [Enter] keys.
+The 'Cancel' button is activated by the [Undo] key, and the 'Help' button 
+by the [Help] key. The keyboard equivalents for these three buttons are handled
+directly by some routines of BIG. It is enough to change the attributes of these 
+buttons in the resource to modify these equivalences. The first two buttons also 
+have a keyboard shortcut indicated by an underlined character (eventually in red), 
+for those which prefer this method.
+
+The 'Help' button calls another centered box which is displayed on top of the first. 
+As for the information form, the management of this call is part of BIG, and is
+fully "automated", without intervention of the main program.
+
+Change some parameters of the form, then confirm. Bring back the same form. 
+Notice that your modifications were recorded. Change them again, but this 
+time hit 'Cancel' and bring again the same form. BIG has restored the 
+previous values. BIG takes care of saving and the restoring the 
+"state" of a form automatically (or almost). 
+
+@image html bubble_help.jpg
+Last experiment with this form: while keeping depressed the [Control] key, 
+move the mouse pointer above the objects in the form. On some object a
+bubble-help is displayed with a short explanatory text. These bubbles are 
+entirely managed by BIG. It is enough, like will see later, to mark an object 
+in a particular way and to place the help text in a free string of the resource.
+That mechanism provides a nice way to display a simplified on line help.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_alert An Alert Box
+@image html alert.jpg
+Click the option 'BIG Alert' of the 'Form' menu. 
+
+The displayed Alert Box can be moved in "real-time" (since this time the save 
+screen buffer is unoccupied), like the form presented earlier 
+(@ref demo_complex_form). A Big alert box works like a standard GEM alert box but 
+can be moved, and offers a choice of more icons.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_form A first small form in window
+<div style="float:left">
+@image html windows_menu.jpg
+</div>
+Lets put aside the 'Quit' option of the 'Forms' menu (we are only starting 
+the visit!) and lets move to the 'Windows' menu. 
+
+The first option, 'Small Form' displays a form in a window. This has a 
+big advantage:  the management of the program is not blocked. For example
+the menus are still active. Try for example to call back the information form.
+Everything works normally ... with one detail: to call this form, you had to 
+do it using the menu option, because the menu keyboard shortcuts do not work 
+anymore. Indeed, this small form in a window contains editable fields. In this 
+case, the input from the keyboard is directed to this form. There is an exception, 
+as in all the rules, the keyboard shortcuts of the selectable buttons with 
+an underlined character work normally, as well as the operations to copy, cut,
+and paste. If this form had radio-buttons with keyboard shortcuts they would 
+also work. Simply, the search for the keyboard shortcuts is not done in the 
+main menu when we are in presence of a form in a window that has one or several 
+editable field(s).
+
+@image html small_form_win.jpg
+In addition, this window has a slightly different aspect from what we are 
+used to. In particular, a strange button is located at the top right 
+corner of the window, resembling to closing parenthesis mark. When several windows 
+are open at the same time, this button makes it possible to move to the next one, 
+even if this one is entirely hidden under the others (and therefore inaccessible). 
+Later we will go into more details about the new buttons of a window. For now
+let’s concentrate on the content of this form.
+
+Two of the four editable fields of this form are "extended entry fields" which 
+authorize the capture of 30 characters, but only 10 of them are visible.
+Two use small font, and the other two use large font. The editable fields  
+of this form use validation filters. The first two ("Field 1" and "Field 2") 
+authorize the capture of any kind of characters. "Field 3" allows only 
+capture of numbers and "Field 4" only spaces, numbers and letters.
+
+This form can be used to change the pattern and the color of the desk. 
+It has two drop-down buttons which uses this time objects of type box
+(and not of type text or the images like previously). Choose a pattern and/or a 
+color and press the [Return] key or click the button 'Apply'. The desktop 
+is modified but the window remains open. Choose another pattern and/or  
+color and click this time the button 'Confirm'. The desktop is again modified 
+but this time the window is closed.
+
+The existence of a form in a window implies the presence of two new buttons: 
+'Apply' and 'Reset'. They correspond to the usual 'Confirm' and 'Cancel', but they
+do not close the window. This is extremely practical 
+to modify parameters without having to call back the form if you 
+do not find immediately the right value for the parameters. The visualization 
+of the effect is immediate, but the form remains available 
+for another modification. If the window is closed by clicking in the closing button
+in the top left corner, this corresponds to the 'Cancel' button.
+
+As previously, BIG manages automatically these buttons, while recording and 
+by restoring if necessary "the state" of the form.
+
+The button 'HELP', which calls a help form, works the same way as 
+the one we have already seen. Bubble-help are also available and can be
+displayed by pressing the [Control] key while walking the mouse over objects
+in the form.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_special_window Special handling of Windows
+<div style="float:right">
+@image html large_form.jpg 
+</div>
+Let’s now click on the 'Large form' option of the 'Windows' menu. 
+
+A new form is displayed in a window but it is too large to fit on the screen. 
+Here we suppose that you do not use a big screen, nor of big virtual screen, 
+like BigScreen or ScreenBlaster for example. The window is therefore equipped 
+with sliders so you can move its content. It can also be moved using the keyboard 
+keys: the four arrow keys are equivalent to a click in the corresponding arrow 
+of the window, and the [Shift + Arrow] are equivalent to a click in the 
+corresponding grayed part of the sliders. The [Esc] key corresponds to the 
+full opening button and the combination [Shift + Esc] to the window closing 
+button. This capability of handling the windows with the keyboard is done by 
+some routines in BIG, but is not necessarily available to all windows. It should 
+be specified during the creation of a window that this kind of management is 
+requested. There is a last keyboard equivalent for the windows: the  
+[Control + Tab] keys bring to the front the following window (if there is one), 
+which was in the back (you can test, if you did not yet closed the small 
+form). This possibility is always active, even if the management of the 
+window by the keyboard was not requested, and even if the form in window 
+contains editables fields.
+
+The management of the window (displacements, scrolling, resizing, 
+etc.) is automatically managed by BIG.
+
+Lets look at the characteristics of this window. It has a resizing
+button in each of its corner, and not only in the bottom right corner
+as usual. Try to test them.  The closing button is as usual in the 
+top left corner, but slightly shifted to the right because of one resizing
+button.
+<div style="clear both"></div>
+There are four buttons on the top right corner: 
+- The first one is used to iconify the window, i.e. "to temporarily deactivate 
+it" by giving it a small size, but without closing it. We will speak about this 
+later.
+- The following, that we already met, is used to "cycle" the active window. 
+Click it, to activate the small form window (if you did not close it
+otherwise or reopen it). A [control-click] on the displacement bar 
+produces the same effect.
+- The third is used to bring the window to its maximum size which is in 
+general the size of the screen (the size of the form in this case). The 
+same result can be obtained by double-clicking on the displacement bar.
+- The last button is another "Sizer", for resizing the window.
+
+Notice that when the window is resized or moved, the shape of the
+mouse pointer changes. It is certainly not very useful, but it is pretty!
+
+At the bottom of the window, on each side, you see two other Sizers. 
+The vertical and horizontal sliders are decorated with a small double 
+arrow (only decorative). When you move them, the mouse also changes of 
+shape.
+
+The handling of windows in BIG is similar to that of windows in GEM. 
+But they have (in addition to the new buttons) extended functionalities. 
+Open simultaneously the small and the large form in windows and place the small 
+form in front. Click then on the displacement bar of the large form. You can 
+move it as if it was in front! You can also resize it, 
+move its sliders, click its arrows or sliders, iconify it, etc. All the buttons 
+are active, as if the window was in the front. The two only restrictions relate 
+to the double-click and the control-click on the displacement bar (respectively 
+"full/restore" sizing and cycling of window). They are active only on the front
+window.
+
+To move or change dimension of a window (in the front or not), it is possible 
+as usual to hold the mouse button depressed and to release it with the new 
+position. But it is also possible to do a normal click on the displacement bar 
+or Sizer. The phantom box appears then, and a new click "drops" the window to 
+its new coordinates. Each one, according to its preferences, will use one or the 
+other method.
+
+There is however a small difference in behavior according to whether you are 
+in a multi-tasking environment or not. In multitasking, to move or to change 
+the size of a window in front, it is mandatory to use the method with two 
+clicks: one to start the operation, another to finish it. For the window not 
+in the front you have the choice. We will get back to the reasons for that in 
+the chapter about working in a multi-tasking environment (@ref prog_multitask).
+
+To bring indeed this window to the front, you will have to click in its working 
+area or to make a [Shift + Click] on one of the edging elements.
+
+When you move or change size of a BIG window, a "phantom image" moves at the same 
+time, following the mouse, showing constantly the modified coordinates. The most 
+external rectangle shows the total window frame. The interior 
+rectangle, which is additionally crossed, shows the coordinates of the work 
+area. Thus, the new position of the window can be selected with precision.
+
+Lastly, BIG windows can be moved outside of the screen, not only to the bottom 
+and to the right as usual with GEM, but also to the left.
+
+After this rapid presentation about windows let’s look in more detail to the large
+form in a window...
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_large_form A large form in window
+This large form does not contain editable fields. Indeed, since this window 
+has sliders and button for changing size, the editable field could be located 
+"outside" the visible part of the window. In this case, its cursor should not 
+be drawn, the input of the text temporarily impossible, etc. The management 
+of the form would be considerably more complex, and the size of the programs 
+would therefore increase consequently.
+
+I thus chose a compromise: It is possible to place editable fields in windowed
+form, but BIG considers that they are <b>always</b> in the visible part. 
+In other words: If you place editable in a form in window, this window <b>should
+not</b> have sliders and <b>should not</b> be re-sizable.
+In counterpart, the search for the keyboard equivalents will also be done 
+in the menu. For example try to press the [Control + B] keys, the information 
+form is displayed.
+
+This form contains three groups of radio-buttons with their keyboard 
+shortcuts, as well as two checkbox buttons, also with their keyboard shortcuts.
+It also includes three drop-down list buttons: two with text, and one with icons 
+and a scroll list with text. Some of these controls allow to change the texts and 
+the icon of the desktop. As in the "Movable Form" a double-click on a radio-button 
+or a selectable button also activate the "default" button of the form.
+
+@image html scrollable_list.jpg
+Let us examine in detail the behavior of the two large list button. The first one, 
+noted 'Drop-down 1', brings a drop-down list made up of only one column of 
+options, but they are too numerous to display them all. In that case BIG creates 
+automatically a scrollable list. It is a list provided with scroll arrows at the 
+top and the bottom. As soon as the cursor of the mouse is placed over one of these 
+arrows, the options start to scroll in this direction, until the end, without it being 
+necessary to click. The list is automatically placed under the calling button 
+if there is enough room to display at least four options and the two arrows. If 
+not, it is displayed from the top of the desk. The option which corresponds to 
+the text of the button (if there is one) is "checked", and it is displayed in the 
+first position in the list (unless it is one in the last entries of the 
+list, in this case it can be shifted).
+
+<div style="clear:both"></div>
+@image html scroll_list.jpg
+The second drop-down button is noted 'Scroll-list'. Click on it. The list which 
+appears (the same one as previously, in fact!) only displays eight options, 
+but it is decorated of a complete slider bar located on his right side. 
+Click on one of the up or down arrow to move the contents of the option menu 
+in this direction. If you click on a grayed part of the slider, eight options
+are shifted at a time. Lastly, by clicking the slider and keeping the mouse button 
+depressed, you can make scroll the contents of the list in real-time. 
+As previously, the option corresponding to the text of the button 
+is checked and it is placed in first position if possible. The list 
+is placed under the calling button if there is enough place, if not above. 
+If the list associated with this button have less than nine options, 
+it is a "normal" drop-down list which is displayed.
+
+For the needs of the demonstration, the buttons 'Drop-down 1' and 'Drop-down 2' 
+allow to change the texts appearing in the box of the desk, and the 
+graphical drop-down list makes it possible to change the icon.
+
+<div style="clear:both"></div>
+@image html lform_bottom.jpg
+The button 'HELP' calls an on line help form. We still find our four buttons 
+'Apply', 'Confirm', 'Reset' and 'Cancel', and the bubble-help, is activated 
+by pressing the [Control] key.
+
+There is still another possibility to handle the forms in windows. 
+Open the small and the large forms in windows, and click on an object of 
+the form of the window which is "behind".  The reaction is the same 
+one as if the window had been in front! On demand, BIG can handle 
+the form in a window whether it is located in the front or behind.
+To put this window in front of the others, it is necessary either to click 
+on the root-object (the background of the form), or to make a [Shift-Click] 
+anywhere inside. So the possibility of making a [Shift-Click] on drop-down lists to 
+activate the following option only works for window in behind, if not it is 
+activated.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_hier_menu A hierarchical menu
+<div style="float:left">
+@image html hier_menu.jpg
+</div>
+We calls "hierarchical menus" the "sub-menus" which can be displayed on the 
+right or on the left of a normal menu when the mouse passes over some 
+options of this menu. BIG provides an automated way of doing this, taking in 
+charge the management of these hierarchical menus, as well as the possible 
+keyboard shortcuts. If the form being used for hierarchical menu is higher 
+than the desk, it is automatically transformed into scroll-menu (this 
+is not the case in the demonstration).
+
+Bring the mouse pointer on the 'Normal window' option of the 'Windows' menu. It
+has a small arrow to remind the user that this option has a hierarchical menu, 
+and it indicates from which side (towards the right side or the left side) the
+sub-menu will be displayed. After a short time of approximately half of a second, 
+the hierarchical menu opens. If you leave the option by the opposite side of
+the sub-menu, or if you move the cursor above or below the sub-menu, it 
+disappears.
+
+The hierarchical menu has three options 'Text...', 'Image...' and 'Histogram...'. 
+Bring the mouse over the sub-menu. It is used like a normal menu. It disappears 
+if you click an option, or if you click outside, or if the cursor of the mouse 
+passes to another option of the main menu, or if it passes above or below 
+the sub-menu. This is necessary in order to prevent that another menu is 
+displayed on top of our hierarchical menu. So <b>it is forbidden</b> to place a 
+hierarchical menu as the first option of a pull-down menu. The routine that looks 
+for keyboard shortcuts in the menu also looks in the sub-menus in order to activate 
+the corresponding option if there is one.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_text_win A Text Window
+@image html text_win.jpg
+Click the option 'Text...' of the sub-menu or press [Control + T]. A file 
+selector object appears 
+so that you can choose a text to be displayed in the window. 
+@note Watch-out, the 
+demonstration is only able to manage an ASCII text with "CR/LF" at the end of each 
+line, and the lines have a maximum length of 80 characters. Do not try to display 
+somethings else or you could have bad surprise as no checking is performed!
+
+The window which opens is designed to display the text. It comprises all 
+standard attributes of a BIG window (sliders, multiple Sizers, etc.), but no 
+information bar. It also contains a "Toolbar", which is a small size form placed 
+at the top. Bubble-help are linked to certain objects of this toolbar.
+
+Look at the "slider arrows" of this window. They are all grouped in bottom right 
+corner! This is optional in BIG, but this can greatly improve the ergonomic. 
+Indeed, the user does not have continuously move the mouse throughout 
+the screen to click on the various arrows. This possibility does not exist for 
+the windows forms (but they are seldom displayed with sliders and arrows in 
+practice).
+
+This window, like the one of the large form, can be handled through usage of the 
+keyboard. Moreover, each time the cursor of the mouse enters the working area of 
+the window, it takes the shape of the text-cursor (two brackets back-to-back), 
+and regains the shape of an arrow as soon as it leaves the window. This behavior, 
+like the management by the keyboard, is automated by BIG and must be declared 
+during the creation of the window. It is not a vital function, but it is a nice 
+feature.
+
+All the basic functions of this window are managed by BIG! The only thing which is 
+left to the developer is the display routine itself as it strongly depends on 
+the way the textual file is stored in memory, and of its content. 
+The display routine of BIG2DEMO.C is extremely simplified (and even simplistic!), but 
+it is sufficient in this situation. BIG take care of all other events: management
+of the redraws, displacement by page or line, new display when a slider is moved, 
+full opening and restoring of size, resizing, displacement, etc. All the GEM messages 
+are treated without involvement of the main program (i.e. the part that the 
+programmer must write)! Only for that, BIG is a great help.
+
+The toolbar allow to modify the way the text is displayed. The three 
+radio-buttons 'Left', 'Center' and 'Right' allow justification of the text 
+in the window. The 'Reverse' button change the display of text between black 
+text on white background and white text on black background. The keyboard shortcuts of 
+these buttons are active as in an ordinary form.
+
+The large drop-down list button makes it possible to choose the SpeedoGDOS character 
+font, if you have installed it on your system, or the system font. 
+Lastly, the other drop-down allow to choose the size of the characters (this 
+can look ugly when used with the system font). The Speedo font being proportional 
+for the majority, this can give imperfect results in the horizontal direction, 
+especially with large fonts, as well as incorrect horizontal scroll of the window. 
+I did not want to complicate the demonstration by designing something perfect, 
+but just to show what few lines of program could offer. Thanks to the many 
+capabilities of BIG.
+
+Note that the objects of the toolbar can be handled even when the window is 
+behind, as we had done with the two forms in windows.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_image_win An Image Window
+@image html image_win.jpg
+The second option 'Image...' of the hierarchical menu displays a window containing 
+an image. The file selector propose to choose a non compressed Degas image (with 
+the extension “pi?”). Do not try to load another type of image, nor one image 
+with a different number of colors plans, because the demonstration does not check 
+anything.
+
+On the other hand, BIG manages the pallet. The pallet of the loaded image becomes 
+the active pallet. As soon as you click on another window (even if it belongs to 
+another program or accessory), or that you close this one, the default pallet 
+becomes active again.
+
+This window is also easily handled with the keyboard. The mouse takes the shape of 
+a hand in the working area. To manage the display of an image with BIG, you don't 
+need to write the display routine (as for the text)! Indeed, the management of 
+rasters (block-images) is standardized in the VDI by the means of MFDB (Memory 
+Form Block Definition) structures. The image, whatever its size, its format, its 
+resolution, etc, is stored in a buffer in memory which is reserved at load time. 
+It is enough to indicate to BIG the address of this buffer so that it can take
+care of everything else!
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_graph_win A Graphic Window
+@image html graph_win.jpg
+The option 'Histogram' displays a window with eight histograms of different sizes, 
+randomly calculated each time the function is called. It also has a line of 
+information, all the new types of windows buttons, but it has no sliders.
+
+If a window is already opened behind and the user asks to open it again, it is brought 
+to the front by BIG.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_win_menu A window with a menu
+@image html win_menu.jpg
+The option 'Window with menu'(or [Shift + Control + M]) opens a window which contains 
+a menu! This possibility of placing menus in windows allows to develop very ergonomic 
+software. For example, in a drawing program, each window can contain an image, and 
+a menu allowing choice of the color parameters, the work tools, etc.  
+corresponding to this image. A toolbar could also be used, but the number of 
+tools would likely increase its size and therefore reduce the work area.
+
+Another interesting use of the menus in window is for desktop accessories. 
+An accessory cannot place a menu bar in the top the screen (I know there are 
+exceptions...), and this is bad. But it can open a window and it is possible to 
+place a menu in this window!
+
+Naturally, BIG takes care of everything. The menu is "attached" to the window and 
+follows it in its displacements. If the window becomes too small so that one 
+cannot reach the menus on the right, the two small arrow buttons on the left make 
+it possible to shift the menu. Try to click on them. 
+
+@image html win_menu_select.jpg
+The menus are not displayed automatically, at least not continuously. Click on 
+one of the titles 'BIGdemo', 'Options' or 'Alerts'. This time, the corresponding 
+menu is displayed, and now the whole menu bar works as usual. You can move to the 
+other menu, select one option, etc. the main desk menu is "blocked" during this time. 
+Choose an option or click outside to close the menus. All becomes normal again. 
+The menu 'Alerts' even offers a hierarchical menu!
+
+BIG also deals with the keyboard shortcuts. If a window is in the front 
+(window activated), it checks in the menu if an option corresponds to the 
+keyboard shortcut. It is recommended that there is no identical keyboard shortcuts 
+in the main menu and in the window menu, but if this is the case, the window one has 
+the priority. As soon as one correspondence is found, search stops. Search is also 
+carried out in the hierarchical menus if there are some.
+
+The menu is created in the resource editor like a normal menu. You can remove the 
+options reserved for the desktop accessories, or use them. Indeed, nothing prevents 
+you from placing in the first menu as many options as you wish, and to use them 
+normally. This is obviously prohibited in the case of the main menu, since 6 entries 
+are reserved for the desktop accessories. But in the case of a menu intended for a 
+window, you can make whatever you want (it is not the case in this demonstration). 
+BIG automatically takes care of "windowing" this menu.
+
+The option 'HELP' is the same as the one in the main menu and displays the same form. 
+The option 'Alert' displays a BIG Alert that can be moved. Moreover, the option is 
+alternatively "checked" and "unchecked" each time it is called.
+
+The option 'Load image' makes it possible to load a non compressed Degas image  
+(same remarks as previously) and to display it in the window (there too, the pallet 
+is managed). Try to load an image with a pallet in the window "image", and another 
+with a different pallet in the window "menu", and open another window, "text" 
+for example. Move from one window to the other and observe the current pallet.
+
+Here again, BIG deals with everything: handling of the window from the keyboard, 
+shape of the mouse in the working area (a fine cross), sliders, refresh, pallet, 
+resizing in all directions, etc. If we were displaying text instead of an image 
+in this window, we would simply have to write the display routine.
+
+Lastly, the 'Icons' option is provided with a hierarchical menu. Contrary to 
+their counterparts in the main menu, they can be placed, as the first menu option.
+If the hierarchical menu is higher than the desktop, BIG automatically transforms 
+it into a scroll-menu. This sub-menu is used to display an alert box (always the 
+same one), with the selection of 9 shapes for icons (as proposed by BIG), plus 
+a 'without icon' option. One can also display them by the keyboard shortcuts. 
+Some of these options work with function pointer, others not. We will get back 
+to this latter.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_free_popup Context menu
+@image html free_popup.jpg
+We are not done yet! Click with the right button of the mouse. A popup menu 
+appears, centered on the position of the click (or shifted if one is at 
+the edge of the screen)! This context menu is optional. BIG manages the right 
+button of the mouse, and transmit the message to your program when he is clicked, 
+and if you wish it can automatically manage a context menu like this one. 
+
+In the example, this context menu includes the various options of the main
+menu. Only one restriction: it is not possible to place hierarchical menus 
+related to options of a context menu. On the other hand, BIG transforms it 
+into scroll-menu if it is too high.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_timer Timer Management
+
+Another action is carried out by BIG, which is not apparent in the
+demonstration. Each time "nothing" happen, no event keyboard, neither click, 
+nor handling of window, etc... BIG "returns the control" to the main program. 
+That occurs, in normal condition, several times per second. It is then possible to 
+benefit from this to do something as a pseudo background task, for example to
+decrease a counter to trigger an automatic save, to watch the serial port, to send 
+text to the printer, etc. But under MultiTOS, it is necessary to be very careful 
+with this kind of function.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_iconification Iconification of windows
+Sometimes the screen may get cluttered with windows, and this may harms the ease 
+of use. Closing some of them is not always the good solution, because reopening
+them may takes long times. For example if the program must reload the contents 
+from a file. The most elegant and convenient solution is "the iconification of 
+the windows". The AES only provide this capability since version 4.10. 
+A new window button has been created for that matter: the "Iconifier". When this button 
+is clicked, the window is reduced to a size of 72 X 72 pixels, and all its other 
+attributes are temporarily canceled, except the title and the displacement bar. 
+Moreover, the title is written in small characters.
+
+@image html iconification.jpg
+BIG Windows can also have an iconifier button (it is the first of the 4, on the top 
+right corner of the windows). It represents a small triangular arrow going towards 
+a small square window. And this capability of BIG is active on \b all operating system 
+versions.
+
+To de-iconify the window, it is necessary to perform a double-click on it. 
+Another message is then sent, and the application can require that GEM restore the 
+window with its old position and its old attributes.
+
+Last possibility: a [Control + click] on the iconifier involves a "ALL_ICONIFY" message. 
+\b All the windows are then iconified in only one icon. The opposite operation 
+is done by double-clicking on this iconified window.
+
+In the case of a iconification of all the windows, BIG carries out a iconification of 
+the window which was "Control clicked", and close the other windows of this application 
+which are open at this time. If the user opens other windows and redo an "all 
+iconification", another "all icons" is created. At the time of a double-click on an
+iconified window, the windows are restored as before.
+
+@image html diff_icons.jpg
+Try these operations on the windows of the demonstration. You will note that 
+the iconified windows can be drawn with different contents, which are active only 
+when the window is iconified. The demonstration displays different small icons,  
+whether the window is a form or a window of another type. As we have already talked 
+about, it is possible to iconify a window located behind.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_bubble Bubble Help
+@image html bhelp.jpg
+Open or bring to the front the large form window. While maintaining the [Control]
+key depressed, walk the mouse over the various objects of the form. Bubbles similar 
+to those of a cartoon are displayed, showing a text of several lines in connection 
+with the object under the mouse!
+
+They are called "bubble-help" because of their shape and of their function. Other 
+bubbles are proposed in the small form in a window, in the ToolBar of the Text window 
+and in the free form. Their display and their management are automated thanks to BIG.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+
+
+@section demo_end End of the visit
+Click the 'Quit' option of the 'Form' menu. BIG is given the responsibility to close 
+all the windows and to release the various memory buffers which it had reserved, the 
+resource, etc.
+
+We can now have a first glance to the BIG2DEMO.C source: it is surprisingly small 
+in regards to the number of functions which the program offers. Admittedly, this 
+program is just a demonstration; it does not carry out anything concrete, but it 
+has a very complete interface (probably a real program will never use all these 
+elements at the same time), with many new features.
+
+We have done a quick review of what BIG can do for a programmer: to deal with quantity 
+of things which are done once for all. In a program “under BIG”, most of the interface
+programming is done by some routines of BIG. The developer only has to take care of
+items specific to its application. As for the structure of this interface, it is mainly 
+located in the resource itself, as we will see very shortly.
+
+What is not seen in the demonstration is the fact that, the size of the source 
+(and therefore the time of programming!) decrease in great proportions, due to the 
+fact that certain functions are directly and automatically called (thanks to the 
+function pointers).
+
+Do two more experiments: 
+- First rename the file BIG2DEMO.PRG in BIG2DEMO.ACC, copy it (with the RSC) to the 
+boot partition, and performs a reset of the system. The demonstration can now run 
+as a desktop accessory! Only the desktop has disappeared. The main menu is now placed 
+in a window, but everything else works like before: the various windows, the keyboard 
+shortcuts, the iconification, the forms, etc.
+- Last experiment, place BIG2DEMO.PRG in the AUTO folder, and do a reset again. During 
+the boot, a message is displayed to let you know that the program cannot be launched 
+this way. Indeed, it is not possible to execute a program under GEM from the AUTO 
+folder and BIG applications are by definition GEM applications. Instead of crashing 
+(this is usually what happens) BIG warns you.
+.
+
+@ref big_toc "[return to BIG toc]" @ref demo_toc "[return to Demo toc]"
+<div style="clear:both"></div>
+
+\date October 2014
+
+*/

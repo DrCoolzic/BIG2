@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BIG2.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2DEMO.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2DIAL.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2DIVR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2EDIT.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2EVTW.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2FOR1.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2FOR2.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2HELP.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2INCL.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2USR1.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2USR2.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2WINB.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG2WIND.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="doxygen\big2hdoc.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BIG_IMGS\BIG_IMGS.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="big2.dcf">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="BIG2.PRJ">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="BIG2DEBG.PRJ">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="BIG2DEMO.PRJ">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="doxygen\big2.css">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="doxygen\bigdemo.dox">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="doxygen\development.dox">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="doxygen\gui.dox">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="doxygen\mainpage.dox">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="doxygen\presentation.dox">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="doxygen\reference.dox">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="doxygen\revision.dox">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="doxygen\source.dox">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="BIG2INCL.HBG">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="BIG2DEMO.RSH">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="history.md">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="LICENSE.md">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="README.md">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BIG2DEMO.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2DIAL.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2DIVR.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2EDIT.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2EVTW.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2FOR1.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2FOR2.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2HELP.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2INIT.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2USR1.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2USR2.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2WINB.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BIG2WIND.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="d_atari.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,23 +1,23 @@
-; >>>>>>>>>>>>>>>>>>>>>>>>> BIG2DEMO.PRJ <<<<<<<<<<<<<<<<<<<<<<<<<
+; Project file to create BIG Demo program
+; Developed by Claude ATTARD 
+; No debug information included
 
-BIG2DEMO.PRG       ; Nom de l'ex‚cutable
-.C [ -K -P ]       ; Options du compilateur sans infos de debuggage
-;.C [ -K -P -Y ]   ; Options du compilateur avec infos de debuggage
-;.L [ -G -L -Y ]	 ; Options du linker avec infos de debuggage
-=                  ; Liste des modules
 
+BIG2DEMO.PRG       ; executable name
+.C [ -K -P ]       ; Compiler option
+;.C [ -K -P -Y ]   ; Compiler options with debug information
+;.L [ -G -L -Y ]	 ; Linker options with debug information
+
+=
 PCSTART.O          ; Startup code
 
-BIG2DEMO.C (BIG2DEMO.H) ; Le programme principal
+BIG2DEMO.C	(BIG2DEMO.H) ; main
 
-PCFLTLIB.LIB       ; Librairie virgule flottante
-PCSTDLIB.LIB       ; Librairie standard
-
-BIG2.LIB           ; Librairie BIG sans infos de debuggage
-;BIG2DEBG.LIB      ; Librairie BIG avec infos de debuggage
-BIG_IMGS.LIB       ; Librairie BIG Image
-PCEXTLIB.LIB       ; Librairie ‚tendue
-PCTOSLIB.LIB       ; Librairie TOS
-PCGEMLIB.LIB       ; Librairies AES et VDI
-
-;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+PCFLTLIB.LIB       ; Floating point library
+PCSTDLIB.LIB       ; Standard Library
+BIG2.LIB           ; BIG library
+;BIG2DEBG.LIB      ; BIG library with debug information
+BIG_IMGS.LIB       ; BIG image libary
+PCEXTLIB.LIB       ; Extended library
+PCTOSLIB.LIB       ; TOS library
+PCGEMLIB.LIB       ; AES & VDI library

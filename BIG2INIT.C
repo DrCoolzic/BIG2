@@ -1,11 +1,36 @@
-/*						>>> Big Is Gem <<<
-				MODULE FONCTIONS D'INITIALISATION
-*/
-/****** En-tˆte BIG ***********************************************/
-/* #[ D‚finitions :																								*/
-/****** Fichiers annexes ******************************************/
+/*! @file BIG2INIT.C
+@brief implementation of functions to initialize BIG
 
-#include <BIG2.H>
+@verbatim
+BIG = "BIG Is GEM" - A high level GEM library. 
+Initial Development by Claude ATTARD, Maintenance by Jean LOUIS-GUERIN
+Copyright (c) 1993-2014 Claude ATTARD
+Copyright (c) 2010-2014 Jean LOUIS-GUERIN
+
+website: http://info-coach.fr/atari/software/system/big.php
+forum:   http://www.atari-forum.com/viewtopic.php?f=16&t=27060
+
+The BIG library may be used and distributed without restriction provided that 
+this copyright statement is not removed from the file and that any derivative 
+work contains the original copyright notice and the associated disclaimer.
+
+The BIG library  is free software; you can redistribute it and/or modify  it 
+under the terms of the GNU General Public License as published by the Free 
+Software Foundation; either version 3 of the License, or (at your option) any 
+later version.
+
+The BIG library is distributed in the hope that it will be useful, but WITHOUT 
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+HxCFloppyEmulator; if not, write to the Free Software Foundation, Inc., 51 
+Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+@endverbatim
+
+*/
+
+#include "big2.h"
 #include "BIG2USR1.H"
 #include "BIG2USR2.H"
 #include "BIG2EDIT.H"
@@ -74,11 +99,11 @@ void	open_work (void);
 int		identifier_tos (void);
 t_ident_hard_soft	identifier_hard_soft (void);
 /* #] Prototypage des fonctions : */ 
-/****** Fonctions d'initialisation ********************************/
-/* #[ initial () Charge et initialise le ressource :							*/
-int		initial (char *rsc, int menu, int desk, int nb_tree,
-							 OBJECT *rs_tree, char *rs_str, int n_wind, int acc)
-{
+
+
+
+int		initial (char *rsc, int menu, int desk, int nb_tree, OBJECT *rs_tree, 
+				 char *rs_str, int n_wind, int acc) {
 int nb_form, i, j, k, d, dummy, ecart[5], effets[3], accok;
 unsigned long map, bit;
 char alrt[MAX_ALRT], gohome[255], prgname[MAX_LEN], pat[128], *tacc;
@@ -583,7 +608,10 @@ char *c;
 	return (id_locale);
 }
 /* #] identifier_hard_soft () Identifier la machine :							*/ 
+
 /* #[ end () Tout lib‚rer et quitter :														*/
+
+
 void end (void)
 {
 int i = ZERO, j, rgb[3];

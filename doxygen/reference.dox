@@ -1,0 +1,1830 @@
+/*! 
+@page page_ref_manual BIG reference manual
+@author Claude Attard\n
+English translation by Jean Louis-Guerin
+
+<hr>
+
+@section prog_toc Table of Content
+<div class="TOC">
+	- @ref prog_new_obj
+	- @ref prog_obj_attrib
+	- @ref prog_button
+	- @ref prog_menu
+	- @ref prog_select_button
+	- @ref prog_extend_edit
+	- @ref prog_move_form
+	- @ref prog_text_graph
+	- @ref prog_3d
+	- @ref prog_image
+	- @ref prog_hier_menu
+	- @ref prog_toolbar_form
+	- @ref prog_kb_shortcut
+	- @ref prog_help_bubble
+	- @ref prog_work_window
+	- @ref prog_event
+	- @ref prog_int_rsc
+	- @ref prog_multitask
+	- @ref prog_param_func
+	- @ref prog_integrated_rsc
+	- @ref prog_accessory
+	- @ref prog_iconify
+	- @ref prog_xvc
+	- @ref prog_win_internal
+	- @ref const_group
+	- @ref typedef_group
+	- @ref global_group
+	- @ref function_group
+.
+</div>
+@sa @ref page_big_source
+
+<hr>
+
+
+@section prog_new_obj New types of objects in BIG
+Let us start by looking at the new types of objects implemented in \b BIG. To 
+define them, we use the concept of "extended types". What is it? The standard 
+objects types defined by the GEM go from number 20 to number 33. This type 
+(\c ob_type) being coded on a word (2 bytes), it leaves a lot of room for 
+extension. To determine the type of an object, the AES only tests the low-order 
+byte. We can thus use the other byte to store up to 255 values that we call 
+"extended types" (in fact the new GEM4 reserves the values from 128 to 255 and 
+therefore we can only use the values 1 to 127, which is more than enough). These 
+objects can be drawn by the GEM and will take the aspect indicated by the normal 
+type (the low-order byte of ob_type). But in BIG, some of these objects with 
+extended type are transformed into \b G_USERDEF. This means that they will be 
+drawn by a specific routine of the program and not by a GEM routine. Of course, 
+these drawing routines are integrated into BIG.
+
+BIG also uses extended ob_state and ob_flags. Indeed, the ob_state and the 
+ob_flags of the objects are not entirely used by the AES. Only bits 0 to 5 of 
+ob_state and bits 0 to 11 of ob_flags are used. The AES does not even test the 
+other bits in normal situation. We will use them for some of our parameters.
+
+Following are the new types of objects and names used in BIG. In the same way 
+that all the names of GEM objects  start with G_, the objects names in BIG 
+start B_:
+
+- B_CHECKB:	Checkbox Button. It is a selectable button which takes the 
+aspect of a small square with the text of the button on the left or on the right. 
+When it is selected, the square is crossed with diagonals. A character of the 
+text can be underlined (by preceding it with a '[' character during creation in 
+the resources editor), in order to be able to activate the button by the 
+combination of <Alternate + character> keys. This button is reserved to simple 
+selectable button.
+
+- B_ROUNDB:	Round Button. It is a selectable button which takes the aspect of a 
+small circle with the text of the button on the left or on the right. When it is 
+selected, the circle contains a small dot, if not selected the interior of the 
+circle is empty. A character of the text can be underlined (by preceding it with 
+a '[' character during creation in the resources editor), in order to activate 
+the button by the combination of <Alternate + character> keys. This button is 
+reserved for radio-buttons usage.
+
+- B_EDIT: Extended editabled Field. It allows to enter more characters than the 
+width of the edit field. These objects must imperatively contains on each side 
+of the edit field small arrows: "left arrow" on the left and "right arrow" on 
+the right (ASCII 4 and 3). A space must respectively follow and precede these 
+two arrows.
+
+- ::B_FRAME: A rectangle used to visually group together other objects, for example 
+a group of radio-buttons. The associated text is displayed overlayed on the top 
+left part of the frame. It is possible to give graphic attributes to this text.
+
+- B_MOVE: Button used to move a form on the screen. It has the shape of a 
+triangle, as if the form had a folded up corner. It is traditionally placed in 
+the upper righ angle of the form.
+
+- B_DEFAULT: This is the traditional default button, with its normal aspect.
+
+- B_UNDO: It is a button with a normal aspect, but which can be activated by 
+pressing the \<Undo> key (it is often use with a 'Cancel' button). Moreover, 
+one of its characters can be underlined, by preceding it with a '[' character 
+during its creation in the resources editor.
+
+- B_UNDER: It is a G_BUTTON or a B_DEFAULT button with one underlined character 
+so that a keyboard equivalent is affected to it. The character to underline is 
+preceded by a '[' character.
+
+- B_HELP: This button gives access to an on line help, without leaving the 
+management of the form in progress. Can also be activated by a depressing the 
+\<Help> key. It has the same aspect as a G_BOXTEXT with SHADOW and OUTLINE, and 
+with the text in small characters.
+
+- B_POPUP: Normal "Shadowed" Button. But it gives access to the management of an 
+associated pop-up menu, without leaving the management of the form in progress. 
+If it is bigger than the desktop, the pop-up will be automatically transformed 
+into scroll-menu. The button can have an optional icon "following option". For 
+that matter, it must have the corresponding extended type.
+
+- B_LIST: Is like a B_POPUP, but it is a pop-list which is displayed. A pop-list 
+is a pop-up of eight options with a slider on its side. If the pop-up comprises 
+less than nine options, it is displayed as a normal pop-up. The button is 
+decorated with a "following option" icon. The extended type is mandatory.
+
+- B_PICT: Makes it possible to display an image (described by a MFDB) in a form. 
+The basic object is preferably a G_BOX.
+
+- B_GRASTR: Chain of text with graphic attributes.
+
+- B_SMSTR: Text string written as small characters, but not the very small 
+unreadable size used by icons, but the size above, the 8x8 font. Moreover, the text 
+can be left or on right justified in the object and can have graphic 
+attributes.
+
+- B_HIERM: option of a menu calling a hierarchical menu, i.e. a pop-up menu 
+on the side of the main menu option. Can be placed in a menu inside a window. 
+If the hierarchical form of menu is too high, BIG transforms it automatically 
+into a scroll-menu.
+
+- B_NICELINE: For disabled Menu option made of separation characters "-". BIG draws 
+a line. There is no extended type, BIG treats this object automatically. The 
+existence of this object is not created only for esthetics reasons. It is 
+essential because of the possible presence of the "Let Them Fly" utility, which 
+carries out the same visual effect, but also causes BIG to crash under certain 
+conditions!
+
+- B_FNCP: Any type of object or menu option which will be linked to a function. 
+It is enough to click this object or this  option (or to call it by its keyboard 
+shortcut) so that the function is automatically executed.
+
+Last point before going into the details: the aspect of these objects can be 
+modified at will by the programmer (color of texts, frames, icons, etc.). 
+We will get back to this in the section about form functions.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_obj_attrib Attributes of the new objects types
+Here is a summary table of the new objects, with their extended type, their 
+attributes, etc. such as they must be created in the resource editor.
+
+<table>
+<tr><th>Object name		
+    <th>Normal type
+	<th>Extended type
+	<th>Normal ob_flags
+	<th>Extended ob_flags
+	<th>Normal ob_state
+	<th>Prohibited attributes
+<tr><td class="obname">B_CHECKB
+    <td>G_BUTTON
+	<td>B_SELEC (18)
+	<td>SELECTABLE
+	<td>--
+	<td>--
+	<td>RBUTTON, SHADOWED
+<tr class="todd"><td class="obname">B_ROUNDB
+    <td>G_BUTTON
+	<td>B_SELEC (18)
+	<td>SELECTABLE, RBUTTON
+	<td>--
+	<td>--
+	<td>SHADOWED
+<tr><td class="obname">B_EDIT 
+    <td>G_FTEXT, G_FBOXTEXT
+	<td>B_EDIT (25)
+	<td>EDITABLE
+	<td>Number of characters
+	<td>-- 
+	<td>SELECTABLE, EXIT
+<tr class="todd"><td class="obname">B_FRAME
+    <td>G_BUTTON
+	<td>B_FRAME (20)
+	<td>--
+	<td>graphical attributes
+	<td>--
+	<td>SELECTABLE, EXIT
+<tr><td class="obname">B_MOVE
+    <td>G_IBOX
+	<td>B_MOVE (17)
+	<td>TOUCHEXIT
+	<td>--
+	<td>OUTLINED, CROSSED
+	<td>SELECTABLE, EXIT
+<tr class="todd"><td class="obname">B_DEFAULT
+    <td>G_BUTTON
+	<td>B_UNDER (30) (option)
+	<td>SELECTABLE, DEFAULT, EXIT
+	<td>--
+	<td>--
+	<td>--
+<tr><td class="obname">B_UNDO
+    <td>G_BUTTON
+	<td>B_UNDO (31)
+	<td>SELECTABLE, EXIT
+	<td>--
+	<td>--
+	<td>DEFAULT
+<tr class="todd"><td class="obname">B_UNDER
+    <td>G_BUTTON
+	<td>B_UNDER (30)
+	<td>SELECTABLE, EXIT
+	<td>--
+	<td>--
+	<td>--
+<tr><td class="obname">B_HELP
+    <td>G_BOXTEXT (small font)
+	<td>B_HELP (21)
+	<td>SELECTABLE
+	<td>associated form number
+	<td>--
+	<td>DEFAULT, EXIT
+<tr class="todd"><td class="obname">B_POPUP
+    <td>G_BUTTON, G_IMAGE, B_BOX
+	<td>B_POPUP (22) (option)
+	<td>SELECTABLE, SHADOWED
+	<td>associated form number
+	<td>--
+	<td>DEFAULT
+<tr><td class="obname">B_LIST
+    <td>G_BUTTON
+	<td>B_LIST (23)
+	<td>SELECTABLE, SHADOWED
+	<td>associated form number
+	<td>--
+	<td>DEFAULT
+<tr class="todd"><td class="obname">B_PICT
+    <td>G_BOX
+	<td>B_PICT (24)
+	<td>--
+	<td>Mono/Color Image mode
+	<td>--
+	<td>--
+<tr><td class="obname">B_GRASTR
+    <td>G_BUTTON
+	<td>B_GRASTR (19)
+	<td>--
+	<td>graphical attributes
+	<td>--
+	<td>SELECTABLE, EXIT
+<tr class="todd"><td class="obname">B_SMSTR
+    <td>G_STRING
+	<td>B_SMSTR (26)
+	<td>--
+	<td>graphical attributes
+	<td>--
+	<td>--
+<tr><td class="obname">B_HIERM 
+    <td>G_STRING (Menu)
+	<td>B_HIERM (41)
+	<td>--
+	<td>associated form number
+	<td>--
+	<td>--
+<tr class="todd"><td class="obname">B_NICELINE
+    <td>G_STRING (Menu)
+	<td>--
+	<td>--
+	<td>--
+	<td>DISABLED
+	<td>--
+<tr><td class="obname">B_FNCP
+    <td>All
+	<td>B_FNCP (51)
+	<td>--
+	<td>Nothing @ create time
+	<td>--
+	<td>--
+</table>
+
+Note that conventions presented above are close to the standards existing in 
+other extended libraries GEM, such as FLY_DIAL and INTERFACE (which does not 
+propose a system of pointers on function nor graphical attributes, nor 
+hierarchical menus, etc.). However, there can be differences between the "look 
+and feel" of a type of object drawn by INTERFACE and the same one drawn by BIG. 
+In particular, B_CHECKB and B_ROUNDB. I voluntarily gave a different aspect to 
+these two buttons, so that they do not resemble too much their counterparts of 
+the Mac world. My personal opinion is that the developers must make an effort 
+to preserve at Atari its "personality" and not to try to make it resemble other 
+machines :)
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_button BIG Buttons usage
+Lets now see now the details. The normal type corresponds to the type of the 
+object during its creation in the ressource editor. They are the routines of 
+BIG which will take care of the transformation of the object into G_USERDEF 
+(if necessary) according to the other indications of this table. The name 
+indicated as extended type is that given by the constants of BIG2.H with
+its corresponding value. The "ob_flags normal" attributes represent the bits 
+which must obligatorily be positioned in the ob_flags of the object. The same 
+remark apply to "ob_state normal". The column "prohibited attributes" represent 
+the parameters which should \b never be activated. In fact, it is advised to 
+activate only those which are indicated in the other columns, except possibly 
+for the ob_states "SELECTED" and "DISABLED".
+
+The "extended ob_state" are used by B_FRAMEs, B_GRASTRs, B_SMSTRs, B_POPUPs, B_LISTs, 
+B_HELPs, B_HIERMs, B_EDITs and the B_FNCPs. For some of them (B_POPUPs, 
+B_LISTs, B_HELPs, B_HIERMs), it is not necessary to define the extended 
+ob_state at the time of creation of the resource, a function of BIG 
+(form_attach()) will take care of it later.
+
+The "extended ob_flags" are also used by BIG and do not appear in this table. 
+We will speak about them progressively in this documentation.
+
+As he was already said, the 10 hight order bits of ob_state can be used. 
+BIG uses in fact only the high order byte, i.e. the 8 high order bits. With regard 
+to B_POPUPs, B_LISTs, B_HELPs and B_HIERMs, we use it in BIG to place it 
+there number (in the resource file) of the form associated with this button 
+(Warning, numbering starts from zero). For example, if the form number 12 
+must be called during the selection of a button B_HELP, we have to set bits 10 
+and 11 in the ob_state of this button. Only taking in account the higher 
+order byte, that corresponds to value 12. The routines of BIG will call this 
+form automatically and will take care of its management.
+
+The principle is the same one for the pop-up buttons and the options of the
+hierarchical menu. We create in the ressource editor a button (or an option 
+of menu) having the attributes above, and the high order byte of the ob_state 
+contains the number of the pop-up form associated with this button. The same 
+form can be associated with several buttons.
+
+With regard to B_FNCPs, it is even simpler, since we do not have to do anything 
+during the creation of the resource file (except specifying the extended type, 
+of course)! The principle is to place in the high order byte of the extended 
+ob_state the index corresponding of the table of functions (there can thus be 
+"only" 256 pointers on functions by application). But this is done automatically 
+by BIG. Indeed, the initialization routines count the number of objects having 
+B_FNCP as extended type, then reserve a storage area of adequate size which will 
+be handled like a table of pointers on functions. It is the responsability of 
+the programmer to make sure that each pointer, in this function pointer table,
+points to the right function of the program (We will see how by studying the 
+source of the demonstration, chapter "the source of BIGdemo"). There are 
+two rules to respect:
+- First is that the pointers must be affected with the elements of the table 
+in the same order that the objects appear in the resource.
+Let us see an example. The resource has three trees: 'Menu', 'Preferences', 
+and 'Choice' (in this order). In 'Menu', two objects (numbered 15 and 23) are 
+of B_FNCPs type. In 'Preferences', two others (numbers 5 and 8), and finally 
+3 objects in the form 'Choice' (numbers 8, 11 and 13). The elements of the table 
+are reserved in ascending order: 15, then 23 of 'Menu'; 5, then 8 of 
+'Preferences'; 8, 11, then 13 of 'Choice'. When object 11 of 'Choice' is 
+clicked, it is the function whose pointer is in the entry 5 of the table 
+which will be executed (Since it is the object 6 in the order of classification, 
+with numbering starting at 0).
+
+- The second rule is that the function must be of the type void 
+function(void), i.e. it cannot have any parameter and must return nothing.
+There is an easy way to ignore this constraint, see the chapter "Parameters 
+and pointers on functions"). This possibility of making GEM objects "point" 
+to functions is one of the big interests of BIG. The sources of the programs 
+decrease dramatically thanks to this capability, since it is not necessary to 
+carry out series of tests that where impossible to avoid before: Which type 
+of event did happen? If it is a click on a menu, which option? If it is a button 
+of form, which button of which form? etc...
+.
+
+The B_FRAMEs, B_GRASTRs, B_SMLSTRs objects use the extended ob_state to set 
+the graphic attributes of the string in the same way that the function 
+vst_effect() of the VDI. The higher byte of the ob_state contains the 
+attribute:
+- bit 0: Thickened
+- bit 1: Lightened
+- bit 2: Italic
+- bit 3: Underlined
+- bit 4: Outlined
+.
+
+If bit 3 is put for an object B_GRASTR, B_SMLSTR the feature of underlining is not 
+limited to the width of the text, but to the width of the object (ob_width).
+
+Lastly, the extended ob_state is used with B_EDITs to indicate the maximum 
+number of that it is possible to capture in the editable field.
+
+The B_SELECs (B_CHECKBs and B_ROUNDBs) are drawn by defect with the button 
+(respectiveley square or round) on the left and the text on the right of the 
+button. If bit 13 of the extended ob_flags is set (define under name 
+"BS_RIGHT", like B_SELEC right), then it is the opposite: button on the 
+right and text on the left.
+
+These two types of buttons are used for their capability of activating the 
+default button of a form by a double-click. For that, it is necessary that 
+bit 11 of the extended ob_flags of the button (bit named DCDEFAULT) is 
+set. This functionality is usable for the normal forms as as well as for 
+those in window, but obviously not for the Tool-Bars, since there is no 
+default button!
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_menu BIG Pop-up menus
+The Help and pop-up forms must follow certain requirements. 
+The help are simple forms without dialog with the user. They contain in 
+theory only explanatory text and frame of presentation (B_FRAME, B_SMLSTR, 
+and B_GRASTR can be used). They must contains at least one exit object: 
+SELECTABLE, DEFAULT, EXIT. The other types of buttons (B_ROUNDB, B_POPUP, etc.) 
+are managed automatically in a help form, but the routine of help itself will 
+have to be rewritten if one wishes for example that the display of the help 
+depends of a Pop-Up. Unless one uses pointers on function. The pop-up forms 
+have the aspect of a pull-down menu. The root object is a G_BOX SHADOWED whose 
+outline is one pixel wide towards the outside. There are three types of 
+pop-ups: the text pop-up, the image pop-up and box pop-up.
+
+The options of a text pop-up are of type G_STRING TOUCHEXIT (this and what 
+follows is also valid for the forms intended to become pop-lists). The first 
+two characters are spaces (as in a normal menu) to leave the space to the 
+check-mark. If certain options must be inactive, the corresponding G_STRING 
+must be DISABLED. It is strongly advised that the numbers of these G_STRING 
+are sorted from top to bottom. The "calling" objectof a text pop-up is a 
+G_BUTTON SHADOWED SELECTABLE. If it also has the extended type B_POPUP (22), 
+a small "following option" icon will be drawn on the right button (also if it 
+is a B_LIST). This is impossible with a image or box pop-up.
+
+The options of a image pop-up are G_IMAGE. All of them must have the same 
+dimensions (ob_width and ob_height), also the same ones as those of the 
+G_IMAGE object which called the pop-up menu. This "calling" object must be 
+SHADOWED and SELECTABLE. As the attribute SHADOWED does not have any 
+influence on the visual aspect of a G_IMAGE, he is advised (as in the 
+demonstration), to place it in a G_BOX SHADOWED, since it is traditionally 
+the "shading" which announces the presence of pop-up. An image pop-up cannot 
+have extended type (it is its attributes which define it) nor to be a 
+pop-list, therefore, no "following option"button.
+
+The options of a pop-up box are of G_BOX. Their dimensions do not have 
+particular importance. The "calling" object is a G_BOX SHADOWED and 
+SELECTABLE. A pop-up box cannot have any extended type (it is its 
+attributes which define it) nor to be a pop-list, therefore, no 
+"following option"button.
+
+The use of pop-up is exactly the same one as for a traditional menu 
+(with the difference that if it is higher than the desktop, BIG transforms it 
+into a scroll-menu). The pop-up tent to place itself so that the text of the  
+B_POPUP button and that the text of the same G_STRING text (or the G_IMAGE or 
+G_BOX of the same pattern) are overlayed. If that is not possible because 
+the pop-up would leave the screen, it is shifted.
+
+If the text of the G_STRING (or the pattern for any G_IMAGE or G_BOX) do not
+match, the top left corner of pop-up is fixed on the bottom low corner 
+of the B_POPUP. The corresponding G_STRING "is checked". To close the pop-up 
+without making choice, it is enough to click outside. If a selection is made, 
+the text of the clicked G_STRING is copied in the B_POPUP button which called 
+the pop-up (without the spaces at the beginning and at the end), or the pattern 
+for the G_IMAGE is copied in G_IMAGE B_POPUP, or the characteristics of the 
+G_BOX in the calling G_BOX.
+
+It is thus imperative that at the beginning, the text of the button is at least 
+as long as that of the longest G_STRING, in the case of a text pop-up, or that 
+all G_IMAGEs are of the same dimensions in the case of a pop up image. It is 
+possible to make a pop-up with several columns of G_STRINGs or G_IMAGEs. But 
+they must entirely cover the root object, as in a pull-down menu.
+
+If the pop-up was changed into a scroll-menu, it will be placed by BIG under 
+the calling button, provided that there is enough room for at least four 
+options and the two scrolling arrows. If it is not the case, the pop-up 
+will start from the top of the desktop.
+
+In addition, the pop-lists are placed by defect under the button 
+of call. If there is not enough place, they are placed above.
+
+While the mouse moves on top of the options of pop-up, several cases can 
+arise. First of all, if it is a pop-up box, the pointed option is simply 
+"framed"by a line. In this case, it is preferable than a selection which would 
+reverse the color or the frame and generate the good visualization of the option. 
+If it is an image pop-up, the pointed option is selected, therefore inversed. 
+In the case of a text pop-up (or pop-list), the option is selected (inversed) 
+if the system has less than 16 colors or if the root-box of the form pop-up has 
+its "Background" bit set to zero (see the chapter on the 3D display). If not 
+(if there are at least 16 colors and if the BackGround bit of the root-box is 
+set to 1), the pointed option is displayed on yellow background, which gives 
+a 3D impression.
+
+After the call to a pop-up or pop-list, the global variable 
+"cliq_in" is set to TRUE if an option at actually been chosen and FALSE if 
+not.
+
+I remind you that the function form_attach() makes it possible to bind the 
+pop-up buttons to their respective forms at the beginning of the execution of 
+the program, which is more practical than to do it during the creation of the 
+resource. Especially that if one must add a form thereafter, the numbers of 
+some are likely to be shifted.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_select_button BIG Selectable buttons
+The B_CHECKB and B_ROUNDB buttons share the same extended type (B_SELEC). 
+They are actually of the same category: SELECTABLE. Their only difference is 
+that B_RADIOs are radio-buttons with a different aspect to better distinguishing 
+them. These buttons can have an underlined character. During the management of 
+the form, the keyboard shortcut <Alternate + character> will be equivalent to a 
+click on this button. During the creation of the resource, the character to be 
+underlined must be preceded by a '[' character. The routine to display the button 
+will take care of the remainder. Warning, if several buttons of the same form 
+use the same underlined character, it is the first (in the order of 
+classification of the objects) which will be selected as the keyboard shortcut. 
+It is possible that these buttons cause the program to leave the management of 
+the form (EXIT), or that they are inactive (DISABLED). In the later case, the mouse 
+click and the keyboard shortcut are without effect.
+
+During the creation of one of these objects in the ressource editor, the 
+width of the G_BUTTON does not always correspond to the width which will be 
+"physically" occupied by the object drawn in the form, since the square or 
+the circle is added beside the text. Here an advice: start by creating the 
+button with a minimum size, i.e. the width of the text. Activate the grid option 
+of the ressource editor (the horizontal grid normally has a step of 8 pixels, 
+correcponding to the width of a system font character). Then increase the width 
+of this button by three "units" if there is no underlined character, and by two 
+otherwise. Thus, the width of the button in the ressource editor is matched 
+with the width it will have once displayed by functions in BIG.
+
+If bit 13 of ob_flags (BS_RIGHT) is set to zero, the button will be on the left 
+side and the text on the right. If it is to 1, will be the opposite.
+
+If bit 11 of the ob_flags (DCDEFAULT) is set, a double-click on the button will 
+also activate the default button of the form (if it there one).
+
+B_POPUPs do not have always have a extended type. The optional type 22 
+makes it possible to have automatically a small "following option" icon with 
+two circular shaped arrow on the right of the button (prohibited for image or 
+box pop-ups). On the other hand, it is mandatory to give it the attribute 
+SHADOWED, it is this flag wich makes it a pop-up. Buttons B_LIST always have the 
+"following option"icon, and are thus reserved for the pop-ups text.
+
+The extended type of B_HELP buttons do not have any influence on their aspect. Their display is left to the care of the normals routines GEM. This extended 
+type is used to distinguish them in the form when the Help key is pressed. 
+If several objects have this extended type, it is the first one which will be 
+used. It can be useful to have several of them in the same form. The first 
+help form could be called by the key Help, the others only by a mouse click. 
+This has the advantage of leaving the management of the help form to the 
+routines of BIG, by means of using the extended ob_state explained 
+above (this is what is done in the demonstration for the information form.
+
+The B_UNDO have an extended type which is used at the same time to locate them 
+at the time the \<Undo> key is pressed and to give them the possibility of 
+having a keyboard equivalent with the underlined character.
+
+The B_DEFAULT do not have an extended type, the DEFAULT attribute is sufficient 
+to locate them at the time of pressing on the \<Return> key. However, they can 
+also have the extended type B_UNDER to have a keyboard shortcut by usage of an
+underlined character.
+
+As we quickly saw during the guided visit of BIGdemo, the forms in window have 
+4 basic buttons: 'Apply','Confirm', 'Reset' and 'Cancel' (you can obviously 
+call them otherwise). According to the preferences of the programmer, it will 
+be the pair 'Apply' and 'Reset', or the pair 'Confirms' and 'Cancels' 
+which will be activated by the \<Return> and \<Undo> keys. The Bit 13 of the 
+ob_flags (::WFCLOSE) must be positioned to involve the automatic closing of 
+the window.
+
+For example, in the forms in window of BIGdemo, 'Apply' and 'Reset' are 
+activables from the keyboard. 'Confirm' and 'Cancel' require a click mouse, 
+but close the window automatically. Experiment and remove the attributes 
+B_DEFAULT and B_UNDO of the two first to assign them to both others, and 
+the window could be closed by the keyboard. One can plan in a program to 
+leave the choice to the user which pair of buttons can be activated by the 
+keyboard, by modifying the corresponding attributes in the resource in memory, 
+while choosing a default configuration with the creation of the resource.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_extend_edit BIG Extended editable
+Objects B_EDIT are "extended" editable fields, which authorize the data entry 
+of more characters than the apparent width of the field. For example, editable 
+itself can be 15 characters wide (width of the string te_pvalid), but the text 
+can have a length more important, up to 255 characters.
+
+The number of authorized character is indicated in the high order byte of 
+the ob_state (it is not possible to modify this number during the course  
+of execution of the program, because the necessary memory is reserved during 
+initialization). it is imperative to place two arrows on both sides of the 
+field, in the following way (the arrows are represented here by the 
+characters "<" and ">" instead of the characters Ascii 4 and 3):
+- Text: < _____________ >
+.
+The field is preceded by an arrow and a space on the left, it is followed 
+of a space and an right arrow on the right. These arrows are used to scroll 
+the text with the mouse. The routine of the cursor placement at the poin of 
+the click (when one clicks in the field) takes in account for its calculations 
+the presence of these arrows if it is a B_EDIT object. If you omit the arrows 
+and their spaces, the cursor will be positioned two characters on the left 
+of the clicked position.
+
+In addition, during the data entry of the characters, BIG considers that the 
+string te_pvalid (the data entry filter) is active for the apparent part of the 
+text. It is thus necessary to reserve the usage of the B_EDIT for editable made 
+up of the same type of characters. For example the string te_pvalid will be 
+"XXXXXXXXXX" or "9999999999". If it consists of several different filters, 
+there will be bad surprise during the data entry.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_move_form BIG Movable form
+The buttons B_MOVE make it possible to move a form on the screen. Its 
+displacement can be done "in real-time", i.e. it is an image of the form 
+and content that one moves until the new position, or simply a "phantom box" 
+with the same dimensions. However, if there is not enough memory available to 
+work in real-time (the screen must be saved entirety in a buffer), the display 
+of the phantom box is automatically used, even if displacement in real-time is 
+requested at the time of the call of the function. It is possible to force the 
+use of the phantom box instead of real-time box even if there is enough memory.
+
+When this button is clicked, and that one keeps the mouse button depressed, 
+the form is moved. When the mouse is released, the form is "droped"to its the 
+new position. Displacements of the form (or of the "phantom box") are done within 
+the limits of the desktop, less three pixels on each edge, in order to 
+compensate for the attribute OUTLINED as the majority of the root-object in 
+forms uses this attribute.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_text_graph BIG Text with graphical attributes
+The B_FRAME are of type G_BUTTON. Only their extended type distinguishes 
+them.  The higher side of the frame will be displayed a half character height 
+lower than the position of the button during its creation in the resource 
+editor. The text will overlap this line, positioned at one character from the 
+left edge. The extended ob_state is used to determine the graphic attributes 
+of this text.
+
+The B_GRASTR can be of type G_STRING or G_BUTTON. Type G_BUTTON is advised, 
+because it makes it possible to better visualize (in the resource editor) the 
+width of the object (which is used if the text must be underlined). If bit 13 
+of ob_flags (BS_RIGHT, already described with the selectable buttons) is set 
+to zero, the text will be fixed on the left side of the object. If the bit 
+is set to one, the text will be fixed on the right side.
+
+The B_SMSTR are close to the B_GRASTR in their aspect. It is a text which 
+will be displayed by means of the font 8x8, which is half height of the 
+"normal" size (in high-resolution), but as wide. This preserves a good 
+readability, compare to the font 6x6, really too small. If bit 13 of ob_flags 
+(BS_RIGHT, already described with the selectable buttons) is set to zero, the 
+text will be fixed on the left side of the object. If the bit is set to one, 
+the text will be fixed on the right side. If the bit BackGround is set to one, 
+the text will be written in transparent mode, if not in opaque mode.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_3d 3D Aspect in BIG
+BIG makes it possible to give to the forms a "3D" aspect. The "BIG Method" is 
+compatible with the specifications of the AES, which uses bits 9 and 10 of the 
+ob_flags of the objects. BIG does not use and tests only bit 10, named 
+"BKGR" (background), which is used to match the aspect of the object (in 
+particular its pattern and its color) with those of the object located 
+under him.
+
+To carry out a 3D form with BIG, two cases are to be distinguished: 
+- if one is using a display with 16 colors or more, and 
+- if one is into 2 or 4 colors. 
+.
+In the first case, the most beautiful effect is obtained when the root-object 
+has one pattern set to 100% and the color number 8, which is defined like clear 
+gray by defect. In the second case, the best is to give up on 3D. There is 
+however a possibility of simulating it, but the effect is hardly esthetics: 
+it is necessary to give a pattern to the root-object (the pattern with 50% is 
+recommended) even if it means to change it for 100% gray if there is enough 
+of colors. Then, in the two situations, that depends on the type of object 
+BIG (look at the forms of the demonstration to better understand the following 
+explanations):
+- The text of the objects of the type B_SELECT (B_ROUNDB and B_CHECKB) is 
+always written in transparent mode, therefore they will always be in agreement 
+with the pattarn and the color placed below. In addition, the drawings of the 
+small round or the small square give by means of a shade the illusion which 
+they "UP" when they are not selected, and that they are "inserted" 
+when they are selected. There is thus nothing special to make to place these 
+objects in a form 3D.
+- B_GRASTR must have the BackGround bit positioned. In this case, the text is 
+transparent, and the black underlining is doubled of one shifted white line, 
+to give an impression of 3D. On a background pattern, it is not advised to give 
+to these texts the attribute Italic, it is not very readable. If the bit is not 
+set, the text is displayed in opaque mode.
+- In the same way, B_FRAME are normally white rectangles, but become a 
+transparent frame if there is a BackGround. The display of this frame is also 
+doubled with a shifted white line. The text becomes transparent (same notices 
+as for usage of Italic).
+- B_UNDER and B_UNDO become transparent in 3D. B_DEFAULT Buttons not being 
+of G_USERDEF, they are drawn normally, i.e. white opaque. The easy way is to 
+give them type B_UNDER even if one does not wish to affect keyboard shortcut 
+to them, and to position their BackGround bit.
+- B_POPUP (having the extended type 22) and B_LISTs become transparencies 
+thanks to the BackGround bit and are decorated with white lines on the left 
+and top sides if they are not selected, on the right and bottom sides if they 
+are.
+- The pop-ups menus themselves (as well as the free pop-up menus, menus B_LIST) 
+have a specificity if there are at least 16 colors. If the Background bit is 
+set for the root-object, the pointed option is displayed in black text on 
+yellow background. To carry out this rather esthetic effect, the active 
+palette is slightly modified, then restored at the end of the call. That is 
+sometimes undesirable, especially if an image is displayed on the the screen at 
+this time. One can then deactivate the bit BackGround. The option pointed by 
+the mouse is then simply selected in an ordinary way, i.e. reversed.
+- Lastly, the editable objects (even if they are not B_EDIT) having a 
+BackGround bit are transformed into G_FBOXTEXT (if this was not the case), 
+possibly without frame, transparent. But their drawing remain done by GEM. 
+It is not enough to give them the transparent attribute, because if they are  
+G_FTEXT without BOX, the GEM manages the edition of the text in an incorrect 
+way.
+.
+The method of the pattern 100% and the color number 8 does not work in less 
+than 16 colors, because this color is then black. One can test at the beginning 
+of the program the number of colors. If there is not 16 of them, it is 
+necessary to pattern all objects concerned, or to put them in white ( no more 
+3D). If not, one can put them in gray.
+
+Last point. A button DISABLED has a displayed text in grayed, i.e. 50% pattern. 
+On an underlying pattern of same percentage and of the same color, the pixels 
+of the text and those of the bottom can either coincide exactly, or to be 
+exactly alternate. In the first case, the text will disappear from the sight, 
+and in the second it will appear normally written. It is to better know about
+these optical illusions!
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_image Images in BIG Forms
+The objects of the extended types B_PICT make it possible to place an any
+image in a form.
+
+Here are characteristics of this object:\n
+At creation, it is theoretically possible to use any type of GEM object, but 
+type G_BOX seems to me more indicated because it allows of good visualization 
+of the coordinates of the future image in the ressource editor.
+Here the structure which contains the relative informations with this object:
+@code
+typedef struct t_image_dial {
+     MFDB mfdb_image;
+     GRECT cur_pos;
+} t_image_dial;
+@endcode
+- "mfdb_image"is a structure of the type VDI MFDB which entirely describes 
+the image to be used (address, size, etc).
+- "cur_pos" is a structure AES GRECT making it possible to carry out a kind 
+of clipping of the image, i.e. to use only one part to place in in the form.
+- "cur_pos" describes the coordinates of this part compared to the full picture.
+.
+At the creation of the resource, create your B_PICTs and give them the 
+dimensions that the image will occupy (if the image is larger, a clipping is 
+carried out automatically). Then, in the body of the program and after the 
+call to the function initial(), carry out the loading of the image (or the 
+images if there is several) proceeding like this :
+- Reserve the memory with:
+@code
+	t_image_dial *img;
+	img = (t_image_dial *) adr [object] .ob_spec.userblk->ub_parm;
+	img.mfdb_image.fd_addr = (long) malloc (size);
+@endcode
+Where "adr" is the address of the form where the object is, 
+"object" is the number of this object and 
+"size" is number of bytes to reserve
+- Fill the other elements of structures MFDB and GRECT with the adequate values.
+- Do not forget to load your image (after decompression if necessary) to the 
+address img.mfdb_image.fd_addr.
+.
+Thats all. It is not even necessary to release the storage areas reserved, the 
+function end() takes care of this at the end of the execution of the program.
+
+On the other hand, you must deal with the palette of your image if it has one. 
+If the form is in a window, reserve memory for this pallet and place this 
+address in the element win[index].w_pal of the corresponding 
+::BigWind (see the chapters on windows in BIG). BIG will be given the 
+responsability to activate it when the window passes in the front and 
+to deactivate it in the other cases. If the form is not in a window, you 
+have to take care of the pallet.\n
+
+Last possibility: if the image is a monochromic pattern (only one plan of 
+color), it is possible to assign a color to its pixels. The index of this color 
+is placed in the first four bits of the high order byte of the ob_state. 
+The "white" points of the image will be displayed... in white! The four next 
+bits represent the mode of copy of the image, according to the rule of VDI
+function vrt_cpyfm(), i.e.: 1: Replacement, 2: Tranparent, 
+3: Xor, 4: Inverse transparency) BIG does not check anything on this subject, 
+take care of placing correctly a color and a view in the extended ob_state.
+
+If the image has several plans of colors, it is displayed with the function 
+vro_cpyfm() and the extended ob_state is ignored.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_hier_menu BIG Hierarchical menus
+The B_HIERM are imperatively reserved for G_STRING of the menu options. The 
+extended ob_state contains the number of the pop-up form which is related to 
+this option. The management of the hierarchical menu deserves that one stops 
+there a little for explanations.
+
+A delay of approximately a half second is respected, then, if the mouse pointer 
+is still on this menu option, the sub-menu is displayed (possibly transformed 
+into scroll-menu if it is too high). The following problem arises then: If the 
+mouse is brought on another title of menu, the corresponding menu is automatically 
+unrolled by GEM! Obviously, this menu is likely to be placed "over" the hierarchical 
+menu. It is useless to try to remove the management of the top menu by doing a
+wind_update(BEG_UPDATE) or menu_bar(0), because then 
+the menu containing our B_HIERM would also disappears!
+
+The only possible solution seems to be as follows: the hierarchical menu is closed 
+again as soon as the mouse pointer goes above the sub-manu, i.e. it has a "y" 
+position higher than the top of the sub-menu. It is thus forbidden to place a 
+hierarchical menu at the first option of a menu, because this "above" would 
+correspond to the input in the menu bar, and we would find the same problem: 
+a new menu could be unrolled on top of the hierarchical menu.
+
+In addition, although the menu option is a Userdef, the GEM takes the annoying 
+initiative to consider it deselected as soon as the mouse pointer leaves it to move 
+on the hierarchical menu. The function in charge with drawing this option into 
+normal or in inverted carry out a whole series of tests and decide according to 
+the context (sub-menu displayed or not) and on the position of the mouse pointer 
+(on this option, on another option, leaving sub-menu from the right, leaving 
+sub-menu from the left, leaving sub-menu from above...) how it must be drawn, 
+and forces possibly the SELECTED bit.
+
+All these considerations apply only to the hierarchical menus of the main menu. 
+In the case of the menus in window, the situation is more simple. Indeed, it is 
+not the GEM that manages this menu bar, it is a function in BIG. If the mouse 
+cursor moves on another title of menu whereas a hierarchical menu is unrolled, 
+this function takes care of closing it before displaying the new menu. So 
+it is possible to place an associated hierarchical menu as the first option 
+for a menu within a window.
+
+The B_HIERM menu option must must be filled with spaces over all its width. 
+Indeed, BIG places in the one but last character a small arrow (ASCII 3 or 4) 
+directed towards the side the hierarchical menu will be unrolled. In the case 
+of the main menu, the initialization function takes care of the operation once 
+for all at the beginning of the execution of the program.
+
+If your application has several menu bars, you will have to call yourself the 
+create_hierm() function (to be seen in the chapter about forms 
+management functions) at each change of menu (if the new menu does not have 
+a B_HIERM, it is not necessary). In the case of windowed forms, BIG takes care 
+of the operation each time a menu must be unrolled, since the window could be 
+moved since last calculation. Moreover, if the sub-menu is likely to leave the 
+screen by the bottom, it is shifted by a certain amount towart the top, or it 
+is changed into scroll-menu if it is really too high. This is done only for the 
+menus in window. For the main menu there is no shifting done, only a transformation 
+into a scroll-menu if the hierarchical menu leaves the desktop by bottom.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_toolbar_form BIG Toolbar in Forms
+This type of form is created like any other. However, it should not comprise any 
+object TOUCHEXIT or EXIT, nor any editable field. BIG do not carry out any test to 
+control this. The other types of objects are authorized and managed like everywhere 
+else (keyboard shortcuts, pop-ups and pop-lists, radio-buttons, etc). We will further 
+see how to use the toolbars. But let us not forget that these forms must be as small 
+as possible in height in order not to reduce too much the window work area. 
+Their root-object will be widened by BIG to the double of the desktop width. it is 
+not possible to shift them as it is the case of the menus in window bu default, but 
+nothing prevents you from placing arrowed buttons and from managing yourself the 
+shifting. Avoid placing the most usually used options towards the right side, 
+because they are inaccessible when the window is narrowed.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_kb_shortcut BIG Keyboard shortcuts
+In the menu options, the value entered for the keyboard shortcuts must follow 
+certain requirements. The keyboard shortcuts using a combinations of several 
+special keys, as <Shift + Control> for example, are possible but one should not 
+overuse them for ergonomic reasons. Moreover, the general guideline 
+is to place in the menus shortcuts using only the \<Control> key, the 
+\<Alternate> key being reserved for the keyboard shortcuts in the forms. In 
+addition, the shortcuts without special key (directly the character) are not 
+authorized, in order not to create conflict with options of the kind "Text 1".
+
+BIG does not take in account the filling spaces which can follow the values 
+entered in the ressource editor for the keyboard shortcut. The last "real" 
+character of the menu option is thus the character who must be pressed, the 
+characters who precede it must be "^" for the \<Control> key, the character 
+Ascii 7 (a rhombus in a rectangle) for the \<Alternate> key, the character 
+ASCII 1 (the up arrow) for the \<Shift> key.
+
+The search routine of the keyboard shortcuts does not make the difference 
+between lower case or upper case letters (neither in the menus, nor in 
+the forms). It does not differentiate either the \<Shift right> key from the 
+\<Shift left> key.
+
+Since the search is carried out in the resource loaded in memory and according to 
+the Ascii code of the typed character, the management of the keyboard shortcuts 
+is independent of the type of keyboard (Azerty, Qwerty, etc), and only dependant 
+on the equivalent placed in the corresponding option. To modify a keyboard shortcut 
+of a program using BIG, it is enough to modify it in the ressorce file. The new 
+keyboard shortcut will be active immediately without having to recompile the program. 
+We can thus consider an option (or an external little program) allowing the user to 
+entirely reconfigure the shortcuts according to his/her personal preferences. 
+He/she would thus have the possibility of assigning to the options which he/she 
+generally uses a specific keyboard shortcut according to his/her taste.
+
+It is possible to assign nonalphanumeric keys to a keyboard shortcut. In this case, 
+the special key is optional (for example, an option can be called by using the 
+\<Undo> key alone. Here the list of the key words to be placed in the menu option, 
+for each one of these keys, which you will recognize:
+
+Help, Undo, Backspc or Bksp, Del or Delete, Insert, Clr, Fn.
+
+"Fn" is used for the function keys, "n" is obviously to replace by the number of 
+the key. No difference is made between the upper case and lower case letters. 
+Several key combinations are prohibited, because reserved by the system are: 
+<Alternate + Help> (Hardcopy), <Alternate + Insert> (left-click), 
+<Alternate + Clr> (right-click) and all the combinations <Alternate + numerical> 
+from the right numeric keyboard (reserved for entering ASCII codes on the most 
+recent versions of the TOS).
+
+According to the context, the search for correspondence between an option or a 
+button and the keyboard shortcut is carried out according to certain rules of 
+priority. The simplest case is the one where an ordinary form is displayed. 
+The pull-down menu is then inactive. Search is only done in the form.
+
+If the window in the front is an ordinary window, search is only done in 
+the menu (and its hierarchical sub-menus). If it is a window with form or toolbar, 
+and that this form does not comprise editable fields, search is done in priority 
+in the menu, then it continues, if nothing were foun,) in the form or the toolbar 
+of the window. If the form of the window comprises one or more editable fields, 
+search is done only in the form. If the window comprises a menu, it is this menu 
+(and its hierarchical sub-menus) which has priority. Search continues then in the 
+main menu. It is impossible to have a window containing at the same time a menu, 
+a toolbar and a form or any combination two by two of these elements. BIG does not 
+allow it, and that would not have great interest.
+
+Last word on the UserDef objects, in connection with B_NICELINE objects. They are 
+by no means essential, but they were added to BIG because the normal objects cause 
+a crash with the Let Them Fly utility. BIG thus transform automatically the menu separation lines made of of dashes ("-") or equal signs ("=") in B_NICELINE 
+(the DISABLED attribute must obviously be set).
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_help_bubble BIG Help-bubbles
+The creation of the Help-bubbles is very simple, and their management during execution
+of the program is done entirely by BIG. The texts of the bubbles are placed in the 
+resource in free strings. To indicate that an object has a bubble, it is necessary to 
+position the bit 14 of its ob_flags (definite under name "AIDE_OBJET"). The number 
+of the free string as usual is placed in the high order byte of the ob_state. Since 
+the ob_state of objects B_POPUP and B_LIST is already used, this number is placed 
+in the extended ob_state of the root-object of the pop-up form linked to the button.
+
+The bubbles can be affected only with objects in forms. Therefore, no bubbles on the 
+desktop, nor in the menus (in windows or not). The objects not being able to receive 
+bubbles are: B_EDIT, B_FRAME, B_GRASTR and B_FNCP, because the high order byte of 
+their ob_state is already used (the pop-up and pop-lists are exceptions).
+
+The global variable \b aide_en_ligne determines the behavior of bubbles: 
+- If its value is zero (default value), all the bubbles are unactivated.
+- If its value is -1, the bubbles are automatically active, and are displayed as soon 
+as the mouse passes over an object which has one of them.
+
+If its value is positive, it is regarded as by a bit mask corresponding to the 
+special key combination (Control, Shift, Alternate) that must be depressed so that 
+the bubbles are displayed. It is for example the case in the demonstration, where 
+this variable is worth 4, which corresponds to the Control key.
+
+The maximum length of a text of bubble is of 960 characters, which largely exceed 
+the capacities of the current ressource editors!
+
+The function bulle_attach() makes it possible to bind the buttons, 
+authorized to have a Help-bubble, to their respective bubbles free strings. This
+is done at the beginning of the execution of the program, which is more practical 
+than to do it during the creation of the resource. Especially if one must add a 
+free string thereafter, the numbers associated with some strings are likely to be 
+shifted. This function also positions AIDE_OBJET bit of the ob_flag.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_work_window Working with the windows
+BIG deals with most of work on the windows. It opens them, closes them, and
+entirely handles them (redraws, scrolling, displacement, resizing, iconification, 
+etc.). It can manages an "unlimited" number of windows per application. Lets 
+be clear: the GEM makes it possible to display simultaneously only a limited number 
+of windows to the screen (7 on the old TOS, more starting from version 4). BIG 
+cannot overcome this limit, but it carries out an internal management of the 
+windows which always exist in memory even if they were closed from the screen. 
+A software can thus work virtually with tens of windows, the only limit being 
+the quantity of memory available.
+
+The principle of windows in BIG is very simple: an ordinary window GEM is created 
+and opened, but it does not have any attribute. In this window is placed a 
+"window-form" which is "BIG window". Thus, some new buttons were added, but the 
+window is nevertheless handle by GEM, without any programming change at the 
+operating system level. That also makes it possible to work comfortably by using the 
+standards messages of the AES, the list of rectangles for the redraw, etc, without 
+risking conflicts with the other present applications. As a logical consequence, the 
+GEM function wind_calc() becomes unusable since the window frame area 
+and the working area the same for GEM! Is is therefore \b mandatory to use 
+the BIG function equivalent bwind_calc().
+
+In the same way, the possibility of handling the background windows is done very 
+simply. When a message WM_TOPPED arrives, BIG acts in function of the object 
+of the "window-form" which was clicked: either it makes indeed the window to go 
+to the front, or it activates another function, displacement for example.
+
+For the possibility of making the windows leave the screen by the left, it is 
+necessary to be careful, especially at the time of messages of redraw. Indeed, 
+the GEM follow the principle that a window cannot leave the screen by this side, 
+and in certain situations, the zone to be redrawn can contain negative "x" 
+coordinates! But BIG is watching and and does what is necessary to correct 
+the values when the case arises.
+
+The working area of BIG windows is not stupidly transparent like the one of the 
+traditional windows GEM. Therefore, it is not anymore necessary to begin by a 
+a "washing" redraw of this zone. It is even possible to give it a pattern and 
+a color! It is also possible to change the colors of the buttons, the frame and 
+the color of the scroll bars, the sliders, etc. We will speak about it in detail 
+in the chapter on window management functions.
+
+The new buttons involve obviously the presence of new window attributes:
+- SMALLER iconification button
+- CYCLER "following Window" button
+- ALLSIZER Three new Sizers at the same time. It is not possible to activate only 
+some of them (i.e. the three or none). However, the normal SIZER is independent.
+
+The NAME Attribute of GEM can be used, but BIG is unaware of it. Whatever are the 
+attributes chosen, the window will always have a title bar, even if the title 
+itself does not exist (empty string), but in my opinion windows without title are 
+to be avoided. On the other hand, attribute MOVER is used to activate the possibility 
+of moving the window. If this attribute is absent, the window will have a title bar, 
+but this one could not be used to move the window.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_event BIG Events
+So that the functions of BIG communicate with GEM and with functions of the main 
+program, several new types of events are used. The type of event is placed in 
+element 0 of the buffer of event, which is a table of integer. It can thus take 
+values from 0 to 65535. GEM uses only one about thirty these values, so that the 
+others are available. Certain systems (as the Tube GEM) reserve several types of 
+extended events. The new events of BIG are different from all the others events
+of which I have knowledge.
+
+In all the cases, these events respect the model GEM, i.e. the type in element 0 
+of the buffer, the identifier of the recipient in element 1, and '0' in element 2, 
+since none of these events need more information. The following elements contain 
+information dependant on the type of message.
+
+- BEV_HIERM A hierarchical option of menu of the top menu was selected. The 
+program receives an event MU_MESAG.
+	- Word 0: BEV_HIERM (150).
+	- Word 3: Number of the title of the top menu.
+	- Word 4: Number of the option in the main menu
+	- Word 5: Number in the resource of the sub-menu tree.
+	- Word 6: Number of the object clicked in this tree.
+
+- BEV_FREEPU The free pop-up option that has been was selected. The program 
+receives an event MU_BUTTON.
+	- Word 0: BEV_FREEPU (151).
+	- Word 3: Number of the pop-up tree.
+	- Word 4: Number of the object clicked in this tree.
+
+- BEV_WFORM An object EXIT of the form in window was clicked. The program 
+receives an event MU_BUTTON.
+	- Word 0: BEV_WFORM (152).
+	- Word 3: Index BIG of the window form.
+	- Word 4: Number of the clicked object.
+
+- BEV_WMENU An option of menu in window was selected. The program receives an 
+event MU_BUTTON.
+	- Word 0: BEV_WMENU (153).
+	- Word 3: Number of the menu title.
+	- Word 4: Number of the clicked option.
+	- Word 5: Index BIG of the window containing the menu.
+
+- BEV_WHIER A hierarchical option of menu of menu in window was selected. 
+The program receives an event MU_BUTTON.
+	- Word 0: BEV_WHIER (154).
+	- Word 3: Number of the menu title.
+	- Word 4: Number of the option which called the sub-menu.
+	- Word 5: Number in the resource of the sub-menu tree.
+	- Word 6: Number of the object clicked in this tree.
+	- Word 7: Index BIG of the window containing the menu.
+
+- BEV_TOOL An object of toolbar of a window was clicked. The program 
+receives an event MU_BUTTON.
+	- Word 0: BEV_TOOL (155).
+	- Word 3: Index BIG of the window containing the toolbar.
+	- Word 4: Number of the clicked object.
+
+In addition, at the time of events occurring on a window, BIG returns to 
+the program the corresponding message GEM. For example, if a window BIG is 
+moved, the GEM does not generate a message WM_MOVED, since they are the routines 
+of BIG which carry out displacement. But BIG simulates a similar message and
+returns it. Thus, the program is informed of all that occurs.
+
+In this domain there is "new" messages intended to simulate those of GEM...
+but the GEM do not have them. Here:
+- WM_CYCLED (38) Cycling of window.
+	- Word 3: GEM Handle of the window which has started the cycling.
+	- Word 4: GEM Handle of the new window in front.
+	.
+Message WM_BOTTOM (33) of the recent versions of the AES is under BIG 
+equivalent with WM_CYCLED.
+
+- WM_ICONIFY (34),
+- WM_UNICONIFY (35), and 
+- WM_ALLICONIFY (36)\n
+are all the three implemented only in the last versions of the AES. However, 
+one can use them under BIG in any Atari configuration.
+	- Word 3: Handle GEM of the window concerned.
+
+All the messages of the type GEM (WM_xxx) are thus turned over by BIG to 
+the application, but conversely, they all can be sent by 
+the application, by means of the function send_mesag().
+
+The only restriction concerns sending messages WM_HSLID and WM_VSLID:\n
+If the application sends one of these messages, the position of the corresponding 
+slider will not be modified. This modification must be made before by the program. 
+On the other hand, the values of BigWind::w_lin and BigWind::w_col are brought up 
+to date.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_int_rsc BIG Internal resource
+BIG has an integrated resource for its own use. It is not incompatible that the 
+program itself has its resource (external or not) and that BIG adds some 
+integrated trees. This included resource beeing part of program itself, it will 
+located somewhere in memory. It is enough to know where to transmit the 
+addresses necessary to the functions which need it. The usage by BIG of this 
+included resource is entirely automated. You do not have to worry about it.
+
+Let us recall that BIG can work the same way with an external or an internal 
+RCS. Please to the chapter 'Working with an internal resource' for more 
+information.
+
+This included resource has 8 free forms, 2 alarms and 1 free string. 
+The first form is the movable alert box which is mofified and used by the call 
+of the function big_alert(). The following form contains the alert 
+icons (BIG offers 9 shape for icons instead of the 3 usual ones). The third 
+contains the two scroll arrows of the menus in window. The fourth contains 
+the G_ICON used for drawing yhe B_ROUNB, B_CHECKB and the 'following option' 
+button of the pop-ups and pop-lists. The following contains the G_BOX the 
+two arrows used for the construction of the scroll-menus. The following 
+contains the form being used to create the pop-lists. The last but one is the 
+form-window itself and the last contains all the small icons used for the 
+buttons of window.
+
+As for alerts, the first is the one used to announce that the external resource 
+was not found to be loaded, and the second informs the user that it is impossible 
+to open a new window.
+
+To finish the free string contains the text which is displayed if one 
+try to launch a program under BIG (thus under GEM) starting from the 
+AUTO folder.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_win_internal BIG Window Structure Detailed Description
+Under GEM, one starts by creating the window with the function 
+wind_create(), then opens it with wind_open() to display 
+something in its working area. GEM keeps up to date data tables which inform it 
+at any time about a given window. BIG makes the same thing, but its data tables 
+contain much more information, and the number of tables (thus of windows) is not 
+limited.
+
+To be precise, it uses a table of structures. It is this structure, called BigWind,
+which contains all the necessary informations for the window management done by BIG. 
+The routines of initialization of the program reserve, at the beginning of the 
+execution, a storage area of the size necessary for the number of windows which 
+will be used by program. We have only one global variable (called "win"), which 
+is declare as BigWind *win, i.e. "pointer on a BigWind structure". 
+From there, we can reach the structure of any window as a table. For example, 
+the structure containing the informations relative with the third window is 
+with the address win[2] (since numbering starts to 0).
+
+@note (You can click on any of the structure elements to get more detail)
+
+The content of the BigWin structure is the following:
+@code
+typedef struct bigwind {
+	int		w_hg;			/* Positive GEM Handle, -1=init, 0=closed */
+	int		w_type;			/* BIG type of windows */
+	int		w_attr;			/* GEM Window attribute */
+	GRECT	w_curr;			/* window current coordinates */
+	Oldw	w_old;			/* coordinate before iconification */
+	int		w_wmini;		/* minimum width */
+	int		w_hmini;		/* minimum Height */
+	int		w_wmaxi;		/* maximum width */
+	int		w_hmaxi;		/* maximum Height */
+	int		w_wunit;		/* horizontal shift unit */
+	int		w_hunit;		/* vertical shift unit */
+	int		w_hprot;		/* number of protected points on left */
+	int		w_vprot;		/* number of protected points on top */
+	Cont	w_cont;			/* vary according to window content */
+	Palette	*w_pal;			/* Pointer to the associated pallet */
+	OBJECT	*w_bar;			/* window with menu/toolbar => tree address */
+	OBJECT	w_fen[NGAD];	/* windowed form */
+	int		w_flags;		/* full win, active Kb, redraw, justification, last win */
+	int		w_mouse;		/* mouse pointer shape in the window */
+	int		w_icon;			/* iconification : associated  window index */
+	FNCP	w_redicn;		/* Funct. pointer redraw if win iconified */
+	FNCP	w_cycle;		/* Funct. pointer display next window */
+	FNCP	w_redraw;		/* Funct. pointer win redraw */
+	FNCP	w_top;			/* Funct. pointer bring win to top */
+	FNCP	w_close;		/* Funct. pointer close win */
+	FNCP	w_move;			/* Funct. pointer move win */
+	FNCP	w_size;			/* Funct. pointer resize win */
+	FNCP	w_full;			/* Funct. pointer full size win */
+	FNCP	w_hslid;		/* Funct. pointer slider horizontal */
+	FNCP	w_vslid;		/* Funct. pointer slider vertical */
+	FNCP	w_uppage;		/* Funct. pointer one page up */
+	FNCP	w_dnpage;		/* Funct. pointer one page down */
+	FNCP	w_lfpage;		/* Funct. pointer one page left */
+	FNCP	w_rtpage;		/* Funct. pointer one page right */
+	FNCP	w_upline;		/* Funct. pointer one line up */
+	FNCP	w_dnline;		/* Funct. pointer one line down */
+	FNCP	w_lfline;		/* Funct. pointer one line left */
+	FNCP	w_rtline;		/* Funct. pointer one line right */
+	char	*w_title;		/* window title pointer */
+	char	*w_infos;		/* window info pointer */
+	long	w_wtot;			/* max window content width (in pixels) */
+	long	w_htot;			/* max window content Height (in pixels) */
+	long	w_lin;			/* window first line */
+	long	w_col;			/* window first column */
+} BigWind;
+@endcode
+
+The element "w_curr" is a substructure GRECT, definite like this by file AES.H:
+@code
+typedef struct
+{
+  int g_x;		/* X coordinate */
+  int g_y;		/* Y coordinate */
+  int g_w;		/* Withdh *
+  int g_h;		/* Heigth *
+} GRECT;
+@endcode
+
+The element "w_old" a Oldw substructure, used "to put aside" the coordinates and 
+attributes of the window when it is iconified or brought to the display size, 
+in order to be able to restore them then:
+@code
+typedef struct oldw {	/* iconified window data *
+  GRECT w_coord;	/* coordinates *
+  int w_att;			/* Attributs *
+} Oldw;
+@endcode
+
+The element "w_cont" is a union:
+@code
+typedef union cont {	/* Define the contents of a window */
+  Form w_form;			/* Data if form */
+  MFDB w_img;			/* Data if image */
+  char *w_adr;			/* Data If text or othern */
+} Cont;
+@endcode
+
+This union is itself made up of a substructure:
+@code
+typedef struct form {	/* Define for a windowed form */
+  OBJECT *w_tree;		/* Adresse tree */
+  int w_edit;			/* Current editable */
+  int w_pos;			/* Position of the cursor */
+  char *w_bak;			/* save form state */
+} Form;
+@endcode
+
+The last element of the union, "w_adr", is a simple pointer on 
+data. If the window contains text, it will be able to indicate it 
+directly, if not it will be able to point on a zone describing these data.
+
+The Palette type is defined as follows:
+@code
+  typedef int Pallet [3];
+@endcode
+
+Finally, here the definition of the type "FNCP", which means 
+"FuNCtion Pointer":
+@code
+  typedef void (*FNCP) (void);
+@endcode
+
+detailed description of the BigWin structure.
+All the names of elements start with w_. For each element, I indicate the 
+mnemonic significance of his name, which is used to remember it more easily, 
+as well as the value given at initialization.
+
+- int w_hg: The GEM Handle. To access a window, BIG uses naturally the GEM calls. 
+It is thus essential to preserve somewhere the GEM handle of this window. At 
+initialization, this element contains -1. This indicates that the window has 
+never been opened. As soon as it is created and opened, it contains the GEM 
+Handle for this window. But when it is closed, its value is not set back to -1
+but to 0, which indicates that it was created, then destroyed by the GEM,
+but that it always exists for BIG. The values contained in the other 
+elements of the structure are therefore not anymore the default values,
+but they containts the last parameters of the window, which will be used
+if the creation of this window is requested again to GEM. 
+- int w_type: Type of BIG Window. This is the type of windows definition is from 
+a BIG perspective. Big defines the following types:
+	- ::WTYP_NORM The window is "normal" contains probably text. The programmer 
+	must write the display routine of display, BIG handle the remainder.
+	- ::WTYP_PICT The window contains an image. Big handle everything. 
+	- ::WTYP_FORM The window contains a form. Big handle everything. 
+	- ::WTYP_TOOL The window contains a toolbar.
+	- ::WTYP_MENU The window contains a menu.
+	.
+A window cannot have at the same time a toolbar and a menu. BIG 
+does not check, but gives the priority to the menu.
+w_type is set to WTYP_NORM by default.
+- int w_attr: The Windows Attributes. They are the GEM attributes of the window 
+(slider, mover, etc) that one indicates to the function wind_create(). 
+Several sets of attributes are predefined by BIG to simplify work:
+	- ::WATR_ALLG All the GEM attributes are activated.
+	- ::WATR_ALLB All the BIG attributes are activated, i.e. really all.
+	- ::WATR_CURRG Most common (current) GEM attributes.
+	- ::WATR_CURRB Most common (current) BIG attributes
+	- ::WATR_FORMG Most common GEM Form attributes.
+	- ::WATR_FORMB Most common BIG Form attributes.
+	.
+ALL means all the attributes, CURR the most common attributes (all except 
+the lines of information), and FORM for the windowed form (NAME, CLOSER 
+and MOVER). The 'G' means that the attributes are limited to those of GEM, 
+the 'B' means that they also include the extended attributes of BIG.
+WATR_CURRB is the default value at initialization.
+- GRECT w_curr: current coordinates and dimensions of the window. This information 
+is upgraded with each change of size or position of the window. 
+At initialization the value is: {0,0,100,100}
+- Oldw w_old: Recording of the coordinates and the attributes of a window before 
+iconification, in order to restore them at the time of desiconification.
+int w_wmini, w_hmini: minimum Width and Height of the window working area. If one 
+tries to dimension it with lower values, BIG takes these minimums. Calculation takes 
+account of the possible presence of a menu or of a toolbar in the window.
+- int w_wmaxi, w_hmaxi: maximum Width and Height of the window working area. 
+If one tries to dimension it with higher values, BIG take these maximums. Calculation 
+takes account of the possible presence of a menu or of a toolbar in the window. 
+But do not place objects in this toolbar on the right of the maximum width of the 
+window! If the window is of type image (WTYP_PICT), dimensions of the image become 
+then the maximum dimensions of the window.
+- int w_wunit, w_hunit: Horizontal and vertical shift units of the window, in pixels.
+At the time of a click on one of the scroll arrows, the contents are shifted in the required direction by this value. For text, it would be respectively the width and 
+the height of a cell of character. With initialization: {1,1}.
+- int w_hprot, w_vprot: Horizontal and Vertical Protection. Gives the number of 
+pixels which will be "protected" on the left (horizontal) and in top (vertical) of 
+the working area. The events of displacement of a line to the top, bottom, the left 
+or the right-hand side will not affect this part of the display, which remains thus 
+protected. That allows, for example if columns of informationare are displayed , to preserve in top of the window the titles of these columns even if one moves 
+vertically. These elements are fixed at 0 with initialization. It is the programmer 
+who must, if necessary, to place there other values.
+- Cont w_cont: Content of window. Fixed at "0L" at init time, this element is in 
+fact a union. It depends on what is displayed in the window. The elements of this 
+union are:
+	- Form w_form `Form. If the window contains a form, w_cont is a structure 
+	Form, defined by BIG. Here is description:
+		- OBJECT *w_tree: Address of the form.
+		- int w_edit If the form contains one (or several) editable field(s), 
+		number of object of the field where the cursor is. -1 if not.
+		- int w_pos If the form contains one (or several) editable fields 
+		position of the cursor in the current field. -1 if not.
+		char *w_bak: BIG is able to manage the buttons 'Confirm', 'Cancel', 
+		'Apply' and 'Reset' of forms, by restoring the state of the form in 
+		the event of cancellation or reset. This pointer indicates the buffer of 
+		backup state for the form.
+		.
+	- MFDB w_img 'Image'. If the window contains an image, w_cont is MFDB. 
+	The MFDB (Memory Form Block Definition) is a standardized VDI structure, 
+	which contains all the necessary informations with the management of an image 
+	(its address, its dimensions, etc). Thanks to this standardization, BIG can 
+	deal completely with the display of the image in the window, without 
+	intervention of the program itself.
+	- char *w_adr: If the window contains neither an image, nor a form 
+	(it then contains probably text or a calculated graphics), this element is 
+	a pointer on char which indicates the beginning of the storage area where 
+	the data (the text) are stored. The display routine of this window will be 
+	able to then find them directly, whatever is the current window. 
+	.
+- Pallet *w_pal: Pallet. This element is a pointer on a buffer zone of N time 3 
+int, 'n' being the number of displayable colors. Each of the 3 words definite 
+values of red, green and blue of the color. Thus, it is possible to associate 
+a palette with each window. That is almost essential for the window of images, 
+but can prove to be useful for other windows. If this element is ZERO, BIG 
+activates the default pallets. Point is ZERO at initialization.
+- OBJECT *w_bar `'Bar'. If the window contains a menu bar or a toolbar, this is
+the addresses of the tree of this menu.
+- OBJECT w_fen [23] 'Window'. It is in this zone of 23 OBJECT strctures that 
+the 'windowed form' of BIG windows is copied. Indeed, it consists of 23 
+objects, and each window has its own, with characteristics which its specific 
+to this window (for example, certain objects could be hidden if the window 
+does not have the corresponding attribute. Normally, the programmer does 
+not need to modify nor even read the information placed in this element of 
+BigWind. The functions of BIG take care of everything, some are precisely 
+intended to modify the data in this element (the color of an object, 
+for example).
+- int w_flags This element is a mask of bits. Here its description:
+	- Bit 0 WFFULL (Window flag FULL): is set if the window currently 
+	has its maximum size (full opening).
+	- Bit 1 WFARROW (Window Flag ARROW): is set if the window must be handled
+	 starting from the keyboard. The arrow keys correspond to the arrows of the 
+	 windows, and the <Shift + arrow> correspond to the scroller. \<Esc> opens the 
+	 window with its maximum size or that of the screen, or brings back it to 
+	 its preceding size. Moreover, if the window is of type WTYP_NORM, \<Clr> 
+	 brings the display on the first line and <Shift + Clr> on the last 
+	 (less the height of the window).
+	- Bit 2 WFCALAG (Window Flag Position): When set indicates that the 
+	width and the height of the working area of the window must always be multiples 
+	of 	the units of shift. In the same way for the positioning of the contents of 
+	the window at the time of a Slider event.
+	- Bit 3 WFDECAL (Window Flag Shift): Necessary by the presence of new Sizers. If 
+	it is not set, the part of the contents displayed from the upper-left angle of 
+	the working area of the window will not be modified, even in the event of 
+	redimensioning by Upper Left Sizer. If the bit is set, the displayed part will 
+	be possibly be updated. By example, if you reduce the height of the window of 
+	50 pixels by means of the Upper Right Sizer, the contents of the window will 
+	remain with the same 'virtual'position, and thus the display will begin 50 
+	lower pixels. If the bit is not set, the display will always start at the 
+	same place.
+	- Bit 4 WFGROUP (Window Flag Grouping arrows) If this bit is set, the four 
+	arrows of the window will be grouped in the lower right angle. This flag 
+	must NEVER be put for a window form.
+	- Bit 5: reserved
+	- Bit 6: reserved
+	- Bit 7: WLAST (Window LAST) It is used by BIG to know if the window is the 
+	last of those which were declared (NEVER modify this bit).
+	.
+	At initialization only WFARROW is set.\n
+	The low-order byte of this word is entirely used or reserved for possible 
+	future extensions of BIG. On the other hand, the most significant byte is 
+	not used, nor not even tested. You are thus free to use it with your own 
+	way if the windows of your program need other flags.
+- int w_mouse: If this element is equal to zero (value with initialization), 
+the mouse will always have the traditional shape of arrow. If not, the value is
+ interpreted as the AES number of the shape which the mouse must take in the 
+ working area of the window (when the window is in the foreground).
+- int w_icon: If the window is normal, this element contains '- 1'. If it is 
+iconified, it contains index of the associated BIG window. That mean that if 
+the window was iconified alone, it is its own index, but if it belongs to a 
+group of iconified windows in only one icon, it is the index of the principal 
+window, that which was actually iconified, the others being temporarily 
+destroyed. At the time of desiconification, BIG will seek all the currently 
+closed windows whose this element is the index of the one asked for the 
+desiconification, and it will reopen them.
+- FNCP w_redicn 'REDraw ICoN' Pointer on a routine for redrawing the contents 
+of the window which is used only if the window is iconified. If it contains 0L, 
+it is the normal routine (see next element) which is used. Initialized with 0L.
+- FNCP w_cycle Pointer on the routine to bring in the foreground the following 
+window. At initialization, it points on the function next_wind().
+- FNCP w_redraw Pointer on the redraw routine of the window. Initialized with 0L. 
+This pointer is necessary only if the window contains another thing that an 
+image or a form, because in these case BIG takes care of the redraw. If there 
+are 'protected' zones in the top or on the left of the display (or both), it 
+is necessary to take this in account in the routine. It must display the contents 
+of the protected zone(s) independently of the display itself.
+- FNCP w_close Pointer on the routine for closing a window. At initialization, 
+it points on the function closed() which closes the window and requires of GEM 
+to forget its existence (but BIG has more memory). However, it will be necessary 
+in certain cases that the programmer writes this function in order to release if 
+necessary the occupied storage area for example by the text of the window.
+- FNCP w_move Pointeur on a routine which informs GEM that the window was moved, 
+and which records its new coordinates. At initialization point to the function 
+moved().
+- FNCP w_size Pointeur on a routine which informs GEM that the window was 
+resized, and which records its new coordinates. Point at initialization on 
+the function sized()or size_form() in the case of a window form. See 
+in the chapter of the guided visit what was said as in connection with the 
+histograms window.
+- FNCP w_full Pointer on the function which gives to the window its maximum 
+size, or brings back it to the preceding ones if it is already to the maximum. 
+This maximum size is possibly limited in the case of a window image or form to 
+the dimensions of this image or this form. The new coordinates are transmitted 
+to GEM. At initialization, points on the function fulled() or  full_form() in 
+the case of a window form.
+- FNCP w_hslid, w_vslid 'Horizontal SLIDer' and 'Vertical SLIDer' .Pointers on 
+the functions to be carried out in the event of displacement of a slide box 
+(horizontal or vertical) along the corresponding slider. The function carries 
+out the tests necessary, transmits information to GEM and records it. At 
+initialization, point respectively on hslid() and vslid().
+- FNCP w_uppage, w_dnpage, w_lfpage, w_rtpage 'Up page', 'Down page', 'Left 
+page' and 'Right page'. Pointers on the functions to be carried out in case 
+of event of slider, i.e. a request for shifting per page to the top, bottom, 
+left or right side. The function carries out the tests necessary, transmits 
+information to GEM and records it. At initialization, point respectively on 
+uppage(), dnpage(), lfpage(),and rtpage(). These functions move the contents 
+of the window height or width (according to the case) of the window, or less 
+if one is 'with the end' of the display.
+- FNCP w_upline, w_dnline, w_lfline, w_rtline 'UP LINE', 'DOWN LINE', 
+'LEFT LINE' and 'RIGHT LINE'. Pointers on the functions to be carried out 
+in case of the arrows events, i.e. a request for shifting per line to the 
+top, bottom, left or right-hand side. The function carries out the tests 
+necessary, transmits information to GEM and records it. At initialization, 
+point respectively on upline(), dnline(), lfline() and rtline(). These 
+functions move the contents of the window height or width (according to 
+the case) of the step size noted in the elements 'w_wunit' and 'w_hunit'.
+- char *w_title Pointer on the window title. 0 at initialization.
+- char *w_infos Pointer on the window line of infos. 0 at initialization.
+- long w_wtot, w_htot 'Total Width' and 'Total Height'. These elements 
+contain respectively the width and the total height of the window, in 
+pixels. For an image, that corresponds to dimensions of this image. For 
+text, the width would represent the maximum number characters of a line 
+multiplied by the width of a cell of character. The height would be the 
+number of lines multiplied by the height of a cell of character. 
+0 at initialization.
+- long w_lin, w_col 'Line' and 'Column'. Represent (in pixels) the first 
+column and row to be displayed in the upper left corner of the working 
+area of the window, compared to the total contents (w_wtot and w_htot). 
+0 at initialization.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_multitask BIG in a multitasking environment
+
+BIG behaves icorrectly under a multi-task environment, but in certain cases a 
+slow down can be noted (it is a general case in this type of environment). 
+In particular, under MultiTOS, where the management of the timer is far from 
+being perfect, BIG can be capricious in its management of the right-clicks, 
+which use precisely the MU_TIMER event. For a reason which I really do not 
+understand, the double-clicks are also badly handled.
+
+With the use of different multi-task  systems, Geneva for example, everything
+works much better, which seems to confirm that many things were done
+incorrectly in MultiTOS.
+
+But there is an important difference between these environments and the 
+traditional mono-task environments (which in fact is also multi-task, the 
+desktop accessories are a clear proof). It concerns the sending of WM_TOPPED 
+messages. In a normal situation (mono-task), the message is sent to the application 
+as soon as a background window is clicked, and before the mouse button is released. 
+It is to some extent a message TOUCHEXIT, if I dare to say.
+
+In multitask, the message is sent only once the button of mouse was released!
+
+For this reason in this environment, it is not possible (under BIG) to move a 
+background window while mouving the mouse with the mouse button down. Indeed, 
+when a message WM_TOPPED reaches BIG, it seeks if the window concerned is of type 
+BIG, and if it is the case, on which object of the form-window the click took place. 
+If it is on one active element (bars displacement, sizer, slider, etc), the window 
+is not put in foreground, but a management is made according to the object.
+
+Under multitask, when this message arrives with BIG, the mouse button is obligatorily already released. The same principle is applied (ignore the message to the profit 
+of a window function), but it is too late for to realize click-move-release. Thus 
+remains only the second solution: the click-move-click. All that does not obviously 
+relate to the window in the foreground.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_param_func Parameters and pointers on functions
+
+The functions called by objects B_FNCP are of type: void function(void)
+It cannot thus receive parameters nor to return value. There are situations where 
+that is a problem, because it will imperatively be necessary to transmit information 
+to the function, and it will have to answer something. \n
+What can be done?\n
+It is enough to set up a storage area, or a global structure, or a table of 
+parameters, according to the context and the preferences of the developer, where 
+will be placed information to exchange with the function. It is exactly what the 
+AES and the VDI do with the tables contrl[], intin[], ptsout[], global[], etc.
+The demonstration, voluntarily simple, does not present an example of this method, 
+but it is a little what is carried out by the function close_txt(). It calls the 
+function closed() which is charged to close a window. But, being declared 
+void closed(void), one cannot transmit the handle to the window in question. 
+close_txt() place thus the handle GEM of the window to be closed in word 3 of 
+the table buf[], which is a global variable, then it calls closed(). This one 
+will seek in buf[3] the information which it needs: the GEM handle of the window 
+to be closed.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_integrated_rsc Working with an integrated resource
+
+It is completely possible to develop with BIG an application using an integrated 
+resource instead of an external RSC file. To carry out that, it is necessary to 
+use a resource editor able to generate a file RSH containing in the form of C 
+source code the description of the resource. It is then enough to place at the 
+beginning of the program the line "#include PROGNAME.RSH".
+
+Normally, one reaches the addresses of the various trees and objects by 
+the intermediary of table $rs_trindex[] (and rs_frstr[] for the free strings). 
+Under BIG, one uses the table "$ir_trindex []". And this \b even if the resource 
+is not integrated!
+
+Indeed, at the beginning of the execution, the function initial() places  
+all addresses of the tree structures in this table, wetheir the resource 
+is integrated or not. Thus, that facilitates work in one or the other of 
+these situations, and the use of the GEM function rsrc_gaddr() becomes useless.
+
+Here a description of syntax to be used. The address of a tree 
+(object 0) is obtained for example by:
+@code
+	adr = ir_trindex[TREE];
+@endcode
+And addresses it of a particular object by:
+@code
+	adr_object = ir_trindex[TREE][OBJECT];
+@endcode
+With: OBJECT *adr, *adr_object;
+
+The addresses of the strings and free alerts are obtained by the use of the 
+function get_string().
+
+It is necessary that BIG knows how it can reach addresses of the elements of the 
+resource. The function initial() puts at TRUE the global variable ::intgr if the 
+resource is integrated, and to FALSE if it is external.
+
+If we work with an integrated resource, we transmit to BIG by the parameters of 
+the function initial() the start addresses of tables rs_trindex[] and rs_frstr[]. 
+These addresses are then simply copied in the tables of BIG in order to be used 
+when it is necessary to obtain an address. If we work with an external resource 
+(in this case, the parameter nb_tree is equal to 0), we can transmit 0 to be clean, 
+but initial() simply ignore these parameters. Nevertheless it will place the 
+addresses in the table ir_trindex[].
+
+Study the source of the demonstration to see how this is treated. It is enough 
+to change the 0 into 1 in the line 
+@code
+#define INTGR 0 
+@endcode
+to recompile the demonstration 
+with an integrated resource. This definition and some instructions intended for 
+the compiler make the difference between these two situations and the program is 
+always compiled appropriately. If the resource is integrated, we include the file 
+"BIG2DEMO.RSH", and we transmit to initial() the addresses of the tables with
+ "(OBJECT *)rs_trindex" and "(char *)rs_frstr" as well as the number 
+ of trees of the resource: 22 (forms and menus). If the resource is external, 
+ we include simply file BIG2DEMO.H (the definitions) and the other parameters are 
+ put at 0. In the body of the program we use simply table ir_trindex[] without us 
+worrying about any another thing (except in the function winicn(), to obtain the 
+address of a free image).
+
+Last point: if the resource is integrated, the coordinates and the dimensions of 
+the objects must be adapted to the current resolution, by the GEM function 
+rsrc_obfix() (what is performed automatically by GEM with the loading of an 
+external resource by the function rsrc_gaddr()). The function initial() takes 
+care of this automatically for the integrated resources. An advice: in the 
+resource editor, always fix the objects on a character offset.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_accessory Programing Accessory with Big
+
+I remind you that the program BIG2DEMO.PRG can be renamed in BIG2DEMO.ACC and 
+be launched like an accessory. The programming of desktop accessories under BIG 
+is even simpler than under GEM, since certain operations are automatically carried 
+out. Briefly let us point out the principle:
+
+A desktop accessory is an application like any other. Normally, an accessory cannot 
+have a menu bar, but as that the demonstration shows, it is easy to circumvent this 
+limit by placing it in a particular window (of other processes, like protocol Tubes 
+GEM, make it possible to place it like normal menu, but with the condition that the 
+current principal application recognizes also this protocol). The main feature of 
+an accessory is that it never stops running. It is formally forbidden to leave a 
+desktop accessory with appl_exit() or any other function! It is installed 
+automatically during the boot, and is stopped by a reset or by turning off the 
+workstation.
+
+To declare an accessory with GEM, it is obligatorily necessary to use the GEM function 
+menu_register(), which is form:
+@code
+	int menu_register (int me_rapid, tank *me_rpstring);
+@endcode
+The first parameter is the identification number of the application, which is 
+returned by the call of the function appl_init(). The second is the character 
+string which must be the name of the accessory in the first desktop menu. It is 
+on this menu option that the user will click to call the accessory. The function 
+returns an identification number of the accessory.
+
+On the old versions of GEM, it was not possible to have more than six accessories 
+simultaneously. There are no more limits on recent TOS. In addition, it is also 
+possible under MultiTOS to use this function to change the displayed name in the 
+menu even in the case of an application launched as a program. But that does not 
+concern us.
+
+What it is necessary to know, it is that this function has sometimes a capricious 
+behavior. It happens that the accessory is correctly recorded by GEM, but its name 
+does not appear in the menu! If one launches a new application which re-initialized 
+the menu bar by installing its own, everything now works. In fact, that depends on 
+the order in which are done the various initializations (declaration of the 
+application, loading of the resource, etc). It is by modifying this order that one 
+can correct this problem. Unfortunately, the order is different according to 
+whether one works with an external or integrated resource! The function initial() 
+of BIG fixes this problem for us. Thank you.
+
+We have installed our accessory. What does it make? It waits until one calls it 
+(it is possible to have it carry out small tasks during this time, but lets leave that 
+on side). When one calls an accessory by clicking it in the menu, it receives an event 
+(of type MU_MESAG if one was in a evnt_multi loop ). The buffer of message contains 
+them then the following elements:
+	- Word 0: AC_OPEN (40)
+	- Word 4: Identifier of the accessory (returned by menu_register).
+.
+When our accessory receives this message, it knows that it has been called (it can 
+check with word 4 that it is well addressed to it, but if not it would not have 
+received anything). What follows obviously depends on the accessory itself.
+It opens a form, a window, etc. It does what it wants, being from now on the 
+foreground application. Note that if it opens a form, it must block the menu. 
+Nothing other than the acessory is active. But it can also, and this is what is
+done in BIG2DEMO.ACC, to open one or more window(s) and to run in an evnt_multi 
+type loop. In this case, it may be that menu options of another application are 
+clicked, or that another window is activated, etc.  Happily, the GEM sends the 
+message corresponding to what happen to the good recipient. Therefore you do
+not need to concerned with that.
+
+But it should be known that the GEM sends keyboard events to the application which 
+has a window in foreground. That means that if your accessory is opened, but that 
+its window is behind, it will not receive messages of keyboard shortcuts, for 
+example. Another important point: in the same situation (the window of the accessory 
+is behind), a click is made for example on the bar of displacement of another window. 
+The application to which this window belongs will thus receive an event of the type 
+MU_MESAG. But the accessory will receive a MU_BUTTON! It will have obviously to be ignored in this context.
+
+It can happen finally that the accessory is closed by an external intervention, 
+without particular action of the user. Let us imagine that we are on the desktop. 
+We open a window belonging to our accessory, then without closing it we move to a 
+window of the hard drive and we launch a program! Another situation: we are in one 
+program, and we open a window of the accessory. Without closing it, we click the 
+option to leave main program. What happen in these cases ?(the following explanations 
+do not apply to operation in multitask).
+The accessory will receive another event, also type MU_MESAG, as follows:
+	- Word 0: AC_CLOSE (41)
+	- Word 3: Identifier of the accessory (turned over by menu_register).
+.
+This message is sent for information, in order to inform the accessory which 
+it is from now on considered closed, and which it must return in its waiting 
+loop of message AC_OPEN, without that it could not be open any more, since it 
+will not treat any more this message. But another thing is made by the GEM: all 
+the windows belonging to this accessory are automatically closed and destroyed by 
+GEM, contrary to what is described in certain books! If the accessory now tries to 
+close one of its windows, whereas it does not exist any more, it occurs in the 
+majority of the cases a blocking of the system without other recourse that the 
+reset. Study how the function clos_acc() is done in the demonstration. The 
+main window of the accessory is only closed and destroyed (by $wind_close()
+and wind_delete()) if the word 0 of the buffer is different from AC_CLOSE 
+(the function closed() of BIG works the same way).
+
+In short, the programming of accessories of desktop is relatively 
+simple. There are certain precautions to take with the caprices of GEM, 
+but BIG is of an invaluable help. It is also necessary to be careful with event 
+management, and not to forget any particular case. The difficulty is the tuning of 
+the application, since it is obviously much more delicate to debug an accessory 
+(it is no more possible to trace the execution). Let us not forget that only one 
+accessory thar crashes will also crash the system and all the other applications! 
+Best is to leave it with the state of a PRG for the programming itself of to turn
+it into an accessory at the latest possible time. To create an application running 
+at the same time as an accessory and a program, take example of the demonstration. 
+A flag (global variable _app in the case of Pure C, _XMODE==GEM_DA in the case of 
+Lattice C) announces if the application were launched out as an accessory or a 
+program, and another (local variable in the function main() of the demonstration) 
+recalls if the accessory is active or waiting.
+
+Under BIG, you will have just to transmit to initial() the number of the free 
+string intended to become the title of the accessory, to write the loop 
+waiting for AC_OPEN message and to treat the message AC_CLOSE.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_iconify Iconification of the Windows
+The iconisation of the windows is realized by BIG in a slightly different way that 
+the versions of the AES which supports this operation directly.
+
+BIG modifies simply the attributes, the position and the size of the window. The 
+position is computed according to the position of the window before iconification: 
+the iconified window is placed at the bottom of the desktop, in the center of the 
+old position... unless the iconified window leave the desktop, in which case it is 
+placed at the edge of this one.
+
+When BIG iconify only one window, it places in the element w_icon of the BigWind structure the index of this window (which is to -1 as long as the window is normal). 
+It is thus necessary to test this element by
+@code
+	if(win[index].w_icon > BLANK)
+@endcode
+to know the state of a window.
+
+In the case of multiple iconification, the window which was used for the request 
+for iconification is really iconified as explained above, the others being simply 
+closed. The element w_icon of all these windows contains BIG Index of the "main" 
+window. Thus, at the time of the deiconification, BIG can determine if other windows 
+must be reopened by traversing them and by seeking those whose w_icon contains 
+the index of the window which one asks for the desiconification.
+
+Lastly, a point must be raised. The old systems can open simultaneously only one 
+limited number of windows. Let us imagine the following situation on a system
+authorizing only 7 windows: Let us open 5 windows, and iconify them all in one. 
+Let us open then 4 other windows, and let us ask the deiconification of the first. 
+There are 2 windows in excess, which will simply not be restored, without 
+informational message.
+
+When it is a window with a pallet which is iconified, the pallet by default is 
+restored. The pallet of the window is restored at the time of the deiconification, 
+if the window is brought in the foreground.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+
+@section prog_xvc Copy, Cut, and Paste
+All the editable fields (extended or not, with large or small characters) of 
+an application under BIG are connected by a system of copy, cut, and paste
+When an editable is active (it is in the blocking form which is displayed, or in 
+the window of foreground), it is possible to copy or cut its contents 
+respectively by the keyboard combinations  "Control + C" and "Control + X". In 
+the case of a copy, the text is copied in a buffer, and nothing is changed in the 
+field itself. in the case of a cut, the text is also copied in the buffer, but the 
+field is emptied of its contents.
+
+To put back a text copied or cuted in another field, it is enough to place the
+cursor in this field and type the keyboard combination "Control + V". The text of 
+the buffer is placed in the editable field. If the field already contained some text, 
+it is replaced by the new one. If the text to be pasted is longer than the size of 
+the field (the complete size in the case of a B_EDIT), the end is truncated.
+No particular action is necessary to activate this functionality, it is 
+automatically active for a program which use BIG.
+
+@ref big_toc "[return to BIG toc]" @ref prog_toc "[return to Prog. toc]"
+
+*/
+
+

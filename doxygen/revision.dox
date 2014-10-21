@@ -1,0 +1,28 @@
+/*! @page page_big_rev BIG Revision History
+<h1>BIG Revision History</h1>
+@author Jean Louis-Guerin
+
+<hr>
+
+@par Release 2.2a October 2014
+
+This is the first release of the BIG sources with English documentation.
+This release is based on release V2.13 from Claude Attard (dated 11/02/99) 
+At this point the source code has not be changed compared to the 
+original code other than: 
+- translating / adding comments in English 
+- using slightly different formating and "beautification" of the code
+- adding doxygen information (defines, functions...)
+- renaming some function calls, global variables, constants, etc.
+.
+
+If you were using BIG 2.0x 2.1x you should be able to recompile your code without
+modification with this new release. Old French function names are translated
+automatically to new English name in the big2.h file.
+For new development it is recommended to use the new English names.
+
+
+@todo
+original 2.x revision history
+
+*/

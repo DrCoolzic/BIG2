@@ -1,0 +1,151 @@
+/*! @mainpage BIG Library
+
+@verbatim
+BIG = "BIG Is GEM" - A high level GEM library. 
+Initial Development by Claude ATTARD, Maintenance by Jean LOUIS-GUERIN
+Copyright (c) 1993-2014 Claude ATTARD
+Copyright (c) 2010-2014 Jean LOUIS-GUERIN
+
+website: http://info-coach.fr/atari/software/system/big.php
+forum:   http://www.atari-forum.com/viewtopic.php?f=16&t=27060
+
+The BIG library may be used and distributed without restriction provided that 
+this copyright statement is not removed from the file and that any derivative 
+work contains the original copyright notice and the associated disclaimer.
+
+The BIG library  is free software; you can redistribute it and/or modify  it 
+under the terms of the GNU General Public License as published by the Free 
+Software Foundation; either version 3 of the License, or (at your option) any 
+later version.
+
+The BIG library is distributed in the hope that it will be useful, but WITHOUT 
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with 
+HxCFloppyEmulator; if not, write to the Free Software Foundation, Inc., 51 
+Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+@endverbatim
+
+<b>Preface by Jean Louis-Guerin</b>
+
+First of all a big thank to <b>Claude ATTARD</b> for the "BIG" work he has
+done on the BIG library and for donating the library to the public domain.\n
+
+Most of the documentation presented here, is just the translation in English of the 
+original BIG library documentation written by Claude ATTARD. I have tried to stay 
+as close as possible to the "spirit" of the original text in French. 
+However the documentation has been completely reorganized and several new chapters,
+pictures, links, etc. have been added.
+
+The documentation has been generated from annotated code using Doxygen in HTML and compiled HTML (.chm) format.\n
+I am not a native English person and therefore the translation is far from being 
+in perfect (or even good) English. Please feel free to contact me if you find mistakes.
+
+@section big_toc Table of Contents
+	- @ref page_big_pres\n
+	This page provides a high level presentation of the functionality of the
+	BIG library and the tools required to use it. It also presents the motivations and
+	the history of the library as well as acknowledgment to contributors.
+
+	- @ref page_big_development\n
+	This page explains how to build applications with BIG library. As the sources 
+	are now public domain it also explain how to build the library itself.
+	
+	- @ref page_big_gui\n
+	This page presents the GUI elements of an application developed with BIG. 
+	If you write an application using BIG, this document can be used as a skeleton 
+	to write the GUI section of your user's manual.
+	
+	- @ref page_big_demo\n
+	This page gives a detailed description of the demo program provided with
+	BIG release. The program demonstrates most of the functionalities that can be
+	easily achieved with the BIG library.
+	
+	- @ref page_big_source\n
+	This page walk you through the source of the BIGDemo program.
+	
+	- @ref page_ref_manual\n
+	This page gives detailed information on writing program with the BIG library. 
+	It is the most important part of the documentation for programmers using BIG.
+	Note that programming information can also be accessed from the \b Constant 
+	page (@ref const_group), the \b Type definition page (@ref typedef_group), the \b Global 
+	variables page (@ref global_group), the \b Functions page (@ref function_group), 
+	as well as from the \b big2.h description page.
+	
+	- @ref page_big_rev\n
+	Revision history of BIG
+
+	<hr>
+@author Claude Attard\n
+English translation and maintenance by Jean Louis-Guerin
+
+@date October 2014
+*/
+
+	
+/*! @defgroup const_group The BIG Constants
+@brief The BIG Constants
+
+To facilitate programming, BIG proposes (and uses) many constant definitions. 
+*/
+
+/*!	@defgroup typedef_group The BIG Defined Types
+@brief The BIG Typedefs
+
+BIG defines several specific type used by the program.
+*/
+
+/*!	@defgroup global_group The BIG Global Variables
+@brief The BIG global variables
+
+BIG works with some global variables, which are accessible from anywhere in the program. 
+Their number was limited as much as possible, but for certain functions it avoids the
+need to pass a lot of argument pointers not always easy to remember and type.
+*/
+
+/*!	@defgroup function_group The BIG Functions Library
+@brief The BIG Functions
+
+BIG contains a large number of functions.\n
+Only the "external" functions that the programmer must (or can) call will be 
+presented here. BIG internal functions are not documented.\n 
+Among all the available functions, about thirty of them are used very often.
+*/
+
+/*!	@addtogroup function_group
+@{ */
+
+/*! @defgroup control_group BIG Control Functions
+@brief Used to initialize and terminate the BIG Library
+
+These two functions must be used at the beginning and at the end of all programs.
+*/
+
+/*! @defgroup form_group BIG Forms Management Functions
+@brief BIG Forms Management Functions
+*/
+
+/*! @defgroup editable_group BIG Extended Editable Management Functions
+@brief BIG Extended Editable Management Functions
+*/
+
+/*! @defgroup utility_group BIG Utility Functions
+@brief BIG Utility Functions
+*/
+
+/*! @defgroup cookie_group BIG Cookie Functions
+@brief BIG Cookie Functions
+*/
+
+/*! @defgroup window_group BIG Windows Function
+@brief BIG Windows Function
+*/
+
+/*! @defgroup image_group Functions for Loading Images
+@brief Functions for loading images
+*/
+
+
+/*! @} */
+

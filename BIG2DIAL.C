@@ -1,8 +1,36 @@
-/*						>>> Big Is Gem <<<
-				MODULE FONCTIONS DE GESTION DES DIALOGUES
+/*! @file big2dial.c
+@brief implementation of dialog box functions
+
+@verbatim
+BIG = "BIG Is GEM" - A high level GEM library.
+Initial Development by Claude ATTARD, Maintenance by Jean LOUIS-GUERIN
+Copyright (c) 1993-2014 Claude ATTARD
+Copyright (c) 2010-2014 Jean LOUIS-GUERIN
+
+website: http://info-coach.fr/atari/software/system/big.php
+forum:   http://www.atari-forum.com/viewtopic.php?f=16&t=27060
+
+The BIG library may be used and distributed without restriction provided that
+this copyright statement is not removed from the file and that any derivative
+work contains the original copyright notice and the associated disclaimer.
+
+The BIG library  is free software; you can redistribute it and/or modify  it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 3 of the License, or (at your option) any
+later version.
+
+The BIG library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+HxCFloppyEmulator; if not, write to the Free Software Foundation, Inc., 51
+Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+@endverbatim
+
 */
-/****** En-tˆte BIG ***********************************************/
-#include <BIG2.H>
+
+#include "BIG2.H"
 #include "BIG2DIAL.H"
 #include "BIG2HELP.H"
 #include "BIG2FOR1.H"
@@ -12,6 +40,7 @@
 #include "BIG2WINB.H"
 #include "BIG2WIND.H"
 #include "BIG2EVTW.H"
+
 int topp = TRUE;
 int dialog_light (int flags, OBJECT *address, int f,
 									int fl_rb, int form_pu, MFDB *img, int fl_move);
@@ -161,7 +190,7 @@ static int topg;
 		return event;
 	}
 }
-/* #] dialog () Dialogue :																				*/ 
+/* #] dialog () Dialogue :																				*/
 /* #[ dialog_light () Dialogue all‚g‚ :														*/
 int dialog_light (int flags, OBJECT *address, int f,
 									int fl_rb, int form_pu, MFDB *img, int fl_move)
@@ -251,7 +280,7 @@ static int topg;
 		return event;
 	}
 }
-/* #] dialog_light () Dialogue all‚g‚ :														*/ 
+/* #] dialog_light () Dialogue all‚g‚ :														*/
 /* #[ dlg_keybd () GŠre les ‚v‚nements clavier :									*/
 int dlg_keybd (OBJECT *adresse, int f, int *dedans, int *fl_cla)
 {
@@ -726,7 +755,7 @@ unsigned char touc;
 	}
 	return FALSE;
 }
-/* #] dlg_keybd () GŠre les ‚v‚nements clavier :									*/ 
+/* #] dlg_keybd () GŠre les ‚v‚nements clavier :									*/
 /* #[ dlg_mesag () GŠre les ‚v‚nements message :									*/
 int dlg_mesag (void)
 {
@@ -890,7 +919,7 @@ MFDB img;
 	}
 	return event;
 }
-/* #] dlg_mesag () GŠre les ‚v‚nements message :									*/ 
+/* #] dlg_mesag () GŠre les ‚v‚nements message :									*/
 /* #[ dlg_button () GŠre les ‚v‚nements clic souris :							*/
 int dlg_button (OBJECT *adresse, int f, int dedans, int fl_cla,
 								MFDB *img, int fl_depl, int fl_notop)
@@ -898,9 +927,9 @@ int dlg_button (OBJECT *adresse, int f, int dedans, int fl_cla,
 int i, j, *ed, *po, obflags, obstate, xtype, dummy, x, y, top,
 		index, wh = ZERO, w, h, xb, d, ok = TRUE, obj, km;
 static int zicmu [] = {
-	  0x32, 0x100, 0x2C8, 0x300, 0x400, 0x500, 0x600, 
-  	0x7FC, 0x810, 0x910, 0xA00, 0xB10, 0xC27, 0xD00, 
-	  0x101, 0x2C8, 0x301, 0x73C, 0x80C, 0x909, 0x80FA, 
+	  0x32, 0x100, 0x2C8, 0x300, 0x400, 0x500, 0x600,
+  	0x7FC, 0x810, 0x910, 0xA00, 0xB10, 0xC27, 0xD00,
+	  0x101, 0x2C8, 0x301, 0x73C, 0x80C, 0x909, 0x80FA,
   	0x8100, 0xE700, 0x800, 0x900, 0xFF00
 	};
 OBJECT *adr, *adrh;
@@ -1379,7 +1408,7 @@ OBJECT *adr, *adrh;
 	}
 	return event;		/* Si c'est un objet quelconque */
 }
-/* #] dlg_button () GŠre les ‚v‚nements clic souris :							*/ 
+/* #] dlg_button () GŠre les ‚v‚nements clic souris :							*/
 /* #[ dlg_mouse () GŠre les ‚v‚nements de zone souris :						*/
 void dlg_mouse (void)
 {
@@ -1396,7 +1425,7 @@ int top, index, dummy;
 		mouse.m_out ^= 0x01;			/* Inverser ‚tat surveillance */
 	}
 }
-/* #] dlg_mouse () GŠre les ‚v‚nements de zone souris :						*/ 
+/* #] dlg_mouse () GŠre les ‚v‚nements de zone souris :						*/
 /* #[ option_find () Cherche sur quelle option de menu on est :		*/
 int option_find (int xm, int ym)
 {
@@ -1419,7 +1448,7 @@ int i = 3, x, y, w, h, retour = ZERO;
 	} while ((retour == ZERO) && (NOT (adr_menu[i++].ob_flags & LASTOB)));
 	return retour;
 }
-/* #] option_find () Cherche sur quelle option de menu on est :		*/ 
+/* #] option_find () Cherche sur quelle option de menu on est :		*/
 /* #[ menu_ok () Signale si aucun menu n'est d‚roul‚ :						*/
 int menu_ok (void)
 {
@@ -1435,7 +1464,7 @@ int o = 2, retour = TRUE;
 	}
 	return retour;		/* Retourner le r‚sultat */
 }
-/* #] menu_ok () Signale si aucun menu n'est d‚roul‚ :						*/ 
+/* #] menu_ok () Signale si aucun menu n'est d‚roul‚ :						*/
 /* #[ dial () Mini_dialog :																				*/
 int dial (OBJECT *address, MFDB *img, int fl_move)
 {
@@ -1464,5 +1493,5 @@ int retour, dedans, fl_cla;
 		}
 	}
 }
-/* #] dial () Mini_dialog :																				*/ 
+/* #] dial () Mini_dialog :																				*/
 

@@ -1,0 +1,182 @@
+/*! @page page_big_pres BIG Presentation
+@author Claude Attard\n
+Translated by Jean Louis-Guerin
+
+<hr>
+
+@section pres_toc Table of Content
+<div class="TOC">
+	- @ref big_intro
+	- @ref big_func_pres
+	- @ref big_form_pres
+	- @ref big_windows_pres
+	- @ref big_learning
+	- @ref big_history
+	- @ref big_friends
+.
+</div>
+
+@section big_intro Introduction
+Like GNU (Gnu is Not Unix) BIG is a recursive acronym  for <b>"Big Is Gem"</b>.
+So BIG is a GEM library that help in the development of GEM GUI applications.
+
+The BIG library only uses standard GEM which ensures compatibility with the 
+complete range Atari machines and their various graphical resolutions (including 
+TT and Falcon with Multitasking). BIG is the result of many years of programming
+with the GEM. It provide the capability to easily create aesthetic and easy to 
+use programs.
+
+@ref big_toc "[return to BIG toc]" @ref pres_toc "[return to Presentation toc]"
+
+@section big_func_pres BIG functions
+
+They allow to manage the most current uses of the AES in few functions calls 
+for a program or a desktop accessory. The application can works with an 
+external or an integrated resource. They also allow to easily realize 
+innovative forms that were only released with versions 4.00 and 4.10 of the 
+AES, or to create forms not provided by the GEM (like new windows, which was 
+entirely redesigned), and this is possible even on systems with old TOS. Some 
+bugs and missing features of the AES are corrected by using BIG.
+
+@ref big_toc "[return to BIG toc]" @ref pres_toc "[return to Presentation toc]"
+
+@section big_form_pres BIG Forms and Menus
+
+BIG provides the capability to define new-look objects: 
+- forms that can be moved on the screen,
+- forms placed inside windows,
+- pop-up buttons or pop-list,
+- on-line help buttons, 
+- hierarchical menus, 
+- pop-up menus freely placed on the desktop,
+- Bubble help
+- etc. 
+.
+The keyboard shortcuts in the menus and the forms are managed automatically by 
+BIG. The management of the cursor in the editable fields can use keyboard 
+equivalents. It is possible to create editable fields capable to contain more text 
+than what can be displayed in the field. It is also possible to create editable 
+fields with small characters, that the GEM does not manage correctly. The alert 
+boxes can be moved like the forms.
+ 
+It is also possible to directly bind objects or menu options to functions,
+so that a click on these objects will call the corresponding function.
+BIG can work with a traditional external RSC file as well as an integrated
+resource. We will see how when we will describe the functions calls.
+
+@ref big_toc "[return to BIG toc]" @ref pres_toc "[return to Presentation toc]"
+
+@section big_windows_pres BIG Windows
+The windows of BIG have an aspect slightly different from those of the GEM. 
+More precisely, they were redesigned in order to add new buttons, such as 
+for example resizing buttons in each corner. However, it is possible to give 
+to these windows the traditional GEM look and feel. In addition, their general 
+look resembles strongly to GEM windows, so that the user "is not confuse".
+
+In BIG, several functions are devoted to windows in order to to simplify their 
+programming. The possibility of placing forms in windows is entirely handled by 
+BIG. It is also possible to place pull-down menus in windows (with or without 
+hierarchical menus), or small toolbars, which are small forms located at the 
+top of a window. 
+
+The windows that contains images are totally managed by BIG. For windows 
+with text (or other type of data), the programmer will only have to write the 
+display routine (which strongly depends on the nature of the data and the way 
+they are stored in memory). BIG takes care of all other events. A palette can 
+be associated with each window, and will be activated automatically each time 
+this window is brought to the front. Lastly, it is possible to define for each 
+window the shape that the mouse pointer will take when it enters the window 
+working area, and to indicate if a window can be handled with keyboard shortcuts. 
+This quasi automation of windows work is undoubtedly one of the attractive points 
+of BIG, as this part of the AES is probably the most ungrateful to programmer. 
+Moreover, the windows have extended capabilities, like the possibility of being 
+manipulated when in background or being moved to the left of the screen.
+
+@ref big_toc "[return to BIG toc]" @ref pres_toc "[return to Presentation toc]"
+
+@section big_learning Learning BIG
+To present the capabilities of BIG the simplest way is to walk through the 
+BIGdemo program. We will detail BIG features in the following order: 
+new objects types, the concept of windows management, and finally the functions 
+of BIG with their syntax, their parameters and their usage recommendations. In the 
+documentation, we only describe the "BIG external functions", i.e. those which 
+a developer could call. The others "BIG internal functions" are not described.
+
+In this documentation we suppose that you have a minimum knowledge of the C 
+language and GEM programming as the goal is not to replace books to learn about
+these subjects.
+
+@ref big_toc "[return to BIG toc]" @ref pres_toc "[return to Presentation toc]"
+
+@section big_history Big History
+How BIG is born? At the beginning, I have created some functions for my 
+developments. Little by little, these functions have grown, in volume and 
+quality. With each new program, I had to recopy them and add more options 
+and new automations... When friends asked to me whether they could use them, 
+I realized that I was the only one to be able to do it, because there was 
+always specific details for each application, which were to be modified 
+each time. But I was the only one able to find his way in this jungle!\n
+
+Then I took my courage in both hands and I rewrote everything. So that the 
+new code was supposed to follow some logic, could be used in all situations,
+in all the applications, with a minimum of constraints, a minimum of global
+variables, and a 100% compatibility with all Atari machines, even those which 
+I did not have! Then came the first beta release of BIG which I tested on a
+Falcon and it was 95% functional!
+
+By developing these routines, I got hooked and I started to add quantities 
+of things which I had never thought of including in my programs: hierarchical 
+menus with windows, variable shape for the mouse, automatic management of 
+the color pallet, movable forms, 3D, scroll-menus, pop-lists, etc. 
+I made a point in creating something complete, taking everything that already 
+existed in other libraries, in new releases of GEM, and that could be useful 
+for applications. But I have banished things that could have render the 
+communication with the user complicated.
+
+The first "public" version of BIG was distributed in July 1993. Since, many
+users provided help in debugging but pushed me to add new functionalities...
+
+@ref big_toc "[return to BIG toc]" @ref pres_toc "[return to Presentation toc]"
+
+@section big_friends Acknowledgment to Friends
+It is important for me to thanks the friends who helped me (or who pushed me) 
+in the development of BIG with their advices, their work and their many 
+ideas:\n
+- Pierre-Louis Lamballais of company PARX Software, author of the brilliant
+Tube GEM, which learned to me many things in connection with the right way of 
+working under GEM. The management of the windows of BIG is strongly based on 
+its excellent ideas.
+- Alexandre Lemaresquier of Brainstorm company, which told me about several 
+oddities of the GEM and made me benefit from its experiments. It is 
+also on its suggestions that the extended editable exist.
+- Joel Houplon which literally badgered me with even the smallest bug and for the 
+addition with certain functions.
+- Marc Abramson which helped me in the debug and made a lot of advertising
+ for BIG. He has pushed strongly so that the versions 1.80 and following 
+of BIG have made a great step with regard to compatibility with all the machines.
+It is also him which added the B_PICTs, the bubbles help, and many others
+things.
+- Mathias Agopian which is the author of the bubbles help routines.
+- Patrick Merminod which found not only one great number of bugs and
+inaccuracies, but which in gave more me the solution each time to avoid me seeking.
+- David Rene which helped me to find the solutions of certain problems and 
+which lend me its Falcon during the long weeks when I awaited mine.
+- Thierry Rodolofo which helped me to integrate the management of 
+SpeedoGDOS into the demonstration.
+- Lionel Burned and Patrick Penos which carried out the adaptation of BIG 
+so that the sources are compatible at the same time with Lattice C and with 
+Pure C.
+.
+All those which encouraged me to continue: 
+- Bruno Christen, Didier Becu, Felix Marciano, Jean-Marc Gigan, Frederic Aloe, 
+Frederic Collet, Jean-Luc Caradeau, Eric Cassegrain, Philippe Wettstein...
+.
+And all those which suggested me improvements or options which are
+now in BIG: 
+- Denis Casanova, Gilles Barges, Jean-Francois Obert, Alain Vigne, ...
+.
+I undoubtedly forget some. \n
+
+@ref big_toc "[return to BIG toc]" @ref pres_toc "[return to Presentation toc]"
+
+*/

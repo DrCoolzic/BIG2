@@ -9,11 +9,12 @@ html/
 *.suo
 *.user
 *.sln.docstates
-*.vcproj
-*.vcxproj*
 
 # Atari
 *.O
+*.ADB
+*.PRG
+*.LIB
 
 # Build results
 
