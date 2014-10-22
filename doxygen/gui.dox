@@ -520,7 +520,7 @@ entering a specific window.
 @ref big_toc "[return to BIG toc]" @ref gui_toc "[return to GUI toc]"
 
 
-@subsection gui_drag Draging Elements
+@subsection gui_drag Dragging Elements
 @image html ghost_image.jpg
 
 Holding down the mouse button on an object and moving the pointer is called 

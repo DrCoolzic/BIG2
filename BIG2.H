@@ -7,7 +7,7 @@ Initial Development by Claude ATTARD, Maintenance by Jean LOUIS-GUERIN
 Copyright (c) 1993-2014 Claude ATTARD
 Copyright (c) 2010-2014 Jean LOUIS-GUERIN
 
-website: http://info-coach.fr/atari/software/system/big.php
+website: http://info-coach.fr/atari/software/projects/big.php
 forum:   http://www.atari-forum.com/viewtopic.php?f=16&t=27060
 
 The BIG library may be used and distributed without restriction provided that 
@@ -1042,7 +1042,7 @@ void	set_attributes(OBJECT* adr, int ob, int attr);
 
 /*! @brief BIG equivalent to GEM objc_edit() function.
 @param	adr		Address of the form where the editable is located.
-@param	car		Character to be registered in the field (such as transmited 
+@param	car		Character to be registered in the field (such as transmitted 
 				by evnt_multi()). 0 (ZERO) for removing or initialize the cursor.
 @param	ed		Object number of the editable field.
 @param	po		pointer on the position of the cursor in the field (will be 

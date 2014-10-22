@@ -7,7 +7,7 @@ Initial Development by Claude ATTARD, Maintenance by Jean LOUIS-GUERIN
 Copyright (c) 1993-2014 Claude ATTARD
 Copyright (c) 2010-2014 Jean LOUIS-GUERIN
 
-website: http://info-coach.fr/atari/software/system/big.php
+website: http://info-coach.fr/atari/software/projects/big.php
 forum:   http://www.atari-forum.com/viewtopic.php?f=16&t=27060
 
 The BIG library may be used and distributed without restriction provided that
@@ -44,7 +44,7 @@ Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 int topp = TRUE;
 int dialog_light (int flags, OBJECT *address, int f,
 									int fl_rb, int form_pu, MFDB *img, int fl_move);
-/****** Fonctions de gestion des dialogues **********************/
+/****** Functions de gestion des dialogues **********************/
 /* #[ dialog () Dialogue :																				*/
 int dialog (int flags, OBJECT *address, int f,
 							int fl_rb, int form_pu, MFDB *img, int fl_move)

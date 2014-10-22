@@ -213,7 +213,7 @@ The other strings are DISABLED for now, and contain provisional filling texts.
 The demonstration will have to replace them by the names of the charged fonts, and 
 activate them.
 
-@par The popup boxe forms
+@par The popup box forms
 We find the two forms of the popup boxes for the small form in a window. They are 
 only made up of G_BOXs TOUCHEXIT. The first represents the choice of the frame, 
 the following the choice of the color.
@@ -625,7 +625,7 @@ transmitted a flag FALSE announcing that the window does not have a menu,
 another TRUE to indicate the presence of a toolbar and the number of tree 
 of this toolbar.
 
-Thats alot of parameters, but it is all that there is to do. From now, we do not 
+Thats a lot of parameters, but it is all that there is to do. From now, we do not 
 have to worry any more about this window. It will be moved, redrawn, iconified, 
 its contents will scroll without any intervention of our program (even in the case 
 of the most recent versions of GEM, which authorizes the handling of the background 
