@@ -13,6 +13,7 @@ The BIG functions allow to manage the most current uses of the AES in few functi
 But the border between these two groups is fuzzy since it is possible to place forms or menus in windows!
 
 For more information please go to BIG Web site http://info-coach.fr/atari/software/st-projects/big.php
+
 BIG Documentation online http://info-coach.fr/atari/software/st-projects/_big/html/index.html
 
 The BIG2 Library project is free software; you can redistribute it
