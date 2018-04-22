@@ -1,4 +1,4 @@
-BIG2 LIBRARY
+ATARI BIG2 GEM LIBRARY
 ===
 BIG2 is a GEM library package for Atari developed initially by Claude Attard in 1993-2000
 Claude Attard has agreed to render BIG sources public domain in 2010.
